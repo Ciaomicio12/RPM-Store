@@ -1,5 +1,5 @@
 
-package com.progetto.viniliprogetto.Model;
+package com.progetto.viniliprogetto.DAO;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
