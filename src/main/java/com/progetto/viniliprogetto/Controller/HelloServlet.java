@@ -1,4 +1,4 @@
-package com.progetto.viniliprogetto;
+package com.progetto.viniliprogetto.Controller;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
