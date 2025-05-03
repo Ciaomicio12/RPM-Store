@@ -44,6 +44,7 @@ create table ordine
     oradiordine varchar(100) not null,
     id          int primary key auto_increment,
     totale      int,
+    stato       varchar(1),
     FOREIGN KEY (id_utente) REFERENCES utente (id) on update cascade on delete cascade
 );
 

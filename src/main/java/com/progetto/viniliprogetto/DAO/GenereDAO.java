@@ -10,11 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenereDAO {
-    private Connection conn;
-
-    public GenereDAO(Connection conn) throws SQLException {
-        this.conn = conn;
-    }
 
     private Genere createGenere(ResultSet rs) throws SQLException {
         Genere g = new Genere();
@@ -24,6 +19,7 @@ public class GenereDAO {
     }
 
     public ArrayList<Genere> doRetriveById(int id) throws SQLException {
+        Connection conn = ConPool.getConnection();
         PreparedStatement ps = conn.prepareStatement("SELECT id, nome " +
                 "FROM genere " +
                 "WHERE id=?");
@@ -35,10 +31,12 @@ public class GenereDAO {
         }
         rs.close();
         ps.close();
+        conn.close();
         return genere;
     }
 
     public ArrayList<Genere> doRetriveByNome(String nome) throws SQLException {
+        Connection conn = ConPool.getConnection();
         PreparedStatement ps = conn.prepareStatement("SELECT id, nome " +
                 "FROM genere " +
                 "WHERE nome=?");
@@ -51,10 +49,12 @@ public class GenereDAO {
         }
         rs.close();
         ps.close();
+        conn.close();
         return genere;
     }
 
     public List<Genere> doRetrieveAll() throws SQLException {
+        Connection conn = ConPool.getConnection();
         PreparedStatement ps = conn.prepareStatement("SELECT id, nome " +
                 "FROM categoria");
         ArrayList<Genere> genere = new ArrayList<>();
@@ -62,35 +62,40 @@ public class GenereDAO {
         while (rs.next()) {
             genere.add(createGenere(rs));
         }
+        conn.close();
         return genere;
     }
 
 
     public void doSave(Genere genere) throws SQLException {
+        Connection conn = ConPool.getConnection();
         PreparedStatement ps = conn.prepareStatement("INSERT INTO genere (nome) " +
                 "VALUES(?)");
         ps.setString(1, genere.getNome());
         ps.executeUpdate();
         ResultSet rs = ps.getGeneratedKeys();
         rs.next();
-
+        conn.close();
     }
 
     public void doUpdate(Genere genere) throws SQLException {
+        Connection conn = ConPool.getConnection();
         PreparedStatement ps = conn.prepareStatement("UPDATE categoria SET nome=?, " +
                 "WHERE id=?");
         ps.setInt(2, genere.getId());
         ps.setString(1, genere.getNome());
         ps.executeUpdate();
+        conn.close();
     }
 
     public void doDelete(int id) throws SQLException {
+        Connection conn = ConPool.getConnection();
         PreparedStatement ps = conn.prepareStatement("DELETE FROM categoria" +
                 " WHERE id=?");
         ps.setInt(1, id);
         if (ps.executeUpdate() != 1) {
             throw new RuntimeException("DELETE error.");
         }
-
+        conn.close();
     }
 }

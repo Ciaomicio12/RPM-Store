@@ -15,10 +15,10 @@ public class OrdineDAO {
 
     public void doSave(Ordine ordini, Utente utente) throws MyServletException {
         try (Connection con = ConPool.getConnection()) {
-            String sql = "Insert into ordini (oradiordine,quantitalibro,id_utente,ean,tipo,anno_pubblicazione,prezzo,descrizione,autore,titolo,copertina,quantita,totale) values";
+            String sql = "Insert into ordini (oradiordine,id_utente,ean,anno_pubblicazione,prezzo,autore,titolo,copertina,quantita,totale) values";
             for (int i = 0; i < ordini.getVinile().size(); i++) {
                 Vinile v = ordini.getVinile().get(i);
-                sql =
+
                 if (i != ordini.getVinile().size() - 1) {
                     sql = sql + ",";
                 }
@@ -30,6 +30,21 @@ public class OrdineDAO {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private Ordine creaOrdine(ResultSet rs) throws SQLException {
+        Ordine o = new Ordine();
+        Vinile v = new Vinile();
+        o.setid(rs.getString(1));
+        o.setOraordine(rs.getString(2));
+        o.setIdutente(rs.getInt(3));
+        o.setTotale(rs.getInt(4));
+        v.setEan(rs.getString(5));
+        v.setAnnoPubblicazione(rs.getInt(6));
+        v.setTitolo(rs.getString(7));
+        v.setCopertina(rs.getString(8));
+        v.setPrezzo(rs.getInt(9));
+        return o;
     }
 
     public ArrayList<Ordine> doRetrieveAll() {
@@ -84,7 +99,6 @@ public class OrdineDAO {
                     ltemp.setEan(rs.getString(1));
                     ltemp.setAnnoPubblicazione(rs.getInt(2));
                     ltemp.setPrezzo(rs.getInt(3));
-                    ltemp.setDescrizione(rs.getString(4));
                     ltemp.setAutore(rs.getString(5));
                     ltemp.setTitolo(rs.getString(6));
                     ltemp.setCopertina(rs.getString(7));
@@ -104,7 +118,6 @@ public class OrdineDAO {
                     ltemp.setEan(rs.getString(4));
                     ltemp.setAnnoPubblicazione(rs.getInt(5));
                     ltemp.setPrezzo(rs.getInt(6));
-                    ltemp.setDescrizione(rs.getString(7));
                     ltemp.setAutore(rs.getString(8));
                     ltemp.setTitolo(rs.getString(9));
                     ltemp.setCopertina(rs.getString(10));
@@ -138,7 +151,6 @@ public class OrdineDAO {
                 temp.setEan(rs.getString(4));
                 temp.setAnnoPubblicazione(rs.getInt(5));
                 temp.setPrezzo(rs.getInt(6));
-                temp.setDescrizione(rs.getString(7));
                 temp.setAutore(rs.getString(8));
                 temp.setTitolo(rs.getString(9));
                 temp.setCopertina(rs.getString(10));

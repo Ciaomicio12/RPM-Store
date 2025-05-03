@@ -8,18 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VinileDAO {
-    SQLException e
-    private Connection conn;
 
-    {
-        throw new RuntimeException(e);
-    }
-
-    public VinileDAO(Connection conn) throws SQLException {
-        this.conn = conn;
-    }
-
-    private static ArrayList<Genere> getGenere(Connection conn, String ean) throws SQLException {
+    private ArrayList<Genere> getGenere(String ean) throws SQLException {
+        Connection conn = ConPool.getConnection();
         String sql = "SELECT genere.id, nome, descrizione " +
                 "FROM genere,vinile_genere " +
                 "where vinile_genere.id=categoria.id " +
@@ -34,12 +25,13 @@ public class VinileDAO {
             g.setNome(rs.getString(2));
             genere.add(g);
         }
+        conn.close();
         return genere;
     }
 
     public boolean seEsiste() {
-        try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM vinile");
+        try (Connection conn = ConPool.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM vinile");
             ResultSet rs = ps.executeQuery();
             rs.next();
             return rs.getBoolean(1);
@@ -62,6 +54,7 @@ public class VinileDAO {
 
     //Recupero tutti i vinili
     public List<Vinile> doRetrieveAll(int offset, int limit) throws SQLException {
+        Connection conn = ConPool.getConnection();
         String query = " SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina\n"
                 + " FROM Vinile LIMIT ?,?";
         PreparedStatement st = conn.prepareStatement(query);
@@ -74,29 +67,34 @@ public class VinileDAO {
         }
         rs.close();
         st.close();
+        conn.close();
         return vinile;
     }
 
     public Vinile doRetrieveByEan(String ean) throws SQLException {
         if (ean.length() != 13) return null;
+        Connection conn = ConPool.getConnection();
         String query = "SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina" +
                 " FROM vinile WHERE ean=?";
         PreparedStatement st = conn.prepareStatement(query);
         st.setString(1, ean);
         ResultSet rs = st.executeQuery();
         if (rs.next()) {
+            conn.close();
             return creatVinile(rs);
         }
+        conn.close();
         return null;
     }
 
     public List<Vinile> doRetrieveByGenere(int genere, int offset, int limit) throws SQLException {
+        Connection conn = ConPool.getConnection();
         String query = "SELECT V.ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina " +
                 " FROM vinile V " +
                 " LEFT JOIN vinile_genere G ON vinile.ean=vinile_genere.ean " +
                 " WHERE G.id=? LIMIT ?, ?";
         PreparedStatement ps = conn.prepareStatement(query);
-        Statement st = this.conn.createStatement();
+        Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
         ps.setInt(1, genere);
         ps.setInt(2, offset);
@@ -105,15 +103,17 @@ public class VinileDAO {
         while (rs.next()) {
             vinile.add(creatVinile(rs));
         }
+        conn.close();
         return vinile;
     }
 
     public List<Vinile> doRetrieveByTitoloOrAutore(String against, int offset, int limit) throws SQLException {
+        Connection conn = ConPool.getConnection();
         String query = "SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina " +
                 " FROM vinile " +
                 "WHERE MATCH(titolo, autore) AGAINST(?) LIMIT ?,?";
         PreparedStatement ps = conn.prepareStatement(query);
-        Statement st = this.conn.createStatement();
+        Statement st = conn.createStatement();
         ps.setString(1, against);
         ps.setInt(2, offset);
         ps.setInt(3, limit);
@@ -122,23 +122,27 @@ public class VinileDAO {
         while (rs.next()) {
             vinile.add(creatVinile(rs));
         }
+        conn.close();
         return vinile;
-    } catch(
+    }
 
     public int countByGenere(int genere) throws SQLException {
+        Connection conn = ConPool.getConnection();
         String query = "SELECT COUNT(*) \n" +
                 "FROM vinile \n" +
                 "LEFT JOIN vinile_genere ON vinile.ean=vinile_genere.ean \n" +
                 "WHERE vinile_genere.id=?";
         PreparedStatement ps = conn.prepareStatement(query);
-        Statement st = this.conn.createStatement();
+        Statement st = conn.createStatement();
         ps.setInt(1, genere);
         ResultSet rs = ps.executeQuery();
         rs.next();
+        conn.close();
         return rs.getInt(1);
-    })
+    }
 
     public void doSave(Vinile vinile) throws SQLException {
+        Connection conn = ConPool.getConnection();
         String sql = "INSERT INTO vinile(ean,anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina) " +
                 "VALUES (?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement st = conn.prepareStatement(sql);
@@ -151,11 +155,12 @@ public class VinileDAO {
         st.setString(7, vinile.getCopertina());
         st.executeUpdate();
         st.close();
+        conn.close();
     }
 
-}
 
     public void doUpdate(Vinile vinile) throws SQLException {
+        Connection conn = ConPool.getConnection();
         String sql = "UPDATE  libro " +
                 "SET  anno_pubblicazione=?,prezzo=?,numero_disponibili=?,autore=?,titolo=?,copertina=?, " +
                 "WHERE ean=?";
@@ -169,31 +174,60 @@ public class VinileDAO {
         ps.setString(7, vinile.getEan());
 
 
-        PreparedStatement psCa2 = con
-                .prepareStatement("DELETE FROM libro_categoria WHERE isbn=?");
-        psCa2.setString(1, libro.getIsbn());
+        PreparedStatement psCa2 = conn
+                .prepareStatement("DELETE FROM vinile_genere WHERE ean=?");
+        psCa2.setString(1, vinile.getEan());
         psCa2.executeUpdate();
 
-        PreparedStatement psCa = con
-                .prepareStatement("INSERT INTO libro_categoria (isbn, id) VALUES (?, ?)");
-        for (Categoria c : libro.getCategorie()) {
-            psCa.setString(1, libro.getIsbn());
+        PreparedStatement psCa = conn
+                .prepareStatement("INSERT INTO vinile_genere (ean, id) VALUES (?, ?)");
+        for (Genere c : vinile.getCategorie()) {
+            psCa.setString(1, vinile.getEan());
             psCa.setInt(2, c.getId());
             psCa.addBatch();
         }
         psCa.executeBatch();
+        conn.close();
     }
 
     public void doDelete(String ean) throws SQLException {
+        Connection conn = ConPool.getConnection();
         PreparedStatement ps = conn.prepareStatement("DELETE FROM vinile WHERE ean=?");
         ps.setString(1, ean);
         if (ps.executeUpdate() != 1) {
             throw new RuntimeException("DELETE error.");
         }
-        PreparedStatement psCa = conn.prepareStatement("DELETE FROM vinile_genere WHERE isbn=?");
+        PreparedStatement psCa = conn.prepareStatement("DELETE FROM vinile_genere WHERE ean=?");
         psCa.setString(1, ean);
         psCa.executeUpdate();
+        conn.close();
     }
 
 
+    public List<Vinile> doRetrieveByNome(String against, int offset, int limit) throws SQLException {
+        Connection conn = ConPool.getConnection();
+        PreparedStatement ps = conn.prepareStatement(
+                "SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina " +
+                        "FROM vinile " +
+                        "WHERE MATCH(titolo) AGAINST(?) LIMIT ?,?");
+        ps.setString(1, against);
+        ps.setInt(2, offset);
+        ps.setInt(3, limit);
+        ArrayList<Vinile> vinile = new ArrayList<>();
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Vinile v = new Vinile();
+            v.setEan(rs.getString(1));
+            v.setAnnoPubblicazione(rs.getInt(3));
+            v.setPrezzo(rs.getInt(5));
+            v.setNumeroDisponibili(rs.getInt(6));
+            v.setAutore(rs.getString(8));
+            v.setTitolo(rs.getString(9));
+            v.setCopertina(rs.getString(10));
+            v.setGenere(getGenere(v.getEan()));
+            vinile.add(v);
+        }
+        conn.close();
+        return vinile;
+    }
 }
