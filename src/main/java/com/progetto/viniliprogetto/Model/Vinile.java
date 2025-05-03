@@ -20,6 +20,28 @@ public class Vinile {
     private String categoriestring;
     private int acquisti = 0;
 
+    public int getAcquisti() {
+        return acquisti;
+    }
+
+    public void setAcquisti(int acquisti) {
+        this.acquisti = acquisti;
+    }
+
+    public List<Categoria> getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(List<Categoria> c) {
+        categorie = c;
+        categoriestring = "";
+        for (int i = 0; i < c.size(); i++) {
+            categoriestring = categoriestring + c.get(i).getNome();
+            if (i != c.size() - 1)
+                categoriestring = categoriestring + ",";
+        }
+    }
+
     public String getEAN() {
         return EAN;
     }
@@ -84,14 +106,6 @@ public class Vinile {
         this.path = path;
     }
 
-    public List<Categoria> getCategorie() {
-        return categorie;
-    }
-
-    public void setCategorie(List<Categoria> categorie) {
-        this.categorie = categorie;
-    }
-
     public String getSdescrizione() {
         return sdescrizione;
     }
@@ -122,14 +136,6 @@ public class Vinile {
 
     public void setCategoriestring(String categoriestring) {
         this.categoriestring = categoriestring;
-    }
-
-    public int getAcquisti() {
-        return acquisti;
-    }
-
-    public void setAcquisti(int acquisti) {
-        this.acquisti = acquisti;
     }
 
     @Override
@@ -166,4 +172,5 @@ public class Vinile {
         NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.FRANCE);
         return nf.format(((float) prezzo / 100));
     }
+
 }
