@@ -8,12 +8,10 @@ public class Vinile {
     private int annoPubblicazione;
     private int prezzo;
     private int numeroDisponibili;
-    private String descrizione;
     private String autore;
-    private String copertina;
     private String titolo;
-    private String Copertina;
-    private List<Categoria> categorie = new ArrayList<>();
+    private String copertina;
+    private List<Genere> genere = new ArrayList<>();
 
     public String getEan() {
         return ean;
@@ -28,7 +26,7 @@ public class Vinile {
     }
 
     public String getCopertina() {
-        return Copertina;
+        return copertina;
     }
 
     public void setTitolo(String titolo) {
@@ -36,15 +34,15 @@ public class Vinile {
     }
 
     public void setCopertina(String Copertina) {
-        this.Copertina = Copertina;
+        this.copertina = Copertina;
     }
 
-    public List<Categoria> getCategorie() {
-        return categorie;
+    public List<Genere> getGenere() {
+        return genere;
     }
 
-    public void setCategorie(List<Categoria> categorie) {
-        this.categorie = categorie;
+    public void setGenere(List<Genere> genere) {
+        this.genere = genere;
     }
 
     public int getAnnoPubblicazione() {
@@ -69,14 +67,6 @@ public class Vinile {
 
     public void setNumeroDisponibili(int numeroDisponibili) {
         this.numeroDisponibili = numeroDisponibili;
-    }
-
-    public String getDescrizione() {
-        return descrizione;
-    }
-
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
     }
 
     public String getAutore() {
