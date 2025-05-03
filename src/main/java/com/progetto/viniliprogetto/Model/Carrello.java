@@ -3,35 +3,38 @@ package com.progetto.viniliprogetto.Model;
 import java.util.ArrayList;
 
 public class Carrello {
-    private ArrayList<Vinile> vinili = new ArrayList<Vinile>();
-    private int totale;
-    private int totprodotti;
+    private final ArrayList<VinileInCarrello> vinili = new ArrayList<>();
 
-    public void setVinile(Vinile v) {
-        for (Vinile vin : vinili) {
-            if (v.getEan().equals(vin.getEan())) {
-                vin.setQuantitaCarrello(vin.getQuantitaCarrello() + 1);
-                totale = totale + vin.getPrezzo();
-                totprodotti = totprodotti + 1;
-                return;
-            }
+    public void aggiungiVinile(Vinile vinile) {
+        VinileInCarrello vic = cercaPerEan(vinile.getEan());
+        if (vic == null) {
+            VinileInCarrello vinInCarrello = new VinileInCarrello();
+            vinInCarrello.setVinile(vinile);
+            vinInCarrello.setQuantita(1);
+            vinInCarrello.setCarrello(this);
+            vinili.add(vinInCarrello);
+        } else {
+            vic.setQuantita(vic.getQuantita()+1);
         }
-        v.setQuantitaCarrello(1);
-        vinili.add(v);
-        totale = totale + v.getPrezzo();
-        totprodotti = totprodotti + 1;
     }
 
-    public void removeVinile(Vinile v) {
-        for (int i = 0; i < vinili.size(); i++) {
-            if (vinili.get(i).getEan().equals(v.getEan())) {
-                vinili.remove(i);
-                break;
-            }
-        }
-        aggiornaTotProdotti();
+    public void rimuoviVinile(Vinile vinile) {
+        VinileInCarrello vic = cercaPerEan(vinile.getEan());
+        if (vic != null) vinili.remove(vic);
     }
 
+    private VinileInCarrello cercaPerEan(String ean) {
+        for (VinileInCarrello vic : vinili) {
+            if (vic.getVinile().getEan().equals(ean)) return vic;
+        }
+        return null;
+    }
+
+    public void modificaQuantita(Vinile vinile, int quant){
+        VinileInCarrello vic = cercaPerEan(vinile.getEan());
+        if(vic != null) vic.setQuantita(quant);
+    }
+    /*
     public int getTotprodotti() {
         aggiornaTotProdotti();
         return totprodotti;
@@ -87,13 +90,5 @@ public class Carrello {
         }
         return x + "," + y;
     }
-
-    public Boolean findLibrobyEAN(String ean) {
-        for (int i = 0; i < vinili.size(); i++) {
-            if (vinili.get(i).getEan().equals(ean)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    */
 }
