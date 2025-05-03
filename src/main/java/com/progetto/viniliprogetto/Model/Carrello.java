@@ -3,17 +3,13 @@ package com.progetto.viniliprogetto.Model;
 import java.util.ArrayList;
 
 public class Carrello {
-    private ArrayList<Vinile> vinile = new ArrayList<Vinile>();
-    private int totale = 0;
-    private int totprodotti = 0;
-
-    public void setVinile(ArrayList<Vinile> libro) {
-        this.vinile = libro;
-    }
+    private ArrayList<Vinile> vinili = new ArrayList<Vinile>();
+    private int totale;
+    private int totprodotti;
 
     public void setVinile(Vinile v) {
-        for (Vinile vin : vinile) {
-            if (v.getEAN().equals(vin.getEAN())) {
+        for (Vinile vin : vinili) {
+            if (v.getEan().equals(vin.getEan())) {
                 vin.setQuantitaCarrello(vin.getQuantitaCarrello() + 1);
                 totale = totale + vin.getPrezzo();
                 totprodotti = totprodotti + 1;
@@ -21,15 +17,15 @@ public class Carrello {
             }
         }
         v.setQuantitaCarrello(1);
-        vinile.add(v);
+        vinili.add(v);
         totale = totale + v.getPrezzo();
         totprodotti = totprodotti + 1;
     }
 
     public void removeVinile(Vinile v) {
-        for (int i = 0; i < vinile.size(); i++) {
-            if (vinile.get(i).getEAN().equals(v.getEAN())) {
-                vinile.remove(i);
+        for (int i = 0; i < vinili.size(); i++) {
+            if (vinili.get(i).getEan().equals(v.getEan())) {
+                vinili.remove(i);
                 break;
             }
         }
@@ -41,20 +37,20 @@ public class Carrello {
         return totprodotti;
     }
 
-    public ArrayList<Vinile> getLibro() {
-        return vinile;
+    public ArrayList<Vinile> getVinili() {
+        return vinili;
     }
 
     public void aggiornaTotProdotti() {
         totprodotti = 0;
-        for (Vinile v : vinile) {
+        for (Vinile v : vinili) {
             totprodotti += v.getQuantitaCarrello();
         }
     }
 
     public int getTotale() {
         int sum = 0;
-        for (Vinile v : vinile) {
+        for (Vinile v : vinili) {
             sum += (v.getPrezzo() * v.getQuantitaCarrello());
         }
         return sum;
@@ -92,9 +88,9 @@ public class Carrello {
         return x + "," + y;
     }
 
-    public Boolean findLibrobyIsbn(String isbn) {
-        for (int i = 0; i < vinile.size(); i++) {
-            if (vinile.get(i).getEAN().equals(isbn)) {
+    public Boolean findLibrobyEAN(String ean) {
+        for (int i = 0; i < vinili.size(); i++) {
+            if (vinili.get(i).getEan().equals(ean)) {
                 return true;
             }
         }

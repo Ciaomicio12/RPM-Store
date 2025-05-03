@@ -47,15 +47,15 @@ public class VinileDAO extends Vinile {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Vinile v = new Vinile();
-                v.setEAN(rs.getString(1));
-                v.setAnno_pubblicazione(rs.getInt(2));
+                v.setEan(rs.getString(1));
+                v.setAnnoPubblicazione(rs.getInt(2));
                 v.setPrezzo(rs.getInt(3));
-                v.setNumero_disponibili(rs.getInt(4));
+                v.setNumeroDisponibili(rs.getInt(4));
                 v.setDescrizione(rs.getString(5));
                 v.setAutore(rs.getString(6));
                 v.setTitolo(rs.getString(7));
-                v.setPath(rs.getString(8));
-                v.setCategorie(getCategorie(con, v.getEAN()));
+                v.setCopertina(rs.getString(8));
+                v.setCategorie(getCategorie(con, v.getEan()));
                 vinile.add(v);
             }
             return vinile;
@@ -72,21 +72,20 @@ public class VinileDAO extends Vinile {
         }
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con
-                    .prepareStatement("SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,descrizione,autore,titolo,copertina,acquisti FROM vinile WHERE ean=?");
+                    .prepareStatement("SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,descrizione,autore,titolo,copertina FROM vinile WHERE ean=?");
             ps.setString(1, ean);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 Vinile v = new Vinile();
-                v.setEAN(rs.getString(1));
-                v.setAnno_pubblicazione(rs.getInt(2));
+                v.setEan(rs.getString(1));
+                v.setAnnoPubblicazione(rs.getInt(2));
                 v.setPrezzo(rs.getInt(3));
-                v.setNumero_disponibili(rs.getInt(4));
+                v.setNumeroDisponibili(rs.getInt(4));
                 v.setDescrizione(rs.getString(5));
                 v.setAutore(rs.getString(6));
                 v.setTitolo(rs.getString(7));
-                v.setPath(rs.getString(8));
-                v.setAcquisti(rs.getInt(9));
-                v.setCategorie(getCategorie(con, v.getEAN()));
+                v.setCopertina(rs.getString(8));
+                v.setCategorie(getCategorie(con, v.getEan()));
                 return v;
             }
             return null;
@@ -106,15 +105,15 @@ public class VinileDAO extends Vinile {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Vinile v = new Vinile();
-                v.setEAN(rs.getString(1));
-                v.setAnno_pubblicazione(rs.getInt(2));
+                v.setEan(rs.getString(1));
+                v.setAnnoPubblicazione(rs.getInt(2));
                 v.setPrezzo(rs.getInt(3));
-                v.setNumero_disponibili(rs.getInt(4));
+                v.setNumeroDisponibili(rs.getInt(4));
                 v.setDescrizione(rs.getString(5));
                 v.setAutore(rs.getString(6));
                 v.setTitolo(rs.getString(7));
-                v.setPath(rs.getString(8));
-                v.setCategorie(getCategorie(con, v.getEAN()));
+                v.setCopertina(rs.getString(8));
+                v.setCategorie(getCategorie(con, v.getEan()));
                 vinile.add(v);
             }
             return vinile;
@@ -134,15 +133,15 @@ public class VinileDAO extends Vinile {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Vinile v = new Vinile();
-                v.setEAN(rs.getString(1));
-                v.setAnno_pubblicazione(rs.getInt(2));
+                v.setEan(rs.getString(1));
+                v.setAnnoPubblicazione(rs.getInt(2));
                 v.setPrezzo(rs.getInt(3));
-                v.setNumero_disponibili(rs.getInt(4));
+                v.setNumeroDisponibili(rs.getInt(4));
                 v.setDescrizione(rs.getString(5));
                 v.setAutore(rs.getString(6));
                 v.setTitolo(rs.getString(7));
-                v.setPath(rs.getString(8));
-                v.setCategorie(getCategorie(con, v.getEAN()));
+                v.setCopertina(rs.getString(8));
+                v.setCategorie(getCategorie(con, v.getEan()));
                 vinile.add(v);
             }
             return vinile;
@@ -170,21 +169,21 @@ public class VinileDAO extends Vinile {
             PreparedStatement ps = con.prepareStatement(
                     "INSERT INTO vinile(anno_pubblicazione,prezzo,numero_disponibili,descrizione,autore,titolo,copertina,ean) VALUES (?,?,?,?,?,?,?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, vinile.getAnno_pubblicazione());
+            ps.setInt(1, vinile.getAnnoPubblicazione());
             ps.setInt(2, vinile.getPrezzo());
-            ps.setInt(3, vinile.getNumero_disponibili());
+            ps.setInt(3, vinile.getNumeroDisponibili());
             ps.setString(4, vinile.getDescrizione());
             ps.setString(5, vinile.getAutore());
             ps.setString(6, vinile.getTitolo());
-            ps.setString(7, vinile.getPath());
-            ps.setString(8, vinile.getEAN());
+            ps.setString(7, vinile.getCopertina());
+            ps.setString(8, vinile.getEan());
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
             PreparedStatement psCa = con
                     .prepareStatement("INSERT INTO vinile_categoria (ean, id) VALUES (?, ?)");
             for (Categoria c : vinile.getCategorie()) {
-                psCa.setString(1, vinile.getEAN());
+                psCa.setString(1, vinile.getEan());
                 psCa.setInt(2, c.getId());
                 psCa.addBatch();
             }
@@ -197,30 +196,29 @@ public class VinileDAO extends Vinile {
     public void doUpdate(Vinile vinile) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "UPDATE  vinile SET  anno_pubblicazione=?,prezzo=?,numero_disponibili=?,descrizione=?,autore=?,titolo=?,copertina=?,acquisti=? WHERE ean=?",
+                    "UPDATE  vinile SET  anno_pubblicazione=?,prezzo=?,numero_disponibili=?,descrizione=?,autore=?,titolo=?,copertina=? WHERE ean=?",
                     Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, vinile.getAnno_pubblicazione());
+            ps.setInt(1, vinile.getAnnoPubblicazione());
             ps.setInt(2, vinile.getPrezzo());
-            ps.setInt(3, vinile.getNumero_disponibili());
+            ps.setInt(3, vinile.getNumeroDisponibili());
             ps.setString(4, vinile.getDescrizione());
             ps.setString(5, vinile.getAutore());
             ps.setString(6, vinile.getTitolo());
-            ps.setString(7, vinile.getPath());
-            ps.setInt(8, vinile.getAcquisti());
-            ps.setString(9, vinile.getEAN());
+            ps.setString(7, vinile.getCopertina());
+            ps.setString(8, vinile.getEan());
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
 
             PreparedStatement psCa2 = con
                     .prepareStatement("DELETE FROM vinile_categoria WHERE ean=?");
-            psCa2.setString(1, vinile.getEAN());
+            psCa2.setString(1, vinile.getEan());
             psCa2.executeUpdate();
 
             PreparedStatement psCa = con
                     .prepareStatement("INSERT INTO vinile_categoria (ean, id) VALUES (?, ?)");
             for (Categoria c : vinile.getCategorie()) {
-                psCa.setString(1, vinile.getEAN());
+                psCa.setString(1, vinile.getEan());
                 psCa.setInt(2, c.getId());
                 psCa.addBatch();
             }
@@ -252,14 +250,14 @@ public class VinileDAO extends Vinile {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Vinile v = new Vinile();
-                v.setEAN(rs.getString(1));
-                v.setAnno_pubblicazione(rs.getInt(3));
-                v.setPrezzo(rs.getInt(5));
-                v.setNumero_disponibili(rs.getInt(6));
-                v.setDescrizione(rs.getString(7));
-                v.setAutore(rs.getString(8));
-                v.setTitolo(rs.getString(9));
-                v.setPath(rs.getString(10));
+                v.setEan(rs.getString(1));
+                v.setAnnoPubblicazione(rs.getInt(2));
+                v.setPrezzo(rs.getInt(3));
+                v.setNumeroDisponibili(rs.getInt(4));
+                v.setDescrizione(rs.getString(5));
+                v.setAutore(rs.getString(6));
+                v.setTitolo(rs.getString(7));
+                v.setCopertina(rs.getString(8));
                 vinile.add(v);
             }
             return vinile;

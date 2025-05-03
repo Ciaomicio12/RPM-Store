@@ -9,10 +9,9 @@ import java.util.Locale;
 public class Ordine {
 
     private String oraordine;
-    private String nomeutente;
+    private String id;
     private int idutente;
     private int totale;
-    private int quantita;
     private ArrayList<Vinile> vinili = new ArrayList<Vinile>();
 
     public String getData() {
@@ -66,14 +65,6 @@ public class Ordine {
         return nf.format(((float) totale / 100));
     }
 
-    public int getQuantita() {
-        return quantita;
-    }
-
-    public void setQuantita(int quantita) {
-        this.quantita = quantita;
-    }
-
     public String convertiEuro(int prezzo) {
         int x = prezzo / 100;
         int y = prezzo % 100;
@@ -83,12 +74,12 @@ public class Ordine {
         return x + "," + y;
     }
 
-    public String getNomeutente() {
-        return nomeutente;
+    public String getid() {
+        return id;
     }
 
-    public void setNomeutente(String nomeutente) {
-        this.nomeutente = nomeutente;
+    public void setid(String id) {
+        this.id = id;
     }
 
     public int getIdutente() {

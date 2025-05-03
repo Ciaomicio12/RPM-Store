@@ -18,7 +18,7 @@ public class OrdineDAO {
             String sql = "Insert into ordini (oradiordine,quantitalibro,id_utente,isbn,tipo,anno_pubblicazione,numero_pagine,prezzo,descrizione,autore,titolo,copertina,quantita,totale) values";
             for (int i = 0; i < ordini.getVinile().size(); i++) {
                 Vinile v = ordini.getVinile().get(i);
-                sql = sql + "(\"" + ordini.getOraordine() + "\"," + v.getQuantitaCarrello() + "," + utente.getId() + ",\"" + v.getEAN() + "\"," + v.getAnno_pubblicazione() + "," + v.getPrezzo() + ",\"" + v.getDescrizione() + "\",\"" + v.getAutore() + "\",\"" + v.getTitolo() + "\",\"" + v.getPath() + "\"," + ordini.getQuantita() + "," + ordini.getTotale() + ")";
+                sql = sql + "(\"" + ordini.getOraordine() + "\"," + utente.getId() + ",\"" + v.getEan() + "\"," + v.getAnnoPubblicazione() + "," + v.getPrezzo() + ",\"" + v.getDescrizione() + "\",\"" + v.getAutore() + "\",\"" + v.getTitolo() + "\",\"" + v.getCopertina() + "\"," + ordini.getQuantita() + "," + ordini.getTotale() + ")";
                 if (i != ordini.getVinile().size() - 1) {
                     sql = sql + ",";
                 }
@@ -53,10 +53,9 @@ public class OrdineDAO {
                     prec = next;
                     temp = new Ordine();
                     temp.setOraordine(rs.getString(1));
-                    temp.setQuantita(rs.getInt(2));
-                    temp.setTotale(rs.getInt(3));
-                    temp.setIdutente(rs.getInt(4));
-                    temp.setNomeutente(rs.getString(5));
+                    temp.setTotale(rs.getInt(2));
+                    temp.setIdutente(rs.getInt(3));
+                    temp.setid(rs.getString(4));
                 }
             }
             if (temp != null) o.add(temp);
@@ -82,13 +81,13 @@ public class OrdineDAO {
                 if (prec.equals(next)) {
                     Vinile ltemp = new Vinile();
                     ltemp.setQuantitaCarrello(rs.getInt(8));
-                    ltemp.setEAN(rs.getString(1));
-                    ltemp.setAnno_pubblicazione(rs.getInt(2));
+                    ltemp.setEan(rs.getString(1));
+                    ltemp.setAnnoPubblicazione(rs.getInt(2));
                     ltemp.setPrezzo(rs.getInt(3));
                     ltemp.setDescrizione(rs.getString(4));
                     ltemp.setAutore(rs.getString(5));
                     ltemp.setTitolo(rs.getString(6));
-                    ltemp.setPath(rs.getString(7));
+                    ltemp.setCopertina(rs.getString(7));
                     temp.addVinile(ltemp);
                 } else {
                     if (i == 0) {
@@ -102,13 +101,13 @@ public class OrdineDAO {
                     temp.setQuantita(rs.getInt(2));
                     temp.setTotale(rs.getInt(3));
                     Vinile ltemp = new Vinile();
-                    ltemp.setEAN(rs.getString(4));
-                    ltemp.setAnno_pubblicazione(rs.getInt(5));
+                    ltemp.setEan(rs.getString(4));
+                    ltemp.setAnnoPubblicazione(rs.getInt(5));
                     ltemp.setPrezzo(rs.getInt(6));
                     ltemp.setDescrizione(rs.getString(7));
                     ltemp.setAutore(rs.getString(8));
                     ltemp.setTitolo(rs.getString(9));
-                    ltemp.setPath(rs.getString(10));
+                    ltemp.setCopertina(rs.getString(10));
                     temp.addVinile(ltemp);
                 }
             }
@@ -136,13 +135,13 @@ public class OrdineDAO {
                     b = false;
                 }
                 Vinile temp = new Vinile();
-                temp.setEAN(rs.getString(4));
-                temp.setAnno_pubblicazione(rs.getInt(5));
+                temp.setEan(rs.getString(4));
+                temp.setAnnoPubblicazione(rs.getInt(5));
                 temp.setPrezzo(rs.getInt(6));
                 temp.setDescrizione(rs.getString(7));
                 temp.setAutore(rs.getString(8));
                 temp.setTitolo(rs.getString(9));
-                temp.setPath(rs.getString(10));
+                temp.setCopertina(rs.getString(10));
                 temp.setQuantitaCarrello(rs.getInt(11));
                 o.addVinile(temp);
             }
