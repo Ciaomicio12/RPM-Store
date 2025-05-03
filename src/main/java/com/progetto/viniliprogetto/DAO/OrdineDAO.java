@@ -15,10 +15,10 @@ public class OrdineDAO {
 
     public void doSave(Ordine ordini, Utente utente) throws MyServletException {
         try (Connection con = ConPool.getConnection()) {
-            String sql = "Insert into ordini (oradiordine,quantitalibro,id_utente,isbn,tipo,anno_pubblicazione,numero_pagine,prezzo,descrizione,autore,titolo,copertina,quantita,totale) values";
+            String sql = "Insert into ordini (oradiordine,quantitalibro,id_utente,ean,tipo,anno_pubblicazione,prezzo,descrizione,autore,titolo,copertina,quantita,totale) values";
             for (int i = 0; i < ordini.getVinile().size(); i++) {
                 Vinile v = ordini.getVinile().get(i);
-                sql = sql + "(\"" + ordini.getOraordine() + "\"," + utente.getId() + ",\"" + v.getEan() + "\"," + v.getAnnoPubblicazione() + "," + v.getPrezzo() + ",\"" + v.getDescrizione() + "\",\"" + v.getAutore() + "\",\"" + v.getTitolo() + "\",\"" + v.getCopertina() + "\"," + ordini.getQuantita() + "," + ordini.getTotale() + ")";
+                sql =
                 if (i != ordini.getVinile().size() - 1) {
                     sql = sql + ",";
                 }
