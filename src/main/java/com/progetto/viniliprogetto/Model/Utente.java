@@ -106,19 +106,6 @@ public class Utente {
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (admin ? 1231 : 1237);
-        result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result + id;
-        result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-        result = prime * result + ((passwordhash == null) ? 0 : passwordhash.hashCode());
-        result = prime * result + ((username == null) ? 0 : username.hashCode());
-        return result;
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
