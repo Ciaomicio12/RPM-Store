@@ -32,27 +32,30 @@ public class OrdineDAO {
 
     }
 
+
     private Ordine creaOrdine(ResultSet rs) throws SQLException {
         Ordine o = new Ordine();
-        Vinile v = new Vinile();
         o.setid(rs.getString(1));
         o.setOraordine(rs.getString(2));
-        o.setIdutente(rs.getInt(3));
         o.setTotale(rs.getInt(4));
-        v.setEan(rs.getString(5));
-        v.setAnnoPubblicazione(rs.getInt(6));
-        v.setTitolo(rs.getString(7));
-        v.setCopertina(rs.getString(8));
-        v.setPrezzo(rs.getInt(9));
+        Utente utente = new Utente();
+        utente.setId(rs.getInt("idutente"));
+        utente.setUsername(rs.getString("Username"));
+        o.setUtente(utente);
         return o;
     }
 
-    public ArrayList<Ordine> doRetrieveAll() {
+    public ArrayList<Ordine> doRetrieveAll(int limit, int offset) {
         ArrayList<Ordine> o = new ArrayList<Ordine>();
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con
-                    .prepareStatement("SELECT oradiordine,quantita,totale,id_utente,username FROM ordini,utente where ordini.id_utente=utente.id order by oradiordine");
+                    .prepareStatement("SELECT O.oradiordine AS ora,O.totale,U.username AS Username, O.id, U.id AS idutente " +
+                            "FROM ordine O " +
+                            "  INNER JOIN utente U on o.id_utente = u-id " +
+                            "where O.id_utente=U.id order by O.oradiordine DASH LIMIT ?,?");
             ResultSet rs = ps.executeQuery();
+            ps.setInt(1, offset);
+            ps.setInt(2, limit);
             String next = "0", prec = "0";
             int i = 0;
             Ordine temp = null;
@@ -85,7 +88,10 @@ public class OrdineDAO {
         ArrayList<Ordine> o = new ArrayList<Ordine>();
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con
-                    .prepareStatement("SELECT oradiordine,quantita,totale,ean, anno_pubblicazione,prezzo,descrizione,autore,titolo,copertina,quantitalibro FROM ordini WHERE id_utente=?  order by oradiordine");
+                    .prepareStatement("SELECT oradiordine,quantita,totale,ean, anno_pubblicazione,prezzo,descrizione,autore,titolo,copertina,quantitalibro " +
+                            "FROM ordini " +
+                            "WHERE id_utente=?  " +
+                            "order by oradiordine");
             ps.setInt(1, idutente);
             ResultSet rs = ps.executeQuery();
             String next = "0", prec = "0";

@@ -14,8 +14,14 @@ public class Carrello {
             vinInCarrello.setCarrello(this);
             vinili.add(vinInCarrello);
         } else {
-            vic.setQuantita(vic.getQuantita()+1);
+            vic.setQuantita(vic.getQuantita() + 1);
         }
+    }
+
+    public int getQuantitaCarrello() {
+        int i = 0;
+        for (VinileInCarrello vic : vinili) i++;
+        return i;
     }
 
     public void rimuoviVinile(Vinile vinile) {
@@ -30,9 +36,13 @@ public class Carrello {
         return null;
     }
 
-    public void modificaQuantita(Vinile vinile, int quant){
+    public void modificaQuantita(Vinile vinile, int quant) {
         VinileInCarrello vic = cercaPerEan(vinile.getEan());
-        if(vic != null) vic.setQuantita(quant);
+        if (vic != null) vic.setQuantita(quant);
+    }
+
+    public ArrayList<VinileInCarrello> getVinile() {
+        return vinili;
     }
     /*
     public int getTotprodotti() {

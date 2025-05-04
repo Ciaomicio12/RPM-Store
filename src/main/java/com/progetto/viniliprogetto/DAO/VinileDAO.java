@@ -75,7 +75,8 @@ public class VinileDAO {
         if (ean.length() != 13) return null;
         Connection conn = ConPool.getConnection();
         String query = "SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina" +
-                " FROM vinile WHERE ean=?";
+                " FROM vinile " +
+                "WHERE ean=?";
         PreparedStatement st = conn.prepareStatement(query);
         st.setString(1, ean);
         ResultSet rs = st.executeQuery();
@@ -161,7 +162,7 @@ public class VinileDAO {
 
     public void doUpdate(Vinile vinile) throws SQLException {
         Connection conn = ConPool.getConnection();
-        String sql = "UPDATE  libro " +
+        String sql = "UPDATE  vinile " +
                 "SET  anno_pubblicazione=?,prezzo=?,numero_disponibili=?,autore=?,titolo=?,copertina=?, " +
                 "WHERE ean=?";
         PreparedStatement ps = conn.prepareStatement(sql);
@@ -192,12 +193,14 @@ public class VinileDAO {
 
     public void doDelete(String ean) throws SQLException {
         Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement("DELETE FROM vinile WHERE ean=?");
+        PreparedStatement ps = conn.prepareStatement("DELETE FROM vinile " +
+                "WHERE ean=?");
         ps.setString(1, ean);
         if (ps.executeUpdate() != 1) {
             throw new RuntimeException("DELETE error.");
         }
-        PreparedStatement psCa = conn.prepareStatement("DELETE FROM vinile_genere WHERE ean=?");
+        PreparedStatement psCa = conn.prepareStatement("DELETE FROM vinile_genere " +
+                "WHERE ean=?");
         psCa.setString(1, ean);
         psCa.executeUpdate();
         conn.close();
@@ -216,16 +219,7 @@ public class VinileDAO {
         ArrayList<Vinile> vinile = new ArrayList<>();
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
-            Vinile v = new Vinile();
-            v.setEan(rs.getString(1));
-            v.setAnnoPubblicazione(rs.getInt(3));
-            v.setPrezzo(rs.getInt(5));
-            v.setNumeroDisponibili(rs.getInt(6));
-            v.setAutore(rs.getString(8));
-            v.setTitolo(rs.getString(9));
-            v.setCopertina(rs.getString(10));
-            v.setGenere(getGenere(v.getEan()));
-            vinile.add(v);
+            vinile.add(creatVinile(rs));
         }
         conn.close();
         return vinile;

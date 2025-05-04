@@ -24,7 +24,6 @@ CREATE TABLE vinile
     anno_pubblicazione int         not null,
     prezzo             int         not null,
     numero_disponibili int,
-    descrizione        mediumtext  not null,
     autore             varchar(50),
     titolo             text        not null,
     copertina          varchar(50) not null unique,
@@ -33,16 +32,15 @@ CREATE TABLE vinile
 
 CREATE TABLE genere
 (
-    id   int auto_increment,
-    nome text not null,
-    primary key (id)
+    id   int primary key auto_increment,
+    nome text not null
 );
 
 create table ordine
 (
+    id          int primary key auto_increment,
     id_utente   int(11),
     oradiordine varchar(100) not null,
-    id          int primary key auto_increment,
     totale      int,
     stato       varchar(1),
     FOREIGN KEY (id_utente) REFERENCES utente (id) on update cascade on delete cascade
@@ -50,8 +48,12 @@ create table ordine
 
 create table vinile_in_ordine
 (
-    quantita  int,
-    prezzoacq float
+    ordine_id  int,
+    quantita   int,
+    vinile_ean char(14),
+    prezzoacq  float,
+    FOREIGN KEY (ordine_id) REFERENCES ordine (id) on update cascade on delete cascade,
+    FOREIGN KEY (vinile_ean) REFERENCES vinile (EAN) on update cascade on delete cascade
 );
 
 CREATE TABLE vinile_genere
@@ -62,10 +64,3 @@ CREATE TABLE vinile_genere
     FOREIGN KEY (EAN) REFERENCES vinile (EAN) on update cascade on delete cascade,
     primary key (EAN, id)
 );
-
-LOCK TABLES utente WRITE;
-INSERT INTO utente
-VALUES (1, 'utente1', SHA1('password1'), 'Utente 1', 'cognome', 'Maschio', 'utente1@test.com', 1, 0),
-       (2, 'utente2', SHA1('password2'), 'Utente 2', 'cognome', 'Maschio', 'utente2@test.com', 0, 0),
-       (3, 'utente3', SHA1('password3'), 'Utente 3', 'cognome', 'Maschio', 'utente3@test.com', 0, 0);
-UNLOCK TABLES;
