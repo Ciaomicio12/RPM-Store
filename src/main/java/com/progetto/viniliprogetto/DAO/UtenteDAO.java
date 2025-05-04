@@ -21,8 +21,6 @@ public class UtenteDAO extends Utente {
         return utenti;
     }
 
-}
-
     public boolean checkPassword(String username, String password) throws SQLException {
         Connection conn = ConPool.getConnection();
         PreparedStatement ps = conn.prepareStatement("SELECT passwordhash " +
