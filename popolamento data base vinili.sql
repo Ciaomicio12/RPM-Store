@@ -7,10 +7,10 @@ VALUES ('utente1', 'password1', 'Tommaso', 'Spataro', 'M', 'utente1@email.com', 
 
 -- Inserimento dati nella tabella "vinile"
 
-INSERT INTO vinile (EAN, anno_pubblicazione, prezzo, numero_disponibili, autore, titolo, copertina)
-VALUES ('EAN001', 1983, 20, 10, 'Mettalica', 'Master of Puppez', ''),
-       ('EAN002', 1956, 15, 5, 'Elvis Presly', 'Elvis Presly', ''),
-       ('EAN003', 1956, 25, 8, 'Nirvana', 'Never Minds', '');
+INSERT INTO vinile (EAN, anno_pubblicazione, prezzo, numero_disponibili, autore, anno, titolo, copertina)
+VALUES ('9781234567890', 1983, 20, 10, 'Mettalica', 'Master of Puppez', 'copertina1.jpg'),
+       ('9780987654321', 1956, 25, 5, 'Elvis Presly', 'Elvis Presly', 'copertina2.jpg'),
+       ('9785432167890', 1956, 18, 8, 'Nirvana', 'Never Minds', 'copertina3.jpg');
 
 -- Inserimento dati nella tabella "genere"
 
@@ -20,23 +20,27 @@ VALUES ('Trash Mettalica'),
        ('Grunge');
 
 -- Inserimento dati nella tabella "ordine"
-INSERT INTO ordine (id_utente, oradiordine, totale)
-VALUES (1, '2023-06-28 10:00:00', 50),
-       (2, '2023-06-28 11:30:00', 35),
-       (1, '2023-06-28 15:45:00', 40);
+
+INSERT INTO ordine (id_utente, oradiordine, totale, stato)
+VALUES (1, '2023-07-08 10:30:00', 50, 'P'),
+       (2, '2023-07-07 15:45:00', 35, 'C'),
+       (3, '2023-07-06 09:15:00', 40, 'P');
 
 
 -- Inserimento dati nella tabella "vinile_in_ordine"
 
-INSERT INTO vinile_in_ordine (quantita, prezzoacq)
-VALUES (2, 40.0),
-       (1, 15.0),
-       (3, 60.0);
+INSERT INTO vinile_in_ordine (ordine_id, quantita, vinile_ean, prezzoacq)
+VALUES (1, 2, '9781234567890', 40),
+       (1, 1, '9785432167890', 18),
+       (2, 3, '9780987654321', 75),
+       (3, 1, '9785432167890', 18);
 
 -- Inserimento dati nella tabella "vinile_genere"
 
 INSERT INTO vinile_genere (EAN, id)
-VALUES ('EAN001', 1),
-       ('EAN001', 2),
-       ('EAN002', 3),
-       ('EAN003', 4);
+VALUES ('9781234567890', 1),
+       ('9780987654321', 2),
+       ('9785432167890', 3);
+
+
+

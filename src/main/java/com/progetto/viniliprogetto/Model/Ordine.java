@@ -7,12 +7,20 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Ordine {
-
     private String oraordine;
     private String id;
-    private int idutente;
     private int totale;
-    private ArrayList<Vinile> vinili = new ArrayList<Vinile>();
+    private Utente utente;
+
+    private ArrayList<VinileInOrdine> vinili = new ArrayList<>();
+
+    public Utente getUtente() {
+        return utente;
+    }
+
+    public void setUtente(Utente utente) {
+        this.utente = utente;
+    }
 
     public String getData() {
         long unixSeconds = Long.parseLong(oraordine);
@@ -40,12 +48,8 @@ public class Ordine {
         this.oraordine = oraordine;
     }
 
-    public ArrayList<Vinile> getVinile() {
+    public ArrayList<VinileInOrdine> getVinili() {
         return vinili;
-    }
-
-    public void setVinile(ArrayList<Vinile> vinili) {
-        this.vinili = vinili;
     }
 
     public void addVinile(Vinile vinile) {
@@ -82,11 +86,16 @@ public class Ordine {
         this.id = id;
     }
 
-    public int getIdutente() {
-        return idutente;
+    public void aggiungiVinile(Vinile vinile, int quantita) {
+        VinileInOrdine vinileInOrdine = new VinileInOrdine();
+        vinileInOrdine.setVinile(vinile);
+        vinileInOrdine.setPrezzo(vinile.getPrezzo());
+        vinileInOrdine.setQuantita(quantita);
+        vinileInOrdine.setOrdine(this);
+        vinili.add(vinileInOrdine);
     }
 
-    public void setIdutente(int idutente) {
-        this.idutente = idutente;
+    public ArrayList<VinileInOrdine> getVinile() {
+        return vinili;
     }
 }
