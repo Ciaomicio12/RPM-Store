@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/deletegenere")
@@ -31,13 +32,17 @@ public class DeleteGenereServlet extends HttpServlet {
             } catch (NumberFormatException ex) {
                 throw new MyServletException("Il genere da eliminare non esiste");
             }
-            if (dao.doRetriveById(idnum) != null) {
-                dao.doDelete(idnum);
-                List<Genere> genere = dao.doRetrieveAll();
-                getServletContext().setAttribute("genere", genere);
-                request.getRequestDispatcher("WEB-INF/jsp/deletegenere.jsp").forward(request, response);
-            } else {
-                throw new MyServletException("Il genere da eliminare non esiste");
+            try {
+                if (dao.doRetriveById(idnum) != null) {
+                    dao.doDelete(idnum);
+                    List<Genere> genere = dao.doRetrieveAll();
+                    getServletContext().setAttribute("genere", genere);
+                    request.getRequestDispatcher("WEB-INF/jsp/deletegenere.jsp").forward(request, response);
+                } else {
+                    throw new MyServletException("Il genere da eliminare non esiste");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         } else {
             throw new MyServletException("Sezione dedicata ai soli amministratori, perfavore prima fai il login");

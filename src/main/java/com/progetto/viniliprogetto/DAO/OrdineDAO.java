@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class OrdineDAO {
+public class OrdineDAO {/*
 
     public void doSave(Ordine ordini, Utente utente) throws MyServletException {
         try (Connection con = ConPool.getConnection()) {
@@ -187,6 +187,6 @@ public class OrdineDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
 }
