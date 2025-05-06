@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet("/ceckusername")
-public class VerificaUsernameServlet extends HttpServlet {
+public class VerificaUsernameServlet extends HttpServlet {/*
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
@@ -33,5 +33,5 @@ public class VerificaUsernameServlet extends HttpServlet {
         } else {
             throw new MyServletException("Errore");
         }
-    }
+    }*/
 }
