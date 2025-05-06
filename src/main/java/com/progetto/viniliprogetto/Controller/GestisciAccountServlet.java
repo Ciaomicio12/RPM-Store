@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 @WebServlet("/gestisciutenti")
 public class GestisciAccountServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    /*protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
 
@@ -40,5 +40,5 @@ public class GestisciAccountServlet extends HttpServlet {
         } else {
             throw new MyServletException("Sezione dedicata agli amministratori");
         }
-    }
+    }*/
 }
