@@ -16,12 +16,12 @@ import java.util.List;
 public class HomeServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         VinileDAO vinileDAO = new VinileDAO();
         try {
             List<Vinile> vinili = vinileDAO.doRetrieveAll(0, 3);
             request.setAttribute("Vinili", vinili);
-
+            request.getRequestDispatcher("/WEB-INF/Pagine/Home.jsp").forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
         }
