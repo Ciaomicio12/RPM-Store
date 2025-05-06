@@ -1,3 +1,11 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.progetto.viniliprogetto.Model.Vinile" %>
+<%
+    List<Vinile> vinili = (List<Vinile>) request.getAttribute("vinili");
+%>
+
+<%= vinili %>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
