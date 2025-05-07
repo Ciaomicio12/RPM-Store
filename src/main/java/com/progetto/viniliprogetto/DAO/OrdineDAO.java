@@ -45,42 +45,20 @@ public class OrdineDAO {
         return o;
     }
 
-    public ArrayList<Ordine> doRetrieveAll(int limit, int offset) {
-        ArrayList<Ordine> o = new ArrayList<Ordine>();
-        try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con
-                    .prepareStatement("SELECT O.oradiordine AS ora,O.totale,U.username AS Username, O.id, U.id AS idutente " +
-                            "FROM ordine O " +
-                            "  INNER JOIN utente U on o.id_utente = u-id " +
-                            "where O.id_utente=U.id order by O.oradiordine DASH LIMIT ?,?");
-            ResultSet rs = ps.executeQuery();
-            ps.setInt(1, offset);
-            ps.setInt(2, limit);
-            String next = "0", prec = "0";
-            int i = 0;
-            Ordine temp = null;
-            while (rs.next()) {
-                next = rs.getString(1);
-                if (prec.equals(next)) {
-                } else {
-                    if (i == 0) {
-                        i++;
-                    } else {
-                        o.add(temp);
-                    }
-                    prec = next;
-                    temp = new Ordine();
-                    temp.setOraordine(rs.getString(1));
-                    temp.setTotale(rs.getInt(2));
-                    temp.setIdutente(rs.getInt(3));
-                    temp.setid(rs.getString(4));
-                }
-            }
-            if (temp != null) o.add(temp);
-            return o;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    public ArrayList<Ordine> doRetrieveAll(int limit, int offset) throws SQLException {
+        ArrayList<Ordine> ordini = new ArrayList<Ordine>();
+        Connection con = ConPool.getConnection();
+        PreparedStatement ps = con.prepareStatement("SELECT O.oradiordine AS ora,O.totale,U.username AS Username, O.id, U.id AS idutente " +
+                "FROM ordine O " +
+                "  INNER JOIN utente U on o.id_utente = u-id " +
+                "where O.id_utente=U.id order by O.oradiordine DASH LIMIT ?,?");
+        ps.setInt(1, offset);
+        ps.setInt(2, limit);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            ordini.add(creaOrdine(rs));
         }
+        return ordini;
     }
 
 
@@ -88,7 +66,7 @@ public class OrdineDAO {
         ArrayList<Ordine> o = new ArrayList<Ordine>();
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con
-                    .prepareStatement("SELECT oradiordine,quantita,totale,ean, anno_pubblicazione,prezzo,descrizione,autore,titolo,copertina,quantitalibro " +
+                    .prepareStatement("SELECT oradiordine,quantita,totale,ean, anno_pubblicazione,prezzo,descrizione,autore,titolo,copertina,quantita " +
                             "FROM ordini " +
                             "WHERE id_utente=?  " +
                             "order by oradiordine");
@@ -127,7 +105,7 @@ public class OrdineDAO {
                     ltemp.setAutore(rs.getString(8));
                     ltemp.setTitolo(rs.getString(9));
                     ltemp.setCopertina(rs.getString(10));
-                    temp.addVinile(ltemp);
+                    temp.aggiungiVinile(ltemp);
                 }
             }
             if (temp != null) o.add(temp);
@@ -140,7 +118,9 @@ public class OrdineDAO {
     public Ordine doRetrievebyUserIdAndOra(String ora, int idutente) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con
-                    .prepareStatement("SELECT oradiordine,quantita,totale,ean, anno_pubblicazione,prezzo,descrizione,autore,titolo,copertina,quantitalibro FROM ordini WHERE id_utente=? and oradiordine=?  order by oradiordine");
+                    .prepareStatement("SELECT oradiordine,quantita,totale,ean, anno_pubblicazione,prezzo,descrizione,autore,titolo,copertina,quantita " +
+                            "FROM ordine " +
+                            "WHERE id_utente=? and oradiordine=?  order by oradiordine");
             ps.setInt(1, idutente);
             ps.setString(2, ora);
             Ordine o = new Ordine();
@@ -175,7 +155,8 @@ public class OrdineDAO {
     public Boolean ceckIfExistbyIsbnAndUserID(String ean, int idutente) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con
-                    .prepareStatement("SELECT * FROM ordini WHERE ean=? and id_utente = ?");
+                    .prepareStatement("SELECT * FROM ordini " +
+                            "WHERE ean=? and id_utente = ?");
             ps.setString(1, ean);
             ps.setInt(2, idutente);
             ResultSet s = ps.executeQuery();

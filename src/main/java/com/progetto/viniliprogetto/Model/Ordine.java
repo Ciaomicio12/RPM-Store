@@ -52,10 +52,6 @@ public class Ordine {
         return vinili;
     }
 
-    public void addVinile(Vinile vinile) {
-        vinili.add(vinile);
-    }
-
     public int getTotale() {
         return totale;
     }

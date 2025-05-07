@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet("/setutente")
 public class SetUtenteServlet extends HttpServlet {
@@ -31,12 +32,25 @@ public class SetUtenteServlet extends HttpServlet {
             } catch (NumberFormatException er) {
                 throw new MyServletException("Utente non trovato!");
             }
-            Utente user = dao.doRetrieveById(id);
+            Utente user = null;
+            try {
+                user = dao.doRetrieveById(id);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             if (user == null) throw new MyServletException("Utente non trovato!");
             if (flag.equals("0")) {
-                dao.doSetAdmin(user, false);
+                try {
+                    dao.doSetAdmin(user, false);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             } else if (flag.equals("1")) {
-                dao.doSetAdmin(user, true);
+                try {
+                    dao.doSetAdmin(user, true);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             } else {
                 throw new MyServletException("Errore parametri");
             }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet("/ceckusername")
 public class VerificaUsernameServlet extends HttpServlet {
@@ -20,10 +21,14 @@ public class VerificaUsernameServlet extends HttpServlet {
         if (id != null) {
             UtenteDAO dao = new UtenteDAO();
             response.setContentType("application/text");
-            if (dao.doRetrieveByUsername(id) != null) {
-                response.getWriter().append("true");
-            } else {
-                response.getWriter().append("no");
+            try {
+                if (dao.doRetrieveByUsername(id) != null) {
+                    response.getWriter().append("true");
+                } else {
+                    response.getWriter().append("no");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         } else {
             throw new MyServletException("Errore");

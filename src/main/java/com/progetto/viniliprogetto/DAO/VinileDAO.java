@@ -61,14 +61,14 @@ public class VinileDAO {
         st.setInt(1, offset);
         st.setInt(2, limit);
         ResultSet rs = st.executeQuery();
-        List<Vinile> vinile = new ArrayList<>();
+        List<Vinile> vinili = new ArrayList<>();
         while (rs.next()) {
-            vinile.add(creatVinile(rs));
+            vinili.add(creatVinile(rs));
         }
         rs.close();
         st.close();
         conn.close();
-        return vinile;
+        return vinili;
     }
 
     public Vinile doRetrieveByEan(String ean) throws SQLException {

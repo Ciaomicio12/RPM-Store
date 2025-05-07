@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet("/gestisciutenti")
@@ -23,8 +24,17 @@ public class GestisciAccountServlet extends HttpServlet {
         Utente utente = (Utente) session.getAttribute("utente");
         if (utente != null && utente.isAdmin() == true) {
             UtenteDAO dao = new UtenteDAO();
-            ArrayList<Utente> li = (ArrayList<Utente>) dao.doRetrieveAll();
-            li.remove(dao.doRetrieveById(utente.getId()));
+            ArrayList<Utente> li = null;
+            try {
+                li = (ArrayList<Utente>) dao.doRetrieveAll();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                li.remove(dao.doRetrieveById(utente.getId()));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             request.setAttribute("utenti", li);
             request.getRequestDispatcher("/WEB-INF/jsp/gestisciutenti.jsp").forward(request, response);
         } else {
