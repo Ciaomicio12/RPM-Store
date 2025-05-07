@@ -5,6 +5,7 @@ import com.progetto.viniliprogetto.DAO.VinileDAO;
 import com.progetto.viniliprogetto.Model.Carrello;
 import com.progetto.viniliprogetto.Model.Utente;
 import com.progetto.viniliprogetto.Model.Vinile;
+import com.progetto.viniliprogetto.Model.VinileInCarrello;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +18,7 @@ import java.io.IOException;
 
 @WebServlet("/carrello")
 public class CarrelloServlet extends HttpServlet {
-
+/*
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Carrello carrello = (Carrello) session.getAttribute("carrello");
@@ -38,16 +39,16 @@ public class CarrelloServlet extends HttpServlet {
                         throw new MyServletException("Il vinile da lei selezionato è già presente nei suoi ordini");
                     }
                 }
-                if (carrello.getVinile().size() == 0) {
+                if (carrello.getVinili().size() == 0) {
                     carrello.aggiungiVinile(vinile);
                     session.setAttribute("carrello", carrello);
                     response.sendRedirect("carrello");
                 } else {
-                    for (int i = 0; i < carrello.getVinile().size(); i++) {
-                        if (carrello.getVinile().get(i).getEan().equals(vinile.getEan())) {
+                    for (VinileInCarrello vic: carrello.getVinili()) {
+                        if (vic.getVinile().getEan().equals(vinile.getEan())) {
                             throw new MyServletException("Errore");
-                        } else if (carrello.getVinile().get(i).getEan().equals(vinile.getEan())) {
-                            carrello.getVinile().get(i).setQuantitaCarrello(carrello.getVinile().get(i).getQuantitaCarrello() + 1);
+                        } else if (vic.getVinile().getEan().equals(vinile.getEan())) {
+                            vic.setQuantita(carrello.getVinili().get(i).getQuantitaCarrello() + 1);
                             break;
                         } else {
                             carrello.aggiungiVinile(vinile);
@@ -63,14 +64,14 @@ public class CarrelloServlet extends HttpServlet {
             } else {
                 if (carrello != null) {
                     int quantita = 0;
-                    for (int i = 0; i < carrello.getVinile().size(); i++) {
-                        Vinile temp = VinileDAO.doRetrieveByEan(carrello.getVinile().get(i).getEan());
+                    for (VinileInCarrello vic: carrello.getVinili()) {
+                        Vinile temp = VinileDAO.doRetrieveByEan(carrello.getVinili().get(i).getEan());
                         if (temp == null) {
-                            carrello.rimuoviVinile(carrello.getVinile().get(i));
+                            carrello.rimuoviVinile(carrello.getVinili().get(i));
                             i--;
-                        } else if (temp.equals(carrello.getVinile().get(i)) == false) {
-                            quantita = carrello.getVinile().get(i).getQuantitaCarrello();
-                            carrello.rimuoviVinile(carrello.getVinile().get(i));
+                        } else if (temp.equals(carrello.getVinili().get(i)) == false) {
+                            quantita = carrello.getVinili().get(i).getQuantitaCarrello();
+                            carrello.rimuoviVinile(carrello.getVinili().get(i));
                             temp.setQuantitaCarrello(quantita);
                             carrello.aggiungiVinile(temp);
                         }
@@ -88,5 +89,5 @@ public class CarrelloServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
-
+*/
 }

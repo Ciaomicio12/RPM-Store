@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet("/setutente")
-public class SetUtenteServlet extends HttpServlet {
+public class SetUtenteServlet extends HttpServlet {/*
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
@@ -58,5 +58,5 @@ public class SetUtenteServlet extends HttpServlet {
         } else {
             throw new MyServletException("Sezione dedicata agli admin!");
         }
-    }
+    }*/
 }
