@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class Ordine {
+public class Ordine {/*
     private String oraordine;
     private String id;
     private int totale;
@@ -93,5 +93,5 @@ public class Ordine {
 
     public ArrayList<VinileInOrdine> getVinile() {
         return vinili;
-    }
+    }*/
 }

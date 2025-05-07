@@ -41,7 +41,7 @@ public class Carrello {
         if (vic != null) vic.setQuantita(quant);
     }
 
-    public ArrayList<VinileInCarrello> getVinile() {
+    public ArrayList<VinileInCarrello> getVinili() {
         return vinili;
     }
     /*
