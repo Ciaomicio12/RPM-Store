@@ -20,8 +20,8 @@ public class HomeServlet extends HttpServlet {
         VinileDAO vinileDAO = new VinileDAO();
         try {
             List<Vinile> vinili = vinileDAO.doRetrieveAll(0, 3);
-            request.setAttribute("Vinili", vinili);
-            request.getRequestDispatcher("/WEB-INF/Pagine/Home.jsp").forward(request, response);
+            request.setAttribute("vinili", vinili);
+            request.getRequestDispatcher("/Pagine/home.jsp").forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
         }
