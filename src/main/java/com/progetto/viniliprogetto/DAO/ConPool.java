@@ -16,7 +16,8 @@ public class ConPool {
 			PoolProperties p = new PoolProperties();
 			p.setUrl("jdbc:mysql://localhost:3306/progetto?characterEncoding=UTF8&useUnicode=yes&serverTimezone=" + TimeZone.getDefault().getID());
 			p.setDriverClassName("com.mysql.cj.jdbc.Driver");
-			p.setUsername("vinile");
+			//ricordati di modificare il nome del database, perché sono diversi per i due computer
+			p.setUsername("root");
 			p.setPassword("root");
 			p.setMaxActive(100);
 			p.setInitialSize(10);
