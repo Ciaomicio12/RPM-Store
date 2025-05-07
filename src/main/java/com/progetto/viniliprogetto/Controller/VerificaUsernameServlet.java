@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/ceckusername")
-public class VerificaUsernameServlet extends HttpServlet {
+public class VerificaUsernameServlet extends HttpServlet {/*
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
@@ -28,5 +28,5 @@ public class VerificaUsernameServlet extends HttpServlet {
         } else {
             throw new MyServletException("Errore");
         }
-    }
+    }*/
 }
