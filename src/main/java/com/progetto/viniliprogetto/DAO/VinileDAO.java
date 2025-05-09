@@ -71,20 +71,24 @@ public class VinileDAO {
         return vinili;
     }
 
-    public Vinile doRetrieveByEan(String ean) throws SQLException {
-        if (ean.length() != 13) return null;
-        Connection conn = ConPool.getConnection();
-        String query = "SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina" +
-                " FROM vinile " +
-                "WHERE ean=?";
-        PreparedStatement st = conn.prepareStatement(query);
-        st.setString(1, ean);
-        ResultSet rs = st.executeQuery();
-        if (rs.next()) {
+    public Vinile doRetrieveByEan(String ean) {
+        try {
+            if (ean.length() != 13) return null;
+            Connection conn = ConPool.getConnection();
+            String query = "SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina" +
+                    " FROM vinile " +
+                    "WHERE ean=?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, ean);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                conn.close();
+                return creatVinile(rs);
+            }
             conn.close();
-            return creatVinile(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        conn.close();
         return null;
     }
 
@@ -163,7 +167,7 @@ public class VinileDAO {
     public void doUpdate(Vinile vinile) throws SQLException {
         Connection conn = ConPool.getConnection();
         String sql = "UPDATE  vinile " +
-                "SET  anno_pubblicazione=?,prezzo=?,numero_disponibili=?,autore=?,titolo=?,copertina=?, " +
+                "SET  anno_pubblicazione=?,prezzo=?,numero_disponibili=?,autore=?,titolo=?,copertina=? " +
                 "WHERE ean=?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, vinile.getAnnoPubblicazione());

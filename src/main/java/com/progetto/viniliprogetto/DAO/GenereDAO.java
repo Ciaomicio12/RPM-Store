@@ -80,7 +80,7 @@ public class GenereDAO {
 
     public void doUpdate(Genere genere) throws SQLException {
         Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE categoria SET nome=?, " +
+        PreparedStatement ps = conn.prepareStatement("UPDATE categoria SET nome=? " +
                 "WHERE id=?");
         ps.setInt(2, genere.getId());
         ps.setString(1, genere.getNome());

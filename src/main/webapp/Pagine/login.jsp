@@ -17,33 +17,34 @@
 </head>
 <body>
 
-<%@ include file = "header.jsp" %>
+<%@ include file="header.jsp" %>
 
 <section class="container-fluid">
   <div class="row">
-    <form class="border border-dark px-4 py-3 mx-4 mx-sm-auto mt-5 col-sm-6" method="POST" action="servlet_login">
+    <form class="border border-dark px-4 py-3 mx-4 mx-sm-auto mt-5 col-sm-6" method="POST" action="login">
       <h2 class="title">Accedi</h2>
       <div class="border border-dark px-4 py-3 mx-1 mx-sm-auto mt-1 col-sm-6">
-        <div class="mx-auto" style="width: 110px;"> 
+        <h3> ${errorserverlogin}</h3>
+        <div class="mx-auto" style="width: 110px;">
           <label for="email">Indirizzo email:</label>
-        </div>  
+        </div>
         <div class="mx-auto" style="width: 200px;">
           <input type="email" id="email" name="email" required>
-        </div> 
-        <div class="mx-auto" style="width: 50px;">       
+        </div>
+        <div class="mx-auto" style="width: 50px;">
           <label for="password">Password:</label>
-        </div>   
+        </div>
         <div class="mx-auto" style="width: 200px;">
-          <input type="password" id="password" name="password" required> 
+          <input type="password" id="password" name="password" required>
         </div>
       </div>
-      <div class="mx-auto" style="width: 100px;">     
+      <div class="mx-auto" style="width: 100px;">
         <input type="submit" value="Accedi">
       </div>
     </form>
   </div>
   <div class="mx-auto" style="width: 300px;">
-    <h6>Sei nuovo su Record Road? <a href="record-road-pagina-registrazione.html">Registrati</a></h6>
+    <h6>Sei nuovo su Record Road? <a href="registrazione">Registrati</a></h6>
   </div>
 </section>
 

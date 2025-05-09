@@ -75,42 +75,28 @@ public class OrdineDAO {
         return ordini;
     }
 
-/*
+    //da controllare
     public Ordine doRetrievebyUserIdAndOra(String ora, int idutente) {
-        try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con
-                    .prepareStatement("SELECT oradiordine,quantita,totale,ean, anno_pubblicazione,prezzo,descrizione,autore,titolo,copertina,quantita " +
-                            "FROM ordine " +
-                            "WHERE id_utente=? and oradiordine=?  order by oradiordine");
+        try {
+            Connection con = ConPool.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT oradiordine,totale " +
+                    "FROM ordine " +
+                    "WHERE id_utente=? and oradiordine=?  order by oradiordine");
             ps.setInt(1, idutente);
             ps.setString(2, ora);
-            Ordine o = new Ordine();
+            Ordine ordine = new Ordine();
             ResultSet rs = ps.executeQuery();
-            Boolean b = true;
             while (rs.next()) {
-                if (b) {
-                    o.setOraordine(rs.getString(1));
-                    o.setQuantita(rs.getInt(2));
-                    o.setTotale(rs.getInt(3));
-                    b = false;
+                ordine.setOraordine(rs.getString(1));
+                ordine.setTotale(rs.getInt(2));
+                if (ordine.getVinile().size() > 0) {
+                    return ordine;
                 }
-                Vinile temp = new Vinile();
-                temp.setEan(rs.getString(4));
-                temp.setAnnoPubblicazione(rs.getInt(5));
-                temp.setPrezzo(rs.getInt(6));
-                temp.setAutore(rs.getString(8));
-                temp.setTitolo(rs.getString(9));
-                temp.setCopertina(rs.getString(10));
-                temp.setQuantitaCarrello(rs.getInt(11));
-                o.addVinile(temp);
             }
-            if (o.getVinile().size() > 0) {
-                return o;
-            }
-            return null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     public Boolean ceckIfExistbyIsbnAndUserID(String ean, int idutente) {
@@ -129,5 +115,5 @@ public class OrdineDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
 }
