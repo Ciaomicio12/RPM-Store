@@ -46,9 +46,9 @@ public class VinileDAO {
         v.setAnnoPubblicazione(rs.getInt(2));
         v.setPrezzo(rs.getInt(3));
         v.setNumeroDisponibili(rs.getInt(4));
-        v.setAutore(rs.getString(6));
-        v.setTitolo(rs.getString(7));
-        v.setCopertina(rs.getString(8));
+        v.setAutore(rs.getString(5));
+        v.setTitolo(rs.getString(6));
+        v.setCopertina(rs.getString(7));
         return v;
     }
 
