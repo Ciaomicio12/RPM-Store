@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
-@WebServlet("/")
+//questo pezzo di codice funziona bene :)
+@WebServlet(name = "HomeServlet", urlPatterns = "", loadOnStartup = 1)
 public class HomeServlet extends HttpServlet {
 
     @Override
@@ -20,6 +22,7 @@ public class HomeServlet extends HttpServlet {
         VinileDAO vinileDAO = new VinileDAO();
         try {
             List<Vinile> vinili = vinileDAO.doRetrieveAll(0, 3);
+            Collections.shuffle(vinili);
             request.setAttribute("vinili", vinili);
             request.getRequestDispatcher("/Pagine/home.jsp").forward(request, response);
         } catch (SQLException e) {
