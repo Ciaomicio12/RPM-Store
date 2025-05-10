@@ -47,9 +47,10 @@
                 <label for="stock">Quantità</label>
                 <input type="number" min="1" value="1" name="stock" class="quantity-input"/>
               <button type="submit" value="aggiungi-prodotto" name="azione">Salva album nell'inventario</button>
+              </form>
             </div>
           </div>
-  </form>
+  </div>
 </section>
 
 

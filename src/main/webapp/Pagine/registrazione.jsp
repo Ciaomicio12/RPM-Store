@@ -22,6 +22,31 @@
       <h2 class="title">Creare account</h2>
       <div class="border border-dark px-4 py-3 mx-3 mx-sm-auto mt-1 col-sm-6">
 
+        <div class="mx-auto" style="width: 60px;">
+          <label for="nome">Nome:</label>
+        </div>
+        <div class="mx-auto" style="width: 200px;">
+          <input type="text" id="nome" name="nome" required>
+        </div>
+        <div class="mx-auto" style="width: 70px;">
+          <label for="cognome">Cognome:</label>
+        </div>
+        <div class="mx-auto" style="width: 200px;">
+          <input type="text" id="cognome" name="cognome" required>
+        </div>
+        <div class="mx-auto" style="width: 70px;">
+          <label for="username">Username:</label>
+        </div>
+        <div class="mx-auto" style="width: 200px;">
+          <input type="text" id="username" name="username" required>
+        </div>
+        <div class="mx-auto" style="width: 60px;">
+          <label for="sesso">Sesso:</label>
+        </div>
+        <div class="mx-auto" style="width: 200px;">
+          <label><input type="radio" name="sesso" value="M" required> M</label>
+          <label><input type="radio" name="sesso" value="F" required> F</label>
+        </div>
         <div class="mx-auto" style="width: 110px;"> 
           <label for="email">Indirizzo email:</label>
         </div>  
