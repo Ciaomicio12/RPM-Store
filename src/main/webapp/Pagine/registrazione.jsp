@@ -18,17 +18,17 @@
 <%@ include file = "header.jsp" %>
 <section class="container-fluid">
   <div class="row">
-    <form class="border border-dark px-4 py-3 mx-4 mx-sm-auto mt-5 col-sm-6" method="POST" action="servlet_registrazione">
+    <form class="border border-dark px-4 py-3 mx-4 mx-sm-auto mt-5 col-sm-6" method="POST" action="registrazione">
       <h2 class="title">Creare account</h2>
       <div class="border border-dark px-4 py-3 mx-3 mx-sm-auto mt-1 col-sm-6">
 
-        <div class="mx-auto" style="width: 110px;"> 
+        <div class="mx-auto" style="width: 110px;">
           <label for="email">Indirizzo email:</label>
-        </div>  
+        </div>
         <div class="mx-auto" style="width: 200px;">
           <input type="email" id="email" name="email" required>
-        </div> 
-        <div class="mx-auto" style="width: 50px;">       
+        </div>
+        <div class="mx-auto" style="width: 50px;">
           <label for="password">Password:</label>
         </div>   
         <div class="mx-auto" style="width: 200px;">

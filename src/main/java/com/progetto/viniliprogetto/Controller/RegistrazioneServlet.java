@@ -5,16 +5,24 @@ import com.progetto.viniliprogetto.Model.Utente;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+@WebServlet("/registrazione")
 public class RegistrazioneServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession login = request.getSession();
+        if (login.getAttribute("utente") != null) {
+            response.sendRedirect("profilo");
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Pagine/registrazione.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     @Override
@@ -23,8 +31,8 @@ public class RegistrazioneServlet extends HttpServlet {
         String username = request.getParameter("username");
         String error = "";
         username = request.getParameter("usernamesubmit");
-        String password = request.getParameter("passwordsubmit");
-        String passwordconfirm = request.getParameter("passwordsubmitconfirm");
+        String password = request.getParameter("password");
+        String passwordconfirm = request.getParameter("confirm-password");
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         String sesso = request.getParameter("sesso");
