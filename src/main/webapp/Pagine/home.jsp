@@ -44,31 +44,11 @@
                 </div>
             </div>
         </c:forEach>
-
-        <!--<div class="album">
-          <img src="C:\Users\User\Desktop\Esercizi C - C++\Tecnologie Software per il Web\Progetto\Album\Appetite for Destruction.jpg" alt="Copertina Album 2">
-          <p>Appetite for Destruction</p>
-          <p>Guns N' Roses</p>
-          <p>37.68€</p>
-        </div>
-      -->
-
-        <!--<div class="album">
-          <img src="C:\Users\User\Desktop\Esercizi C - C++\Tecnologie Software per il Web\Progetto\Album\The Final Countdown.jpg" alt="Copertina Album 3">
-          <p>The Final Countdown</p>
-          <p>Europe</p>
-          <p>35.14€</p>
-        </div>
-        -->
     </div>
 </section>
 
 
 <%@ include file = "footer.jsp" %>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
 </body>
 </html>
