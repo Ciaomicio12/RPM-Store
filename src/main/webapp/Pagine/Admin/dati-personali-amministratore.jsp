@@ -19,24 +19,24 @@
 	  		<h3>Informazioni personali</h3>
 			<form>
 			    <label for="name">Nome</label>
-			    <input type="text" id="name" name="name" required>
+				<input type="text" id="name" name="name" required>
 
-			    <label for="surname">Cognome</label>
-			    <input type="text" id="surname" name="surname" required>
+				<label for="surname">Cognome</label>
+				<input type="text" id="surname" name="surname" required>
 
-			    <label for="email">Email</label>
-			    <input type="email" id="email" name="email" required>   
+				<label for="email">Email</label>
+				<input type="email" id="email" name="email" required>
 			</form>
-			<h3>Cambio password</h3>
-			<form>
-			    <label for="password">Nuova password</label>
-			    <input type="password" id="new-password" name="new-password" required>
+		<h3>Cambio password</h3>
+		<form>
+			<label for="new-password">Nuova password</label>
+			<input type="password" id="new-password" name="new-password" required>
 
-			    <label for="password">Conferma nuova Password</label>
-			    <input type="password" id="confirm-password" name="confirm-password" required>   
-			</form>
-			<input type="submit" value="Aggiorna">
-			<%@ include file = "../footer.jsp" %>
+			<label for="confirm-password">Conferma nuova Password</label>
+			<input type="password" id="confirm-password" name="confirm-password" required>
+		</form>
+		<input type="submit" value="Aggiorna">
+		<%@ include file = "../footer.jsp" %>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 				integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 				crossorigin="anonymous"></script>

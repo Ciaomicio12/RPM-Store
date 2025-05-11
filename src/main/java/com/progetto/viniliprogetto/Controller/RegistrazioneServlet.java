@@ -30,7 +30,7 @@ public class RegistrazioneServlet extends HttpServlet {
         UtenteDAO utentedao = new UtenteDAO();
         String username = request.getParameter("username");
         String error = "";
-        username = request.getParameter("usernamesubmit");
+        username = request.getParameter("username");
         String password = request.getParameter("password");
         String passwordconfirm = request.getParameter("confirm-password");
         String nome = request.getParameter("nome");

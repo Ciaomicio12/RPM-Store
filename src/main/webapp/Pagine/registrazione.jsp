@@ -43,19 +43,19 @@
         <div class="mx-auto" style="width: 60px;">
           <label for="sesso">Sesso:</label>
         </div>
-        <div class="mx-auto" style="width: 200px;">
-          <label><input type="radio" name="sesso" value="M" required> M</label>
-          <label><input type="radio" name="sesso" value="F" required> F</label>
-        </div>
-        <div class="mx-auto" style="width: 110px;"> 
+        <select name="sesso" id="sesso" style="width: 60px;">
+          <option value="Maschio">Maschio</option>
+          <option value="Femmina">Femmina</option>
+        </select>
+        <div class="mx-auto" style="width: 110px;">
           <label for="email">Indirizzo email:</label>
-        </div>  
+        </div>
         <div class="mx-auto" style="width: 200px;">
           <input type="email" id="email" name="email" required>
-        </div> 
-        <div class="mx-auto" style="width: 50px;">       
+        </div>
+        <div class="mx-auto" style="width: 50px;">
           <label for="password">Password:</label>
-        </div>   
+        </div>
         <div class="mx-auto" style="width: 200px;">
           <input type="password" id="password" name="password" required> 
         </div> 

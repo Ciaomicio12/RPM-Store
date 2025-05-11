@@ -45,8 +45,8 @@
                 <input type="number" id="price" name="price" required/>
 
                 <label for="stock">Quantità</label>
-                <input type="number" min="1" value="1" name="stock" class="quantity-input"/>
-              <button type="submit" value="aggiungi-prodotto" name="azione">Salva album nell'inventario</button>
+                <input type="number" min="1" value="1" name="stock" class="quantity-input" id="stock"/>
+                <button type="submit" value="aggiungi-prodotto" name="azione">Salva album nell'inventario</button>
               </form>
             </div>
           </div>
