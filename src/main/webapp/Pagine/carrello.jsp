@@ -19,27 +19,28 @@
 <section class="container">
   <div class="random-albums my-3" class="row">
 
-        <div class="cart-item">
-          <div class="col-12">
-            <div class="album col-12 row my-5 my-sm-4 mx-auto">
-              <div class="col-9 col-sm-3 mx-auto" >
-                <a href="dettaglio-album.html">
-                  <img src="C:\Users\User\Desktop\Esercizi C - C++\Tecnologie Software per il Web\Progetto\Album\Significant Other.jpg" alt="Copertina Album 1" class="img-fluid" >
-                </a>
-              </div>
-              <div class="information col-12 col-sm-9">
-                <h4>Significant Other</h2>
-                <h4>33.13&euro;</h3>
-              </div>
-            </div>
-            <div class="item-quantity">
-              <select class="quantity-select">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-              </select>
-            </div>
-            <div class="item-actions">
+    <div class="cart-item">
+      <div class="col-12">
+        <div class="album col-12 row my-5 my-sm-4 mx-auto">
+          <div class="col-9 col-sm-3 mx-auto">
+            <a href="dettaglio-album.html">
+              <img src="C:\Users\User\Desktop\Esercizi C - C++\Tecnologie Software per il Web\Progetto\Album\Significant Other.jpg"
+                   alt="Copertina Album 1" class="img-fluid">
+            </a>
+          </div>
+          <div class="information col-12 col-sm-9">
+            <h4>Significant Other</h4>
+            <h4>33.13&euro;</h4>
+          </div>
+        </div>
+        <div class="item-quantity">
+          <select class="quantity-select">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+        <div class="item-actions">
               <button class="delete-button">Rimuovi dal carrello</button>
             </div>
           </div>
