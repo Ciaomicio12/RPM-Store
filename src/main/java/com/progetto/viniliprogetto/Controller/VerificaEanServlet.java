@@ -1,6 +1,6 @@
 package com.progetto.viniliprogetto.Controller;
 
-import com.progetto.viniliprogetto.DAO.UtenteDAO;
+import com.progetto.viniliprogetto.DAO.VinileDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,22 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/ceckusername")
-public class VerificaUsernameServlet extends HttpServlet {
+@WebServlet("/checkean")
+public class VerificaEanServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
-        if (id != null) {
-            UtenteDAO dao = new UtenteDAO();
+        String ean = request.getParameter("ean");
+        if (ean != null) {
+            VinileDAO viniledao = new VinileDAO();
             response.setContentType("application/text");
-            if (dao.doRetrieveByUsername(id) != null) {
-                    response.getWriter().append("true");
-                } else {
-                    response.getWriter().append("no");
-                }
+            if (viniledao.doRetrieveByEan(ean) == null) {
+                response.getWriter().append("ok");
+            } else {
+                response.getWriter().append("no");
+            }
         } else {
             throw new MyServletException("Errore");
         }

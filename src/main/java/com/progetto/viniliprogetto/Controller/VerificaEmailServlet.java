@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/ceckusername")
-public class VerificaUsernameServlet extends HttpServlet {
+@WebServlet("/checkemail")
+public class VerificaEmailServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
@@ -20,11 +20,11 @@ public class VerificaUsernameServlet extends HttpServlet {
         if (id != null) {
             UtenteDAO dao = new UtenteDAO();
             response.setContentType("application/text");
-            if (dao.doRetrieveByUsername(id) != null) {
-                    response.getWriter().append("true");
-                } else {
-                    response.getWriter().append("no");
-                }
+            if (dao.doRetrieveByEmail(id) == true) {
+                response.getWriter().append("true");
+            } else {
+                response.getWriter().append("no");
+            }
         } else {
             throw new MyServletException("Errore");
         }
