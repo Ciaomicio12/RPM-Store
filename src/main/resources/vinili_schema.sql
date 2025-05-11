@@ -75,9 +75,9 @@ VALUES ('utente1', 'password1', 'Tommaso', 'Spataro', 'M', 'utente1@email.com', 
 -- Inserimento dati nella tabella "vinile"
 
 INSERT INTO vinile (EAN, anno_pubblicazione, prezzo, numero_disponibili, autore, titolo, copertina)
-VALUES ('9781234567890', 1983, 20, 10, 'Metallica', 'Master of Puppets', 'copertina1.jpg'),
+VALUES ('9781234567890', 1986, 20, 10, 'Metallica', 'Master of Puppets', 'copertina1.jpg'),
        ('9780987654321', 1956, 25, 5, 'Elvis Presley', 'Elvis Presley', 'copertina2.jpg'),
-       ('9785432167890', 1956, 18, 8, 'Nirvana', 'Nevermind', 'copertina3.jpg');
+       ('9785432167890', 1991, 18, 8, 'Nirvana', 'Nevermind', 'copertina3.jpg');
 
 -- Inserimento dati nella tabella "genere"
 
