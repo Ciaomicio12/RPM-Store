@@ -53,17 +53,22 @@ public class GenereDAO {
         return genere;
     }
 
-    public List<Genere> doRetrieveAll() throws SQLException {
-        Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement("SELECT id, nome " +
-                "FROM categoria");
-        ArrayList<Genere> genere = new ArrayList<>();
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            genere.add(createGenere(rs));
+    public List<Genere> doRetrieveAll() {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT id, nome " +
+                    "FROM categoria");
+            ArrayList<Genere> genere = new ArrayList<>();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                genere.add(createGenere(rs));
+            }
+            conn.close();
+            return genere;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        conn.close();
-        return genere;
+        return null;
     }
 
 
