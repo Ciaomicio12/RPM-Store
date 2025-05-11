@@ -89,16 +89,29 @@ VALUES ('utente1', 'password1', 'Tommaso', 'Spataro', 'M', 'utente1@email.com', 
 -- Inserimento dati nella tabella "vinile"
 
 INSERT INTO vinile (EAN, anno_pubblicazione, prezzo, numero_disponibili, autore, titolo, copertina)
-VALUES ('9781234567890', 1986, 20, 10, 'Metallica', 'Master of Puppets', 'Master_of_Puppets.jpg'),
-       ('9780987654321', 1956, 25, 5, 'Elvis Presley', 'Elvis Presley', 'copertina2.jpg'),
-       ('9785432167890', 1991, 18, 8, 'Nirvana', 'Nevermind', 'copertina3.jpg');
+VALUES ('602557382594', 1986, 34.99, 10, 'Metallica', 'Master of Puppets', 'Master_of_Puppets.jpg'),
+        ('194397971514', 1956, 21.99, 5, 'Elvis Presley', 'Elvis Presley', 'Elvis_Presley.jpg'),
+       ('720642442517', 1991, 29.90, 8, 'Nirvana', 'Nevermind', 'Nevermind.jpg'),
+        ('93624941422', 2000, 24.51, 15, 'Linkin Park', 'Hybrid Theory', 'Hybrid_Theory.jpg'),
+        ('93624915959', 2003, 28, 5, 'Linkin Park', 'Meteora', 'Meteora.jpg'),
+       ('93624913245', 2017, 29.99, 20, 'Linkin Park', 'One More Light', 'One_More_Light.jpg'),
+       ('93624935711', 2014, 40.84, 5, 'Linkin Park', 'The Hunting Party', 'The_Hunting_Party.jpg'),
+       ('93624921127', 2012, 28.69, 5, 'Linkin Park', 'Living Things', 'Living_Things.jpg'),
+       ('93624963189', 2010, 37.09, 3, 'Linkin Park', 'A Thousand Suns', 'A_Thousand_Suns.jpg'),
+        ('93624998105', 2007, 28, 5, 'Linkin Park', 'Minutes to Midnight', 'Minutes_to_Midnight.jpg'),
+        ('194398019116', 1986, 27.95, 10, 'Europe', 'The Final Countdown', 'The_Final_Countdown.jpg'),
+        ('602557646146', 1999, 40, 2, 'Limp Bizkit', 'Significant Other', 'Significant_Other.jpg'),
+        ('602567098348', 1967, 38.99, 11, 'The Beatles', 'Sgt. Peppers Lonely Hearts Club Band', 'Sgt._Peppers_Lonely_Hearts_Club_Band.jpg'),
+       ('75678669637', 2015, 51.21, 5, 'Twenty One Pilots', 'Blurryface', 'Blurryface.jpg'),
+       ('720642414811', 1987, 33.99, 10, 'Guns N Roses', 'Appetite for Destruction', 'Appetite_for_Destruction.jpg'),
+       ('602552962104', 1975, 36.81, 5, 'Queen', 'A Night at the Opera', 'A_Night_at_the_Opera.jpg');
 
 -- Inserimento dati nella tabella "genere"
 
-INSERT INTO genere (nome)
-VALUES ('Thrash Metal'),
-       ('Rock and Roll'),
-       ('Grunge');
+INSERT INTO genere (id, nome)
+VALUES (1, 'Thrash Metal'),
+       (2, 'Rock and Roll'),
+       (3, 'Grunge');
 
 -- Inserimento dati nella tabella "ordine"
 
@@ -111,17 +124,17 @@ VALUES (1, '2023-07-08 10:30:00', 50, 'P'),
 -- Inserimento dati nella tabella "vinile_in_ordine"
 
 INSERT INTO vinile_in_ordine (ordine_id, quantita, vinile_ean, prezzoacq)
-VALUES (1, 2, '9781234567890', 40),
-       (1, 1, '9785432167890', 18),
-       (2, 3, '9780987654321', 75),
-       (3, 1, '9785432167890', 18);
+VALUES (1, 2, '602557382594', 69.98),
+       (1, 1, '194397971514', 18),
+       (2, 3, '720642442517', 59.80),
+       (3, 1, '93624915959', 18);
 
 -- Inserimento dati nella tabella "vinile_genere"
 
 INSERT INTO vinile_genere (EAN, id)
-VALUES ('9781234567890', 1),
-       ('9780987654321', 2),
-       ('9785432167890', 3);
+VALUES ('602557382594', 1),
+       ('194397971514', 2),
+       ('720642442517', 3);
 
 
 
