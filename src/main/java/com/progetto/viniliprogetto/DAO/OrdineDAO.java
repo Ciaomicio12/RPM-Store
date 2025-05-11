@@ -1,7 +1,6 @@
 package com.progetto.viniliprogetto.DAO;
 
-import com.progetto.viniliprogetto.Model.Ordine;
-import com.progetto.viniliprogetto.Model.Utente;
+import com.progetto.viniliprogetto.Model.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -116,9 +115,8 @@ public class OrdineDAO {
 
     public Boolean ceckIfExistbyIsbnAndUserID(String ean, int idutente) {
         try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con
-                    .prepareStatement("SELECT * FROM ordini " +
-                            "WHERE ean=? and id_utente = ?");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM ordini " +
+                    "WHERE ean=? and id_utente = ?");
             ps.setString(1, ean);
             ps.setInt(2, idutente);
             ResultSet s = ps.executeQuery();
@@ -130,5 +128,48 @@ public class OrdineDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Ordine doRetriveById(int idutente) {
+        try {
+            Connection con = ConPool.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT o.id AS idordine, o.id_utente AS idutenteordine, o.oradiordine AS oradiordine,\n" +
+                    "        o.totale AS totaleordine, o.stato AS ordinestato,\n" +
+                    "        vio.quantita AS vinileordinequantita, vio.vinile_ean AS vinileordineean,\n" +
+                    "        vio.prezzoacq AS vinileordineprezzoacq, v.anno_pubblicazione AS vinileanno,\n" +
+                    "        v.prezzo AS vinileprezzo, v.numero_disponibili AS vinilenumero,\n" +
+                    "        v.autore AS vinileautore, v.titolo AS viniletitolo,\n" +
+                    "        v.copertina AS vinilecopertina,\n" +
+                    "        u.nome AS nomeutente, u.cognome AS cognomeutente,\n" +
+                    "        u.username AS username, i.id AS idindirizzo,\n" +
+                    "        i.cap AS capindirizzo, i.citta AS cittaindirizzo,\n" +
+                    "        i.numero_civico AS numerocivicoindirizzo, i.strada AS stradaindirizzo,\n" +
+                    "        i.telefono AS indirizzotelefono\n" +
+                    "        from ordine o\n" +
+                    "        inner join vinile_in_ordine vio on o.id = vio.ordine_id\n" +
+                    "        inner join vinile v on vio.vinile_ean = v.EAN\n" +
+                    "        inner join utente u on o.id_utente = u.id\n" +
+                    "        inner join indirizzo i on o.indirizzo = i.id\n" +
+                    "        where o.id=?");
+            ps.setInt(1, idutente);
+            Ordine ordine = null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (ordine == null) { //creare ordine indirizzo e utente dal result set
+                    ordine = new Ordine();
+                    Utente utente = new Utente();
+                    Indirizzo indirizzo = new Indirizzo();
+                    ordine.setUtente(utente);
+                    ordine.setIndirizzo(indirizzo);
+                }
+                VinileInOrdine vio = new VinileInOrdine();
+                Vinile vinile = new Vinile();
+                vio.setVinile(vinile);
+                vio.setOrdine(ordine);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }
