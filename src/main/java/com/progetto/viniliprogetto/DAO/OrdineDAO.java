@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class OrdineDAO {
-    /*
+/*
     public void doSave(Ordine ordini, Utente utente) throws MyServletException {
         try (Connection con = ConPool.getConnection()) {
             String sql = "Insert into ordini (oradiordine,id_utente,ean,anno_pubblicazione,prezzo,autore,titolo,copertina,quantita,totale) values";
@@ -28,14 +28,15 @@ public class OrdineDAO {
             throw new RuntimeException(e);
         }
 
-    }*/
-
+    }
+*/
 
     private Ordine creaOrdine(ResultSet rs) throws SQLException {
         Ordine o = new Ordine();
-        o.setid(rs.getString(1));
+        o.setId(rs.getInt(1));
         o.setOraordine(rs.getString(2));
         o.setTotale(rs.getInt(4));
+        o.setStato(rs.getString(5));
         Utente utente = new Utente();
         utente.setId(rs.getInt("idutente"));
         utente.setUsername(rs.getString("Username"));
@@ -59,22 +60,36 @@ public class OrdineDAO {
         return ordini;
     }
 
-    //da controllare
-    public ArrayList<Ordine> doRetrieveByUserId(int idutente) throws SQLException {
-        ArrayList<Ordine> ordini = new ArrayList<>();
-        Connection con = ConPool.getConnection();
-        PreparedStatement ps = con.prepareStatement("SELECT oradiordine,totale " +
-                "FROM ordine " +
-                "WHERE id_utente=?  " +
-                "order by oradiordine");
-        ps.setInt(1, idutente);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            ordini.add(creaOrdine(rs));
+    /*
+        //da controllare
+        public ArrayList<Ordine> doRetrieveByUserId(int idutente) {
+            try {
+                ArrayList<Ordine> ordini = new ArrayList<>();
+                Connection con = ConPool.getConnection();
+                PreparedStatement ps = con.prepareStatement("SELECT id,oradiordine,totale,stato " +
+                        "FROM ordine " +
+                        "WHERE id_utente=?  " +
+                        "order by oradiordine desc");
+                ps.setInt(1, idutente);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    ordini.add(creaOrdine(rs));
+                }
+                return ordini;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            ;
+            return null;
         }
-        return ordini;
-    }
 
+        public Ordine doRetriveById(int idordine){
+            try{
+                Ordine ordine = new Ordine;
+
+            }
+        }
+    */
     //da controllare
     public Ordine doRetrievebyUserIdAndOra(String ora, int idutente) {
         try {

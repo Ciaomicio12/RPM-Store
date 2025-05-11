@@ -2,31 +2,43 @@ DROP DATABASE IF EXISTS progetto;
 CREATE DATABASE progetto;
 USE progetto;
 
+create TABLE indirizzo
+(
+    id            integer auto_increment primary key,
+    strada        varchar(128) NOT NULL,
+    citta         varchar(128) NOT NULL,
+    cap           char(5)      NOT NULL,
+    numero_civico varchar(12)  NOT NULL,
+    telefono      varChar(15)  NOT NULL
+);
+
 CREATE TABLE utente
 (
-    id       int(11)      NOT NULL AUTO_INCREMENT,
-    username varchar(45)  NOT NULL,
-    password char(40)     NOT NULL,
-    nome     varchar(100) NOT NULL,
-    cognome  varchar(100) NOT NULL,
-    sesso    varchar(7)   NOT NULL,
-    email    varchar(100) NOT NULL,
-    admin    tinyint(1)   NOT NULL,
-    disabled tinyint(1) default 0,
+    indirizzo integer,
+    id        int(11)      NOT NULL AUTO_INCREMENT,
+    username  varchar(45)  NOT NULL,
+    password  char(40)     NOT NULL,
+    nome      varchar(100) NOT NULL,
+    cognome   varchar(100) NOT NULL,
+    sesso     varchar(7)   NOT NULL,
+    email     varchar(100) NOT NULL,
+    admin     tinyint(1)   NOT NULL,
+    disabled  tinyint(1) default 0,
     PRIMARY KEY (id),
     UNIQUE KEY (username),
-    UNIQUE KEY (email)
+    UNIQUE KEY (email),
+    foreign key (indirizzo) references indirizzo (id) on update cascade on delete set null
 );
 
 CREATE TABLE vinile
 (
     EAN                varchar(14),
-    anno_pubblicazione int         not null,
-    prezzo             int         not null,
+    anno_pubblicazione int           not null,
+    prezzo             DECIMAL(5, 2) not null,
     numero_disponibili int,
     autore             varchar(50),
-    titolo             text        not null,
-    copertina          varchar(50) not null unique,
+    titolo             text          not null,
+    copertina          varchar(50)   not null unique,
     primary key (EAN)
 );
 
@@ -38,12 +50,14 @@ CREATE TABLE genere
 
 create table ordine
 (
+    indirizzo   int          not null,
     id          int primary key auto_increment,
     id_utente   int(11),
     oradiordine varchar(100) not null,
     totale      int,
     stato       varchar(1),
-    FOREIGN KEY (id_utente) REFERENCES utente (id) on update cascade on delete cascade
+    FOREIGN KEY (id_utente) REFERENCES utente (id) on update cascade on delete cascade,
+    FOREIGN KEY (indirizzo) REFERENCES indirizzo (id) on delete restrict on update cascade
 );
 
 create table vinile_in_ordine
@@ -51,7 +65,7 @@ create table vinile_in_ordine
     ordine_id  int,
     quantita   int,
     vinile_ean char(14),
-    prezzoacq  float,
+    prezzoacq  DECIMAL(5, 2),
     FOREIGN KEY (ordine_id) REFERENCES ordine (id) on update cascade on delete cascade,
     FOREIGN KEY (vinile_ean) REFERENCES vinile (EAN) on update cascade on delete cascade
 );
@@ -75,7 +89,7 @@ VALUES ('utente1', 'password1', 'Tommaso', 'Spataro', 'M', 'utente1@email.com', 
 -- Inserimento dati nella tabella "vinile"
 
 INSERT INTO vinile (EAN, anno_pubblicazione, prezzo, numero_disponibili, autore, titolo, copertina)
-VALUES ('9781234567890', 1986, 20, 10, 'Metallica', 'Master of Puppets', 'copertina1.jpg'),
+VALUES ('9781234567890', 1986, 20, 10, 'Metallica', 'Master of Puppets', 'Master_of_Puppets.jpg'),
        ('9780987654321', 1956, 25, 5, 'Elvis Presley', 'Elvis Presley', 'copertina2.jpg'),
        ('9785432167890', 1991, 18, 8, 'Nirvana', 'Nevermind', 'copertina3.jpg');
 

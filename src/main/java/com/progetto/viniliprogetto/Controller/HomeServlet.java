@@ -14,11 +14,11 @@ import java.util.Collections;
 import java.util.List;
 
 //questo pezzo di codice funziona bene :)
-@WebServlet(name = "HomeServlet", urlPatterns = "", loadOnStartup = 1)
+@WebServlet(name = "HomeServlet", urlPatterns = "/home", loadOnStartup = 1)
 public class HomeServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         VinileDAO vinileDAO = new VinileDAO();
         try {
             List<Vinile> vinili = vinileDAO.doRetrieveAll(0, 3);

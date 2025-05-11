@@ -15,6 +15,15 @@ public class Utente {
     private String sesso;
     private boolean admin;
     private boolean disabled = false;
+    private Indirizzo indirizzo;
+
+    public Indirizzo getIndirizzo() {
+        return indirizzo;
+    }
+
+    public void setIndirizzo(Indirizzo indirizzo) {
+        this.indirizzo = indirizzo;
+    }
 
     public boolean isDisabled() {
         return disabled;
