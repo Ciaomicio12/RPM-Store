@@ -8,7 +8,6 @@
     List<Vinile> vinili = (List<Vinile>) request.getAttribute("vinili");
 %>
 
-<%= vinili %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
@@ -34,7 +33,8 @@
             <div class="album col-12 row my-5 my-sm-4 mx-auto">
                 <div class="col-9 col-sm-3 mx-auto">
                     <a href="dettaglio-album.html">
-                        <img src="img/${vinile.copertina}" alt="Copertina Album 1" class="img-fluid">
+                        <img src="<%=request.getContextPath()%>/img/Cover/${vinile.copertina}" alt="Copertina Album 1"
+                             class="img-fluid">
                     </a>
                 </div>
                 <div class="information col-12 col-sm-9">

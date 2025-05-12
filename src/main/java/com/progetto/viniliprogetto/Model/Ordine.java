@@ -8,9 +8,35 @@ import java.util.Locale;
 
 public class Ordine {
     private String oraordine;
-    private String id;
+    private int id;
     private int totale;
     private Utente utente;
+    private String stato;
+    private Indirizzo indirizzo;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Indirizzo getIndirizzo() {
+        return indirizzo;
+    }
+
+    public void setIndirizzo(Indirizzo indirizzo) {
+        this.indirizzo = indirizzo;
+    }
+
+    public String getStato() {
+        return stato;
+    }
+
+    public void setStato(String stato) {
+        this.stato = stato;
+    }
 
     private ArrayList<VinileInOrdine> vinili = new ArrayList<>();
 
@@ -72,14 +98,6 @@ public class Ordine {
             return x + ",00";
         }
         return x + "," + y;
-    }
-
-    public String getid() {
-        return id;
-    }
-
-    public void setid(String id) {
-        this.id = id;
     }
 
     public void aggiungiVinile(Vinile vinile, int quantita) {
