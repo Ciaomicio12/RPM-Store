@@ -13,7 +13,10 @@
                     <li><a href="login">Login/Registrazione</a></li>
                 </c:if>
                 <c:if test="${utente != null}">
-                    <li><a href="logout">LogOut</a></li>
+                    <c:if test="${utente.admin}">
+                        <li><a href="inventario">Inventario</a></li>
+                    </c:if>
+                    <li><a href="logout">Logout</a></li>
                 </c:if>
             </ul>
         </div>
