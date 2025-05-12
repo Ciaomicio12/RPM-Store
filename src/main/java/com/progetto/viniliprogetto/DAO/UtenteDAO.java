@@ -11,7 +11,7 @@ public class UtenteDAO extends Utente {
     public List<Utente> doRetrieveAll() {
         try {
             Connection conn = ConPool.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT id, username, passwordhash, nome, cognome, sesso, email, admin, disabled " +
+            PreparedStatement ps = conn.prepareStatement("SELECT id, username, password, nome, cognome, sesso, email, admin, disabled " +
                     "FROM utente");
             ArrayList<Utente> utenti = new ArrayList<>();
             ResultSet rs = ps.executeQuery();
@@ -29,9 +29,9 @@ public class UtenteDAO extends Utente {
     public boolean checkPassword(String email, String password) {
         try {
             Connection conn = ConPool.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT passwordhash " +
+            PreparedStatement ps = conn.prepareStatement("SELECT password " +
                     "from utente " +
-                    "WHERE email=? AND passwordhash=SHA1(?)");
+                    "WHERE email=? AND password=SHA1(?)");
             ps.setString(1, email);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
@@ -45,14 +45,14 @@ public class UtenteDAO extends Utente {
         return false;
     }
 
-    public Utente doRetrieveByUsernamePassword(String username, String password) {
+    public Utente doRetrieveByEmailPassword(String email, String password) {
         try {
             Connection conn = ConPool.getConnection();
             PreparedStatement ps = conn.prepareStatement(
-                    "SELECT id, username, passwordhash, nome, cognome, sesso, email, admin,disabled " +
+                    "SELECT id, username, password, nome, cognome, sesso, email, admin,disabled " +
                             "FROM utente " +
-                            "WHERE username=? AND passwordhash=SHA1(?)");
-            ps.setString(1, username);
+                            "WHERE email=? AND password=SHA1(?)");
+            ps.setString(1, email);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -71,7 +71,7 @@ public class UtenteDAO extends Utente {
         try {
             Connection conn = ConPool.getConnection();
             PreparedStatement ps = conn.prepareStatement(
-                    "SELECT id, username, passwordhash, nome, cognome, sesso, email, admin , disabled " +
+                    "SELECT id, username, password, nome, cognome, sesso, email, admin , disabled " +
                             "FROM utente " +
                             "WHERE username=?");
             ps.setString(1, username);
@@ -91,7 +91,7 @@ public class UtenteDAO extends Utente {
         try {
             Connection conn = ConPool.getConnection();
             PreparedStatement ps = conn.prepareStatement(
-                    "SELECT id, username, passwordhash, nome, cognome, sesso, email, admin, disabled " +
+                    "SELECT id, username, password, nome, cognome, sesso, email, admin, disabled " +
                             "FROM utente " +
                             "WHERE id=?");
             ps.setInt(1, id);
@@ -111,7 +111,7 @@ public class UtenteDAO extends Utente {
         try {
             Connection conn = ConPool.getConnection();
             PreparedStatement ps = conn.prepareStatement(
-                    "SELECT id, username, passwordhash, nome, cognome, sesso, email, admin " +
+                    "SELECT id, username, password, nome, cognome, sesso, email, admin " +
                             "FROM utente " +
                             "WHERE email=?");
             ps.setString(1, email);
@@ -153,7 +153,7 @@ public class UtenteDAO extends Utente {
         try {
             Connection conn = ConPool.getConnection();
             PreparedStatement ps = conn.prepareStatement(
-                    "UPDATE utente set passwordhash=SHA1(?) " +
+                    "UPDATE utente set password=SHA1(?) " +
                             "where username=?;",
                     Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, password);
@@ -207,7 +207,7 @@ public class UtenteDAO extends Utente {
         try {
             Connection conn = ConPool.getConnection();
             PreparedStatement ps = conn.prepareStatement(
-                    "INSERT INTO utente (username, passwordhash, nome, cognome, sesso, email, admin) " +
+                    "INSERT INTO utente (username, password, nome, cognome, sesso, email, admin) " +
                             "VALUES(?,?,?,?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, utente.getUsername());

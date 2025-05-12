@@ -2,12 +2,6 @@
          pageEncoding="UTF-8" %>
 <%@taglib prefix="c"
           uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.progetto.viniliprogetto.Model.Vinile" %>
-<%
-    List<Vinile> vinili = (List<Vinile>) request.getAttribute("vinili");
-%>
-
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
@@ -26,19 +20,19 @@
     </style>
 </head>
 <body>
-<%@ include file = "header.jsp" %>
+<jsp:include page="header.jsp"></jsp:include>
 <section class="container">
     <div class="random-albums my-3" class="row">
         <c:forEach items="${vinili}" var="vinile">
             <div class="album col-12 row my-5 my-sm-4 mx-auto">
                 <div class="col-9 col-sm-3 mx-auto">
                     <a href="dettaglio-album.html">
-                        <img src="<%=request.getContextPath()%>/img/Cover/${vinile.copertina}" alt="Copertina Album 1"
+                        <img src="img/Cover/${vinile.copertina}" alt="Copertina Album 1"
                              class="img-fluid">
                     </a>
                 </div>
                 <div class="information col-12 col-sm-9">
-                    <h2 class="display-3"><a href="dettaglio-album.html">${vinile.titolo}</a></h2>
+                    <h2 class="display-3"><a href="vinile?ean=${vinile.ean}">${vinile.titolo}</a></h2>
                     <h3 class="display-5 text-muted"><em>${vinile.autore}</em></h3>
                     <h3 class="display-6"><strong>${vinile.prezzo}&euro;</strong></h3>
                 </div>

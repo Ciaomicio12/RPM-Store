@@ -12,9 +12,7 @@ import java.util.List;
 public class GenereDAO {
 
     private Genere createGenere(ResultSet rs) throws SQLException {
-        Genere g = new Genere();
-        g.setId(rs.getInt(1));
-        g.setNome(rs.getString(2));
+        Genere g = new Genere(rs.getInt(1), rs.getString(2));
         return g;
     }
 
@@ -44,7 +42,6 @@ public class GenereDAO {
             ps.setString(1, nome);
             ArrayList<Genere> genere = new ArrayList<>();
             ResultSet rs = ps.executeQuery();
-            Genere g = new Genere();
             while (rs.next()) {
                 genere.add(createGenere(rs));
             }

@@ -20,9 +20,7 @@ public class VinileDAO {
         ArrayList<Genere> genere = new ArrayList<>();
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
-            Genere g = new Genere();
-            g.setId(rs.getInt(1));
-            g.setNome(rs.getString(2));
+            Genere g = new Genere(rs.getInt(1), rs.getString(2));
             genere.add(g);
         }
         conn.close();
@@ -40,7 +38,7 @@ public class VinileDAO {
         }
     }
 
-    private Vinile creatVinile(ResultSet rs) throws SQLException {
+    private Vinile createVinile(ResultSet rs) throws SQLException {
         Vinile v = new Vinile();
         v.setEan(rs.getString(1));
         v.setAnnoPubblicazione(rs.getInt(2));
@@ -63,7 +61,7 @@ public class VinileDAO {
         ResultSet rs = st.executeQuery();
         List<Vinile> vinili = new ArrayList<>();
         while (rs.next()) {
-            vinili.add(creatVinile(rs));
+            vinili.add(createVinile(rs));
         }
         rs.close();
         st.close();
@@ -73,19 +71,27 @@ public class VinileDAO {
 
     public Vinile doRetrieveByEan(String ean) {
         try {
-            if (ean.length() != 13) return null;
+            if (ean.length() != 12) return null;
             Connection conn = ConPool.getConnection();
-            String query = "SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina" +
-                    " FROM vinile " +
-                    "WHERE ean=?";
+            String query = "SELECT v.ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina,nome,g.id\n" +
+                    "FROM vinile v\n" +
+                    "inner join vinile_genere vg on v.EAN = vg.EAN\n" +
+                    "inner join genere g on vg.id = g.id\n" +
+                    "WHERE v.ean=?";
             PreparedStatement st = conn.prepareStatement(query);
             st.setString(1, ean);
             ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                conn.close();
-                return creatVinile(rs);
+            Vinile v = null;
+            List<Genere> generi = new ArrayList<>();
+            while (rs.next()) {
+                if (v == null) {
+                    v = createVinile(rs);
+                }
+                generi.add(new Genere(rs.getInt(9), rs.getString(8)));
             }
+            v.setGenere(generi);
             conn.close();
+            return v;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -106,7 +112,7 @@ public class VinileDAO {
         ps.setInt(3, limit);
         List<Vinile> vinile = new ArrayList<>();
         while (rs.next()) {
-            vinile.add(creatVinile(rs));
+            vinile.add(createVinile(rs));
         }
         conn.close();
         return vinile;
@@ -125,7 +131,7 @@ public class VinileDAO {
         ResultSet rs = ps.executeQuery();
         ArrayList<Vinile> vinile = new ArrayList<>();
         while (rs.next()) {
-            vinile.add(creatVinile(rs));
+            vinile.add(createVinile(rs));
         }
         conn.close();
         return vinile;
@@ -185,14 +191,12 @@ public class VinileDAO {
             ps.setString(7, vinile.getEan());
 
 
-            PreparedStatement psCa2 = conn
-                    .prepareStatement("DELETE FROM vinile_genere WHERE ean=?");
+            PreparedStatement psCa2 = conn.prepareStatement("DELETE FROM vinile_genere WHERE ean=?");
             psCa2.setString(1, vinile.getEan());
             psCa2.executeUpdate();
 
-            PreparedStatement psCa = conn
-                    .prepareStatement("INSERT INTO vinile_genere (ean, id) VALUES (?, ?)");
-            for (Genere c : vinile.getCategorie()) {
+            PreparedStatement psCa = conn.prepareStatement("INSERT INTO vinile_genere (ean, id) VALUES (?, ?)");
+            for (Genere c : vinile.getGenere()) {
                 psCa.setString(1, vinile.getEan());
                 psCa.setInt(2, c.getId());
                 psCa.addBatch();
@@ -237,7 +241,7 @@ public class VinileDAO {
             ArrayList<Vinile> vinile = new ArrayList<>();
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                vinile.add(creatVinile(rs));
+                vinile.add(createVinile(rs));
             }
             conn.close();
             return vinile;
