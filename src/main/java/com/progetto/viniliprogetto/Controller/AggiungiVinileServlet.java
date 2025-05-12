@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
-@WebServlet("/editlibro")
+@WebServlet("/editvinile")
 
 public class AggiungiVinileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

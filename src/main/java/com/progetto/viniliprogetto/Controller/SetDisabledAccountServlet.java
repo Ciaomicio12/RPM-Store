@@ -1,6 +1,5 @@
 package com.progetto.viniliprogetto.Controller;
 
-
 import com.progetto.viniliprogetto.DAO.UtenteDAO;
 import com.progetto.viniliprogetto.Model.Utente;
 
@@ -12,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/setutente")
-public class SetUtenteServlet extends HttpServlet {
+@WebServlet("/setdisabled")
+public class SetDisabledAccountServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
@@ -22,7 +21,7 @@ public class SetUtenteServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Utente utente = (Utente) session.getAttribute("utente");
         if (utente != null && utente.isAdmin() == true) {
-            UtenteDAO utentedao = new UtenteDAO();
+            UtenteDAO dao = new UtenteDAO();
             String idutente = request.getParameter("id");
             String flag = request.getParameter("id1");
             int id = 0;
@@ -31,12 +30,12 @@ public class SetUtenteServlet extends HttpServlet {
             } catch (NumberFormatException er) {
                 throw new MyServletException("Utente non trovato!");
             }
-            Utente user = utentedao.doRetrieveById(id);
-            if (utente == null) throw new MyServletException("Utente non trovato!");
+            Utente user = dao.doRetrieveById(id);
+            if (user == null) throw new MyServletException("Utente non trovato!");
             if (flag.equals("0")) {
-                utentedao.doSetAdmin(user, false);
+                dao.doDisableProfile(user, false);
             } else if (flag.equals("1")) {
-                utentedao.doSetAdmin(user, true);
+                dao.doDisableProfile(user, true);
             } else {
                 throw new MyServletException("Errore parametri");
             }
@@ -46,5 +45,3 @@ public class SetUtenteServlet extends HttpServlet {
         }
     }
 }
-
-

@@ -1,6 +1,7 @@
 package com.progetto.viniliprogetto.Controller;
 
-import com.progetto.viniliprogetto.DAO.UtenteDAO;
+import com.progetto.viniliprogetto.DAO.OrdineDAO;
+import com.progetto.viniliprogetto.Model.Ordine;
 import com.progetto.viniliprogetto.Model.Utente;
 
 import javax.servlet.ServletException;
@@ -10,25 +11,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
-@WebServlet("/ceckpassword")
-public class CeckPasswordServlet extends HttpServlet {
+@WebServlet("/ordini")
+public class ListaOrdiniServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Utente user = (Utente) session.getAttribute("email");
-        String password = request.getParameter("password");
-        if (user != null && password != null) {
-            UtenteDAO utenteDAO = new UtenteDAO();
-            response.setContentType("application/text");
-            if (utenteDAO.checkPassword(user.getEmail(), password)) {
-                response.getWriter().append("false");
-            } else {
-                response.getWriter().append("true");
-            }
+        Utente utente = (Utente) session.getAttribute("utente");
+        if (utente != null && utente.isAdmin() == false) {
+            OrdineDAO o = new OrdineDAO();
+            ArrayList<Ordine> ordini = o.doRetrieveByUserId(utente.getId());
+            request.setAttribute("ordini", ordini);
+            request.getRequestDispatcher("WEB-INF/jsp/ordini.jsp").forward(request, response);
+        } else {
+            throw new MyServletException("Sezione dedicata agli utenti registrati");
         }
     }
 }

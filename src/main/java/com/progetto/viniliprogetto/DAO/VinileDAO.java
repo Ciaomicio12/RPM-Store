@@ -146,86 +146,104 @@ public class VinileDAO {
         return rs.getInt(1);
     }
 
-    public void doSave(Vinile vinile) throws SQLException {
-        Connection conn = ConPool.getConnection();
-        String sql = "INSERT INTO vinile(ean,anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina) " +
-                "VALUES (?,?,?,?,?,?,?,?,?,?)";
-        PreparedStatement st = conn.prepareStatement(sql);
-        st.setString(1, vinile.getEan());
-        st.setInt(2, vinile.getAnnoPubblicazione());
-        st.setInt(3, vinile.getPrezzo());
-        st.setInt(4, vinile.getNumeroDisponibili());
-        st.setString(5, vinile.getAutore());
-        st.setString(6, vinile.getTitolo());
-        st.setString(7, vinile.getCopertina());
-        st.executeUpdate();
-        st.close();
-        conn.close();
+    public void doSave(Vinile vinile) {
+        try {
+            Connection conn = ConPool.getConnection();
+            String sql = "INSERT INTO vinile(ean,anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina) " +
+                    "VALUES (?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, vinile.getEan());
+            st.setInt(2, vinile.getAnnoPubblicazione());
+            st.setInt(3, vinile.getPrezzo());
+            st.setInt(4, vinile.getNumeroDisponibili());
+            st.setString(5, vinile.getAutore());
+            st.setString(6, vinile.getTitolo());
+            st.setString(7, vinile.getCopertina());
+            st.executeUpdate();
+            st.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
-    public void doUpdate(Vinile vinile) throws SQLException {
-        Connection conn = ConPool.getConnection();
-        String sql = "UPDATE  vinile " +
-                "SET  anno_pubblicazione=?,prezzo=?,numero_disponibili=?,autore=?,titolo=?,copertina=? " +
-                "WHERE ean=?";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, vinile.getAnnoPubblicazione());
-        ps.setInt(2, vinile.getPrezzo());
-        ps.setInt(3, vinile.getNumeroDisponibili());
-        ps.setString(4, vinile.getAutore());
-        ps.setString(5, vinile.getTitolo());
-        ps.setString(6, vinile.getCopertina());
-        ps.setString(7, vinile.getEan());
+    public void doUpdate(Vinile vinile) {
+        try {
+            Connection conn = ConPool.getConnection();
+            String sql = "UPDATE  vinile " +
+                    "SET  anno_pubblicazione=?,prezzo=?,numero_disponibili=?,autore=?,titolo=?,copertina=? " +
+                    "WHERE ean=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, vinile.getAnnoPubblicazione());
+            ps.setInt(2, vinile.getPrezzo());
+            ps.setInt(3, vinile.getNumeroDisponibili());
+            ps.setString(4, vinile.getAutore());
+            ps.setString(5, vinile.getTitolo());
+            ps.setString(6, vinile.getCopertina());
+            ps.setString(7, vinile.getEan());
 
 
-        PreparedStatement psCa2 = conn
-                .prepareStatement("DELETE FROM vinile_genere WHERE ean=?");
-        psCa2.setString(1, vinile.getEan());
-        psCa2.executeUpdate();
+            PreparedStatement psCa2 = conn
+                    .prepareStatement("DELETE FROM vinile_genere WHERE ean=?");
+            psCa2.setString(1, vinile.getEan());
+            psCa2.executeUpdate();
 
-        PreparedStatement psCa = conn
-                .prepareStatement("INSERT INTO vinile_genere (ean, id) VALUES (?, ?)");
-        for (Genere c : vinile.getCategorie()) {
-            psCa.setString(1, vinile.getEan());
-            psCa.setInt(2, c.getId());
-            psCa.addBatch();
+            PreparedStatement psCa = conn
+                    .prepareStatement("INSERT INTO vinile_genere (ean, id) VALUES (?, ?)");
+            for (Genere c : vinile.getCategorie()) {
+                psCa.setString(1, vinile.getEan());
+                psCa.setInt(2, c.getId());
+                psCa.addBatch();
+            }
+            psCa.executeBatch();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        psCa.executeBatch();
-        conn.close();
     }
 
-    public void doDelete(String ean) throws SQLException {
-        Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement("DELETE FROM vinile " +
-                "WHERE ean=?");
-        ps.setString(1, ean);
-        if (ps.executeUpdate() != 1) {
-            throw new RuntimeException("DELETE error.");
+    public void doDelete(String ean) {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM vinile " +
+                    "WHERE ean=?");
+            ps.setString(1, ean);
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("DELETE error.");
+            }
+            PreparedStatement psCa = conn.prepareStatement("DELETE FROM vinile_genere " +
+                    "WHERE ean=?");
+            psCa.setString(1, ean);
+            psCa.executeUpdate();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        PreparedStatement psCa = conn.prepareStatement("DELETE FROM vinile_genere " +
-                "WHERE ean=?");
-        psCa.setString(1, ean);
-        psCa.executeUpdate();
-        conn.close();
     }
 
 
-    public List<Vinile> doRetrieveByNome(String against, int offset, int limit) throws SQLException {
-        Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement(
-                "SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina " +
-                        "FROM vinile " +
-                        "WHERE MATCH(titolo) AGAINST(?) LIMIT ?,?");
-        ps.setString(1, against);
-        ps.setInt(2, offset);
-        ps.setInt(3, limit);
-        ArrayList<Vinile> vinile = new ArrayList<>();
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            vinile.add(creatVinile(rs));
+    public List<Vinile> doRetrieveByNome(String against, int offset, int limit) {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement ps = conn.prepareStatement(
+                    "SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina " +
+                            "FROM vinile " +
+                            "WHERE MATCH(titolo) AGAINST(?) LIMIT ?,?");
+            ps.setString(1, against);
+            ps.setInt(2, offset);
+            ps.setInt(3, limit);
+            ArrayList<Vinile> vinile = new ArrayList<>();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                vinile.add(creatVinile(rs));
+            }
+            conn.close();
+            return vinile;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        conn.close();
-        return vinile;
+        return null;
     }
 }
