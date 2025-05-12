@@ -8,96 +8,122 @@ import java.util.List;
 
 public class UtenteDAO extends Utente {
 
-    public List<Utente> doRetrieveAll() throws SQLException {
-        Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement("SELECT id, username, passwordhash, nome, cognome, sesso, email, admin, disabled " +
-                "FROM utente");
-        ArrayList<Utente> utenti = new ArrayList<>();
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            utenti.add(creatUtente(rs));
+    public List<Utente> doRetrieveAll() {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT id, username, passwordhash, nome, cognome, sesso, email, admin, disabled " +
+                    "FROM utente");
+            ArrayList<Utente> utenti = new ArrayList<>();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                utenti.add(creatUtente(rs));
+            }
+            conn.close();
+            return utenti;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        conn.close();
-        return utenti;
+        return null;
     }
 
-    public boolean checkPassword(String username, String password) throws SQLException {
-        Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement("SELECT passwordhash " +
-                "from utente " +
-                "WHERE username=? AND passwordhash=SHA1(?)");
-        ps.setString(1, username);
-        ps.setString(2, password);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            conn.close();
-            return true;
+    public boolean checkPassword(String email, String password) {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT passwordhash " +
+                    "from utente " +
+                    "WHERE email=? AND passwordhash=SHA1(?)");
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                conn.close();
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return false;
     }
 
-    public Utente doRetrieveByUsernamePassword(String username, String password) throws SQLException {
-        Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement(
-                "SELECT id, username, passwordhash, nome, cognome, sesso, email, admin,disabled " +
-                        "FROM utente " +
-                        "WHERE username=? AND passwordhash=SHA1(?)");
-        ps.setString(1, username);
-        ps.setString(2, password);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
+    public Utente doRetrieveByUsernamePassword(String username, String password) {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement ps = conn.prepareStatement(
+                    "SELECT id, username, passwordhash, nome, cognome, sesso, email, admin,disabled " +
+                            "FROM utente " +
+                            "WHERE username=? AND passwordhash=SHA1(?)");
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                conn.close();
+                return creatUtente(rs);
+            }
             conn.close();
-            return creatUtente(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        conn.close();
         return null;
     }
 
-    public Utente doRetrieveByUsername(String username) throws SQLException {
-        Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement(
-                "SELECT id, username, passwordhash, nome, cognome, sesso, email, admin , disabled " +
-                        "FROM utente " +
-                        "WHERE username=?");
-        ps.setString(1, username);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
+
+    public Utente doRetrieveByUsername(String username) {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement ps = conn.prepareStatement(
+                    "SELECT id, username, passwordhash, nome, cognome, sesso, email, admin , disabled " +
+                            "FROM utente " +
+                            "WHERE username=?");
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                conn.close();
+                return creatUtente(rs);
+            }
             conn.close();
-            return creatUtente(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        conn.close();
         return null;
     }
 
-    public Utente doRetrieveById(int id) throws SQLException {
-        Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement(
-                "SELECT id, username, passwordhash, nome, cognome, sesso, email, admin, disabled " +
-                        "FROM utente " +
-                        "WHERE id=?");
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
+    public Utente doRetrieveById(int id) {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement ps = conn.prepareStatement(
+                    "SELECT id, username, passwordhash, nome, cognome, sesso, email, admin, disabled " +
+                            "FROM utente " +
+                            "WHERE id=?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                conn.close();
+                return creatUtente(rs);
+            }
             conn.close();
-            return creatUtente(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        conn.close();
         return null;
     }
 
-    public boolean doRetrieveByEmail(String email) throws SQLException {
-        Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement(
-                "SELECT id, username, passwordhash, nome, cognome, sesso, email, admin " +
-                        "FROM utente " +
-                        "WHERE email=?");
-        ps.setString(1, email);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
+    public boolean doRetrieveByEmail(String email) {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement ps = conn.prepareStatement(
+                    "SELECT id, username, passwordhash, nome, cognome, sesso, email, admin " +
+                            "FROM utente " +
+                            "WHERE email=?");
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                conn.close();
+                return true;
+            }
             conn.close();
-            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        conn.close();
         return false;
     }
 
@@ -145,38 +171,46 @@ public class UtenteDAO extends Utente {
         conn.close();
     }
 
-    public void doSetAdmin(Utente utente, Boolean admin) throws SQLException {
-        Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement(
-                "UPDATE utente set admin=? " +
-                        "where id=?");
-        ps.setBoolean(1, admin);
-        ps.setInt(2, utente.getId());
-        if (ps.executeUpdate() != 1) {
-            throw new RuntimeException("INSERT error.");
+    public void doSetAdmin(Utente utente, Boolean admin) {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE utente set admin=? " +
+                            "where id=?");
+            ps.setBoolean(1, admin);
+            ps.setInt(2, utente.getId());
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        conn.close();
     }
 
 
-    public void doSave(Utente utente) throws SQLException {
-        Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement(
-                "INSERT INTO utente (username, passwordhash, nome, cognome, sesso, email, admin) " +
-                        "VALUES(?,?,?,?,?,?,?)",
-                Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, utente.getUsername());
-        ps.setString(2, utente.getPasswordhash());
-        ps.setString(3, utente.getNome());
-        ps.setString(4, utente.getCognome());
-        ps.setString(5, utente.getSesso());
-        ps.setString(6, utente.getEmail());
-        ps.setBoolean(7, utente.isAdmin());
-        if (ps.executeUpdate() != 1) {
-            throw new RuntimeException("INSERT error.");
+    public void doSave(Utente utente) {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement ps = conn.prepareStatement(
+                    "INSERT INTO utente (username, passwordhash, nome, cognome, sesso, email, admin) " +
+                            "VALUES(?,?,?,?,?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, utente.getUsername());
+            ps.setString(2, utente.getPasswordhash());
+            ps.setString(3, utente.getNome());
+            ps.setString(4, utente.getCognome());
+            ps.setString(5, utente.getSesso());
+            ps.setString(6, utente.getEmail());
+            ps.setBoolean(7, utente.isAdmin());
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+            utente.setId(this.lastInsertId(conn));
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        utente.setId(this.lastInsertId(conn));
-        conn.close();
     }
 
     private Utente creatUtente(ResultSet rs) throws SQLException {

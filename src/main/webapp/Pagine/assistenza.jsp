@@ -30,30 +30,24 @@
         </div>   
         <div class="mx-auto" style="width: 110px;"> 
           <label for="email">Indirizzo email:</label>
-        </div>  
+        </div>
         <div class="mx-auto" style="width: 200px;">
           <input type="email" id="email" name="email" required>
-        </div>   
-        <div class="mx-auto" style="width: 110px;"> 
+        </div>
+        <div class="mx-auto" style="width: 110px;">
           <label for="object-mail">Oggetto:</label>
-        </div>  
+        </div>
         <div class="mx-auto" style="width: 200px;">
           <input type="object-mail" id="object-mail" name="object-mail" required>
-        </div>   
-        <div class="mx-auto" style="width: 110px;"> 
-          <label for="object-mail">Oggetto:</label>
-        </div>  
-        <div class="mx-auto" style="width: 200px;">
-          <input type="object-mail" id="object-mail" name="object-mail" required>
-        </div>   
-        <div class="mx-auto" style="width: 110px;"> 
-          <label for="message-mail">Messaggio:</label>
-        </div>  
+        </div>
+        <div class="mx-auto" style="width: 110px;">
+          <label for="message">Messaggio:</label>
+        </div>
         <div class="mx-auto" style="width: 200px;">
           <textarea id="message" name="message" rows="10" required></textarea>
         </div>
       </div>
-      <div class="mx-auto" style="width: 100px;">     
+      <div class="mx-auto" style="width: 100px;">
         <input type="submit" value="Invia">
       </div>
     </form>

@@ -22,15 +22,40 @@
       <h2 class="title">Creare account</h2>
       <div class="border border-dark px-4 py-3 mx-3 mx-sm-auto mt-1 col-sm-6">
 
-        <div class="mx-auto" style="width: 110px;"> 
+        <div class="mx-auto" style="width: 60px;">
+          <label for="nome">Nome:</label>
+        </div>
+        <div class="mx-auto" style="width: 200px;">
+          <input type="text" id="nome" name="nome" required>
+        </div>
+        <div class="mx-auto" style="width: 70px;">
+          <label for="cognome">Cognome:</label>
+        </div>
+        <div class="mx-auto" style="width: 200px;">
+          <input type="text" id="cognome" name="cognome" required>
+        </div>
+        <div class="mx-auto" style="width: 70px;">
+          <label for="username">Username:</label>
+        </div>
+        <div class="mx-auto" style="width: 200px;">
+          <input type="text" id="username" name="username" required>
+        </div>
+        <div class="mx-auto" style="width: 60px;">
+          <label for="sesso">Sesso:</label>
+        </div>
+        <select name="sesso" id="sesso" style="width: 60px;">
+          <option value="Maschio">Maschio</option>
+          <option value="Femmina">Femmina</option>
+        </select>
+        <div class="mx-auto" style="width: 110px;">
           <label for="email">Indirizzo email:</label>
-        </div>  
+        </div>
         <div class="mx-auto" style="width: 200px;">
           <input type="email" id="email" name="email" required>
-        </div> 
-        <div class="mx-auto" style="width: 50px;">       
+        </div>
+        <div class="mx-auto" style="width: 50px;">
           <label for="password">Password:</label>
-        </div>   
+        </div>
         <div class="mx-auto" style="width: 200px;">
           <input type="password" id="password" name="password" required> 
         </div> 

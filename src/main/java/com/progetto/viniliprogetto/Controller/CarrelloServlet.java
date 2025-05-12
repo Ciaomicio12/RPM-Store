@@ -1,24 +1,11 @@
 package com.progetto.viniliprogetto.Controller;
 
-import com.progetto.viniliprogetto.DAO.OrdineDAO;
-import com.progetto.viniliprogetto.DAO.VinileDAO;
-import com.progetto.viniliprogetto.Model.Carrello;
-import com.progetto.viniliprogetto.Model.Utente;
-import com.progetto.viniliprogetto.Model.Vinile;
-import com.progetto.viniliprogetto.Model.VinileInCarrello;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 @WebServlet("/carrello")
 public class CarrelloServlet extends HttpServlet {
-/*
+    /*
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Carrello carrello = (Carrello) session.getAttribute("carrello");
@@ -65,13 +52,12 @@ public class CarrelloServlet extends HttpServlet {
                 if (carrello != null) {
                     int quantita = 0;
                     for (VinileInCarrello vic: carrello.getVinili()) {
-                        Vinile temp = VinileDAO.doRetrieveByEan(carrello.getVinili().get(i).getEan());
+                        Vinile temp = VinileDAO.doRetrieveByEan(vic.getVinile().getEan());
                         if (temp == null) {
-                            carrello.rimuoviVinile(carrello.getVinili().get(i));
-                            i--;
-                        } else if (temp.equals(carrello.getVinili().get(i)) == false) {
-                            quantita = carrello.getVinili().get(i).getQuantitaCarrello();
-                            carrello.rimuoviVinile(carrello.getVinili().get(i));
+                            carrello.rimuoviVinile(vic.getVinile());
+                        } else if (temp.equals(vic.getVinile()) == false) {
+                            quantita = vic.getQuantita();
+                            carrello.rimuoviVinile(vic.getVinile());
                             temp.setQuantitaCarrello(quantita);
                             carrello.aggiungiVinile(temp);
                         }
@@ -89,5 +75,6 @@ public class CarrelloServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
-*/
+
+     */
 }
