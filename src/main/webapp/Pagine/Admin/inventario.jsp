@@ -27,31 +27,31 @@
 			<table id="inventory-table">
 			    <thead>
 			    	<tr>
-				        <th>Copertina</th>		
-				        <th onclick="sortTable(0)">Titolo</th>				        
-				        <th onclick="sortTable(1)">Artista</th>
-				        <th onclick="sortTable(2)">Genere</th>
-				        <th onclick="sortTable(3)">Prezzo</th>
-				        <th onclick="sortTable(4)">EAN</th>
-				        <th onclick="sortTable(5)">Quantità</th>
-			        </tr>
-			    </thead>
-			    <tbody>
-			     	<tr>
-			     		<td><img src="../../Album/Master of Puppets.jpg"></td> 
-			     		<td><a href="record-road-pagina-impostazioni-prodotto.html">Master of Puppets</a></td>    	
-			     		<td>Metallica</td>
-			     		<td>Thrash Metal</td>
-			     		<td>38.99&euro;</td>
-			     		<td>0075678669637</td>
-			     		<td>10</td>
-			     	</tr>
-			    </tbody>
-		    </table>
+				        <th>Copertina</th>
+						<th onclick="sortTable(0)">Titolo</th>
+						<th onclick="sortTable(1)">Artista</th>
+						<th onclick="sortTable(2)">Genere</th>
+						<th onclick="sortTable(3)">Prezzo</th>
+						<th onclick="sortTable(4)">EAN</th>
+						<th onclick="sortTable(5)">Quantità</th>
+					</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td><img src="../img/Cover/${vinile.copertina}"></td>
+					<td><a href="record-road-pagina-impostazioni-prodotto.html">${vinile.titolo}</a></td>
+					<td>${vinile.autore}</td>
+					<td>${vinile.getGenereString()}</td>
+					<td>${vinile.prezzo}&euro;</td>
+					<td>${vinile.ean}</td>
+					<td>${vinile.numeroDisponibili}</td>
+				</tr>
+				</tbody>
+			</table>
 
-		    <script src="script.js"></script>
+		<script src="script.js"></script>
 
-			<%@ include file = "../footer.jsp" %>
+		<%@ include file="../footer.jsp" %>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 				integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 				crossorigin="anonymous"></script>

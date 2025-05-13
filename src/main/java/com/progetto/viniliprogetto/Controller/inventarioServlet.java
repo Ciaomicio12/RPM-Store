@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @WebServlet("/inventario")
 public class inventarioServlet extends HttpServlet {
@@ -24,10 +25,11 @@ public class inventarioServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Utente utente = (Utente) session.getAttribute("utente");
         if (utente != null && utente.isAdmin() == true) {
-            VinileDAO vinilidao = new VinileDAO();
-            ArrayList<Vinile> vinili = (ArrayList<Vinile>) vinilidao.doRetrieveAll(0, 100);
+            VinileDAO vinileDAO = new VinileDAO();
+            List<Vinile> vinili = vinileDAO.doRetrieveAll(0, 5);
+            Collections.shuffle(vinili);
             request.setAttribute("vinili", vinili);
-            request.getRequestDispatcher("WEB-INF/jsp/inventario.jsp").forward(request, response);
+            request.getRequestDispatcher("/Pagine/Admin/inventario.jsp").forward(request, response);
         } else {
             throw new MyServletException("Sezione dedicata agli utenti amministratori");
         }
