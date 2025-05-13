@@ -26,17 +26,16 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("email");
+        String email = request.getParameter("email");
         UtenteDAO dao = new UtenteDAO();
         String password = request.getParameter("password");
-        Utente utente = dao.doRetrieveByUsernamePassword(username, password);
+        Utente utente = dao.doRetrieveByEmailPassword(email, password);
         if (utente != null && utente.isDisabled() == false) {
             HttpSession session = request.getSession();
             session.setAttribute("utente", utente);
-            response.sendRedirect("profilo");
+            response.sendRedirect(request.getContextPath());
         } else {
             if (utente != null && utente.isDisabled() == true) {
                 request.setAttribute("errorserverlogin", "Il tuo account é stato eliminato");

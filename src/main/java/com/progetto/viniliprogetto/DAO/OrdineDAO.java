@@ -111,7 +111,7 @@ public class OrdineDAO {
         return null;
     }
 
-    public Boolean ceckIfExistbyEanAndUserID(String ean, int idutente) {
+    public Boolean checkIfExistbyEanAndUserID(String ean, int idutente) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM ordine " +
                     "WHERE ean=? and id_utente = ?");

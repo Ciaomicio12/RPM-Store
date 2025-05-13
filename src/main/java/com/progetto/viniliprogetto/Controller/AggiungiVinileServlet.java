@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
-@WebServlet("/editvinile")
+@WebServlet("/aggiungivinile")
 
 public class AggiungiVinileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -42,20 +42,20 @@ public class AggiungiVinileServlet extends HttpServlet {
                 Genere current = null;
                 while (iter1.hasNext()) {//iterazione sul genere da rimuovere
                     current = iter1.next();
-                    for (int i = 0; i < vinile.getCategorie().size(); i++) {
-                        if (current.getId() == vinile.getCategorie().get(i).getId()) {
+                    for (int i = 0; i < vinile.getGenere().size(); i++) {
+                        if (current.getId() == vinile.getGenere().get(i).getId()) {
                             iter1.remove();
                             break;
                         }
                     }
                 }
-                request.setAttribute("checked", vinile.getCategorie());
+                request.setAttribute("checked", vinile.getGenere());
             } else {
                 request.setAttribute("titolo", "Aggiugni vinile");
             }
             request.setAttribute("genere", list);
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/addlibro.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/Pagine/Admin/creazione-album.jsp");
             dispatcher.forward(request, response);
         } else {
             throw new MyServletException("Sezione dedicata ai soli amministratori, perfavore prima fai il login");

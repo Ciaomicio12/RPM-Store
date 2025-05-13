@@ -15,60 +15,54 @@
   </style>
 </head>
 <body>
-<%@ include file = "header.jsp" %>
+<%@ include file="header.jsp" %>
 <section class="container-fluid">
   <div class="row">
-    <form class="border border-dark px-4 py-3 mx-4 mx-sm-auto mt-5 col-sm-6" method="POST" action="servlet_registrazione">
+    <form class="border border-dark px-4 py-3 mx-4 mx-sm-auto mt-5 col-sm-6" method="POST" action="registrazione">
       <h2 class="title">Creare account</h2>
       <div class="border border-dark px-4 py-3 mx-3 mx-sm-auto mt-1 col-sm-6">
-
-        <div class="mx-auto" style="width: 60px;">
-          <label for="nome">Nome:</label>
+        <p> ${formerror}</p>
+        <br>
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input type="text" class="form-control" id="nome" name="nome" placeholder="Inserisci nome" required>
         </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="text" id="nome" name="nome" required>
+        <div class="form-group">
+          <label for="cognome">Cognome</label>
+          <input type="text" class="form-control" id="cognome" name="cognome" placeholder="Inserisci cognome" required>
         </div>
-        <div class="mx-auto" style="width: 70px;">
-          <label for="cognome">Cognome:</label>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username" name="username" placeholder="Inserisci username"
+                 required>
         </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="text" id="cognome" name="cognome" required>
+        <div class="form-group">
+          <label for="sesso">Sesso</label>
+          <select name="sesso" id="sesso" class="form-select">
+            <option value="Maschio">Maschio</option>
+            <option value="Femmina">Femmina</option>
+          </select>
         </div>
-        <div class="mx-auto" style="width: 70px;">
-          <label for="username">Username:</label>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="Inserisci email" required>
         </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="text" id="username" name="username" required>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Inserisci password"
+                 required pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$"
+                 title="La password é mal formata! La password deve essere lunga 8 caratteri e al massimo 32. Deve contenere una lettere maiuscola e una minuscola. Deve contenere un numero"
+          >
         </div>
-        <div class="mx-auto" style="width: 60px;">
-          <label for="sesso">Sesso:</label>
+        <div class="form-group">
+          <label for="confirm-password">Conferma Password</label>
+          <input type="password" class="form-control" id="confirm-password" name="confirm-password"
+                 placeholder="Inserisci nuovamente la password" required>
         </div>
-        <select name="sesso" id="sesso" style="width: 60px;">
-          <option value="Maschio">Maschio</option>
-          <option value="Femmina">Femmina</option>
-        </select>
-        <div class="mx-auto" style="width: 110px;">
-          <label for="email">Indirizzo email:</label>
-        </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="email" id="email" name="email" required>
-        </div>
-        <div class="mx-auto" style="width: 50px;">
-          <label for="password">Password:</label>
-        </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="password" id="password" name="password" required> 
-        </div> 
-        <div class="mx-auto" style="width: 130px;"> 
-          <label for="email">Verifica Password:</label>
-        </div>  
-        <div class="mx-auto" style="width: 200px;">
-          <input type="password" id="confirm-password" name="confirm-password" required>
-        </div> 
       </div>
 
-      <div class="mx-auto" style="width: 90px;">      
-        <input type="submit" value="Continua">
+      <div class="mx-auto" style="width: 90px;">
+        <button type="submit" class="btn btn-danger">Conferma</button>
       </div>
 
     </form>

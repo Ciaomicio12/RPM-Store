@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 //questo pezzo di codice funziona bene :)
-@WebServlet(name = "HomeServlet", urlPatterns = "/home", loadOnStartup = 1)
+@WebServlet(name = "HomeServlet", urlPatterns = "", loadOnStartup = 1)
 public class HomeServlet extends HttpServlet {
 
     @Override

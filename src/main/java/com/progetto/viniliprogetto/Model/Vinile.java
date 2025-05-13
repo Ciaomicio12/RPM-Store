@@ -11,7 +11,7 @@ public class Vinile {
     private String autore;
     private String titolo;
     private String copertina;
-    private String genereString;
+    private String genereString = "";
     private List<Genere> genere = new ArrayList<>();
 
     public String getEan() {
@@ -38,18 +38,18 @@ public class Vinile {
         this.copertina = Copertina;
     }
 
-    public List<Genere> getCategorie() {
+    public List<Genere> getGenere() {
         return genere;
     }
 
-    public void setGenere(List<Genere> c) {
-        genere = c;
-        genereString = "";
-        for (int i = 0; i < c.size(); i++) {
-            genereString = genereString + c.get(i).getNome();
-            if (i != c.size() - 1)
-                genereString = genereString + ",";
-        }
+    public void setGenere(List<Genere> genere) {
+        this.genere = genere;
+    }
+
+    public String getGenereString() {
+        List<String> generi = new ArrayList<>();
+        genere.forEach(genere1 -> generi.add(genere1.getNome()));
+        return String.join(",", generi);
     }
 
     public int getAnnoPubblicazione() {
