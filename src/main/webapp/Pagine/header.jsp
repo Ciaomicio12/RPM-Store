@@ -10,7 +10,6 @@
 				<h1 class="text-decoration-none text-dark fw-bold">
 					<img src="img/logo.png" alt="Logo"/>Record Road</h1>
 			</a>
-			<!-- <h1><img src="C:\Users\User\Desktop\Esercizi C - C++\Tecnologie Software per il Web\Progetto\Logo sito.png" alt="Logo"/> Record Road</h1> -->
 			<div class="w-100 d-md-none"></div>
 			<form class="col d-flex my-0 my-md-3">
 				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -75,6 +74,11 @@
 					</li>
 				</c:if>
 				<c:if test="${utente != null}">
+					<c:if test="${utente.admin}">
+						<li class="nav-item justify-content-center">
+							<a class="nav-link" href="inventario">Inventario</a>
+						</li>
+					</c:if>
 					<li class="nav-item justify-content-center">
 						<a class="nav-link" href="logout">LogOut</a>
 					</li>
