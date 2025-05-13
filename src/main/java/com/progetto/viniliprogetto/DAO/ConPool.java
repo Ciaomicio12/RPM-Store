@@ -14,7 +14,7 @@ public class ConPool {
 	public static Connection getConnection() throws SQLException {
 		if (datasource == null) {
 			PoolProperties p = new PoolProperties();
-			p.setUrl("jdbc:mysql://localhost:3306/progetto?characterEncoding=UTF8&useUnicode=yes&serverTimezone=" + TimeZone.getDefault().getID());
+			p.setUrl("jdbc:mysql://localhost:3307/progetto?characterEncoding=UTF8&useUnicode=yes&serverTimezone=" + TimeZone.getDefault().getID());
 			p.setDriverClassName("com.mysql.cj.jdbc.Driver");
 			//ricordati di modificare il nome del database, perché sono diversi per i due computer
 			p.setUsername("root");
