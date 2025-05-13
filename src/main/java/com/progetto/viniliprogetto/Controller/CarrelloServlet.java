@@ -22,7 +22,7 @@ public class CarrelloServlet extends HttpServlet {
                 }
                 OrdineDAO dao = new OrdineDAO();
                 if (user != null && user.isAdmin() == false) {
-                    if (dao.checkIfExistbyIsbnAndUserID(vinile.getEan(), user.getId())) {
+                    if (dao.checkIfExistbyEanAndUserID(vinile.getEan(), user.getId())) {
                         throw new MyServletException("Il vinile da lei selezionato è già presente nei suoi ordini");
                     }
                 }

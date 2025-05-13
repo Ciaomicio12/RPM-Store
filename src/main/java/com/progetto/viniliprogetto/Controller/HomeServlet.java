@@ -21,7 +21,7 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         VinileDAO vinileDAO = new VinileDAO();
         try {
-            List<Vinile> vinili = vinileDAO.doRetrieveAll(0, 3);
+            List<Vinile> vinili = vinileDAO.doRetrieveAll(0, 5);
             Collections.shuffle(vinili);
             request.setAttribute("vinili", vinili);
             request.getRequestDispatcher("/Pagine/home.jsp").forward(request, response);

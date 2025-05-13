@@ -54,7 +54,7 @@ public class VinileDAO {
     public List<Vinile> doRetrieveAll(int offset, int limit) throws SQLException {
         Connection conn = ConPool.getConnection();
         String query = " SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina\n"
-                + " FROM Vinile LIMIT ?,?";
+                + " FROM Vinile ORDER BY RAND() LIMIT ?,? ";
         PreparedStatement st = conn.prepareStatement(query);
         st.setInt(1, offset);
         st.setInt(2, limit);
@@ -89,7 +89,9 @@ public class VinileDAO {
                 }
                 generi.add(new Genere(rs.getInt(9), rs.getString(8)));
             }
-            v.setGenere(generi);
+            if (v != null) {
+                v.setGenere(generi);
+            }
             conn.close();
             return v;
         } catch (SQLException e) {
