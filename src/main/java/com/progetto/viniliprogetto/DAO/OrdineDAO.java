@@ -43,57 +43,55 @@ public class OrdineDAO {
         return o;
     }
 
-    public ArrayList<Ordine> doRetrieveAll(int limit, int offset) throws SQLException {
-        ArrayList<Ordine> ordini = new ArrayList<Ordine>();
-        Connection con = ConPool.getConnection();
-        PreparedStatement ps = con.prepareStatement("SELECT O.oradiordine AS ora,O.totale,U.username AS Username, O.id, U.id AS idutente " +
-                "FROM ordine O " +
-                "  INNER JOIN utente U on o.id_utente = u-id " +
-                "where O.id_utente=U.id order by O.oradiordine DASH LIMIT ?,?");
-        ps.setInt(1, offset);
-        ps.setInt(2, limit);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            ordini.add(creaOrdine(rs));
+    public ArrayList<Ordine> doRetrieveAll(int limit, int offset) {
+        try {
+            ArrayList<Ordine> ordini = new ArrayList<Ordine>();
+            Connection con = ConPool.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT O.oradiordine AS ora,O.totale,U.username AS Username, O.id, U.id AS idutente " +
+                    "FROM ordine O " +
+                    "  INNER JOIN utente U on o.id_utente = u-id " +
+                    "where O.id_utente=U.id order by O.oradiordine DASH LIMIT ?,?");
+            ps.setInt(1, offset);
+            ps.setInt(2, limit);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ordini.add(creaOrdine(rs));
+            }
+            return ordini;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return ordini;
+        return null;
     }
 
-    /*
-        //da controllare
-        public ArrayList<Ordine> doRetrieveByUserId(int idutente) {
-            try {
-                ArrayList<Ordine> ordini = new ArrayList<>();
-                Connection con = ConPool.getConnection();
-                PreparedStatement ps = con.prepareStatement("SELECT id,oradiordine,totale,stato " +
-                        "FROM ordine " +
-                        "WHERE id_utente=?  " +
-                        "order by oradiordine desc");
-                ps.setInt(1, idutente);
-                ResultSet rs = ps.executeQuery();
-                while (rs.next()) {
-                    ordini.add(creaOrdine(rs));
-                }
-                return ordini;
-            } catch (SQLException e) {
-                e.printStackTrace();
+
+    //da controllare
+    public ArrayList<Ordine> doRetrieveByUserId(int idutente) {
+        try {
+            ArrayList<Ordine> ordini = new ArrayList<>();
+            Connection con = ConPool.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT id,oradiordine,totale,stato " +
+                    "FROM ordine " +
+                    "WHERE id_utente=?  " +
+                    "order by oradiordine desc");
+            ps.setInt(1, idutente);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ordini.add(creaOrdine(rs));
+            }
+            return ordini;
+        } catch (SQLException e) {
+            e.printStackTrace();
             }
             ;
             return null;
         }
 
-        public Ordine doRetriveById(int idordine){
-            try{
-                Ordine ordine = new Ordine;
-
-            }
-        }
-    */
     //da controllare
     public Ordine doRetrievebyUserIdAndOra(String ora, int idutente) {
         try {
             Connection con = ConPool.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT oradiordine,totale " +
+            PreparedStatement ps = con.prepareStatement("SELECT id,oradiordine,totale,stato " +
                     "FROM ordine " +
                     "WHERE id_utente=? and oradiordine=?  order by oradiordine");
             ps.setInt(1, idutente);
@@ -113,14 +111,13 @@ public class OrdineDAO {
         return null;
     }
 
-    public Boolean ceckIfExistbyIsbnAndUserID(String ean, int idutente) {
+    public Boolean ceckIfExistbyEanAndUserID(String ean, int idutente) {
         try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM ordini " +
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM ordine " +
                     "WHERE ean=? and id_utente = ?");
             ps.setString(1, ean);
             ps.setInt(2, idutente);
             ResultSet s = ps.executeQuery();
-
             if (s.next()) {
                 return true;
             }
@@ -161,11 +158,34 @@ public class OrdineDAO {
                     Indirizzo indirizzo = new Indirizzo();
                     ordine.setUtente(utente);
                     ordine.setIndirizzo(indirizzo);
+                    ordine.setTotale(rs.getInt(4));
+                    ordine.setOraordine(rs.getString(3));
+                    ordine.setId(rs.getInt(1));
+                    ordine.setStato(rs.getString(5));
+                    indirizzo.setId(rs.getInt("cittaindirizzo"));
+                    indirizzo.setCap(rs.getString("capindirizzo"));
+                    indirizzo.setCitta(rs.getString("cittaindirizzo"));
+                    indirizzo.setStrada(rs.getString("stradaindirizzo"));
+                    indirizzo.setNumero_civico(rs.getString("numerocivicoindirizzo"));
+                    indirizzo.setTelefono(rs.getString("indirizzotelefono"));
+                    utente.setNome(rs.getString("nomeutente"));
+                    utente.setCognome(rs.getString("cognomeutente"));
+                    utente.setUsername(rs.getString("username"));
+                    utente.setIndirizzo(indirizzo);
                 }
                 VinileInOrdine vio = new VinileInOrdine();
                 Vinile vinile = new Vinile();
                 vio.setVinile(vinile);
                 vio.setOrdine(ordine);
+                vio.setQuantita(rs.getInt("vinileordinequantita"));
+                vio.setPrezzo(rs.getInt("vinileordineprezzoacq"));
+                vinile.setCopertina(rs.getString("vinilecopertina"));
+                vinile.setPrezzo(rs.getInt("vinileprezzo"));
+                vinile.setTitolo(rs.getString("viniletitolo"));
+                vinile.setAnnoPubblicazione(rs.getInt("vinileanno"));
+                vinile.setNumeroDisponibili(rs.getInt("vinilenumero"));
+                vinile.setAutore(rs.getString("vinileautore"));
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

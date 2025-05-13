@@ -127,48 +127,62 @@ public class UtenteDAO extends Utente {
         return false;
     }
 
-    public void doUpdateUserInfo(Utente u) throws SQLException {
-        Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement(
-                "UPDATE utente set nome=?,cognome=?,email=?,username=? " +
-                        "where id=?;",
-                Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, u.getNome());
-        ps.setString(2, u.getCognome());
-        ps.setString(3, u.getEmail());
-        ps.setString(4, u.getUsername());
-        ps.setInt(5, u.getId());
-        if (ps.executeUpdate() != 1) {
-            throw new RuntimeException("INSERT error.");
+    public void doUpdateUserInfo(Utente u) {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE utente set nome=?,cognome=?,email=?,username=? " +
+                            "where id=?;",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, u.getNome());
+            ps.setString(2, u.getCognome());
+            ps.setString(3, u.getEmail());
+            ps.setString(4, u.getUsername());
+            ps.setInt(5, u.getId());
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        conn.close();
+
     }
 
-    public void doUpdatePassword(String username, String password) throws SQLException {
-        Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement(
-                "UPDATE utente set passwordhash=SHA1(?) " +
-                        "where username=?;",
-                Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, password);
-        ps.setString(2, username);
-        if (ps.executeUpdate() != 1) {
-            throw new RuntimeException("INSERT error.");
+    public void doUpdatePassword(String username, String password) {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE utente set passwordhash=SHA1(?) " +
+                            "where username=?;",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, password);
+            ps.setString(2, username);
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        conn.close();
+
     }
 
-    public void doDisableProfile(Utente utente, Boolean disabled) throws SQLException {
-        Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement(
-                "UPDATE utente set disabled=? " +
-                        "where id=?");
-        ps.setInt(2, utente.getId());
-        ps.setBoolean(1, disabled);
-        if (ps.executeUpdate() != 1) {
-            throw new RuntimeException("INSERT error.");
+    public void doDisableProfile(Utente utente, Boolean disabled) {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE utente set disabled=? " +
+                            "where id=?");
+            ps.setInt(2, utente.getId());
+            ps.setBoolean(1, disabled);
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        conn.close();
     }
 
     public void doSetAdmin(Utente utente, Boolean admin) {
