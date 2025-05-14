@@ -26,15 +26,51 @@
 		</button>
 		<div class="row collapse navbar-collapse" id="navbarContent">
 			<ul class="navbar-nav mb-2 mb-sm-0 text-center d-flex flex-column flex-sm-row justify-content-evenly">
-				<li class="nav-item justify-content-center">
-					<a class="nav-link" href="#">Assistenza</a>
-				</li>
+				<c:if test="${utente != null}">
+					<c:if test="${utente.admin}">
+						<li class="nav-item justify-content-center">
+							<a class="nav-link" href="dati-personali-amministratore">Dati personali</a>
+						</li>
+					</c:if>
+					<c:if test="${!utente.admin}">
+						<li class="nav-item justify-content-center">
+							<a class="nav-link" href="dati-personali-cliente">Dati personali</a>
+						</li>
+					</c:if>
+				</c:if>
+				<c:if test="${utente == null}">
+					<li class="nav-item justify-content-center">
+						<a class="nav-link" href="#">Assistenza</a>
+					</li>
+				</c:if>
+				<c:if test="${utente != null}">
+					<c:if test="${!utente.admin}">
+						<li class="nav-item justify-content-center">
+							<a class="nav-link" href="#">Assistenza</a>
+						</li>
+					</c:if>
+				</c:if>
 				<li class="nav-item justify-content-center">
 					<a class="nav-link" href="#">Carrello</a>
 				</li>
+				<c:if test="${utente != null}">
+					<c:if test="${!utente.admin}">
+						<li class="nav-item justify-content-center">
+							<a class="nav-link" href="lista-ordini-cliente">I miei ordini</a>
+						</li>
+					</c:if>
+					<c:if test="${utente.admin}">
+						<li class="nav-item justify-content-center">
+							<a class="nav-link" href="inventario">Inventario</a>
+						</li>
+						<li class="nav-item justify-content-center">
+							<a class="nav-link" href="lista-ordini-amministratore">Elenco ordinazioni</a>
+						</li>
+					</c:if>
+				</c:if>
 				<c:if test="${utente == null}">
 					<li class="nav-item justify-content-center">
-						<a class="nav-link" href="login">Login/Registrazione</a>
+						<a class="nav-link" href="login">LogIn/Registrazione</a>
 					</li>
 				</c:if>
 				<c:if test="${utente != null}">
