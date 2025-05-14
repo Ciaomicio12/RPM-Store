@@ -51,22 +51,27 @@ public class VinileDAO {
     }
 
     //Recupero tutti i vinili
-    public List<Vinile> doRetrieveAll(int offset, int limit) throws SQLException {
-        Connection conn = ConPool.getConnection();
-        String query = " SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina\n"
-                + " FROM Vinile ORDER BY RAND() LIMIT ?,? ";
-        PreparedStatement st = conn.prepareStatement(query);
-        st.setInt(1, offset);
-        st.setInt(2, limit);
-        ResultSet rs = st.executeQuery();
-        List<Vinile> vinili = new ArrayList<>();
-        while (rs.next()) {
-            vinili.add(createVinile(rs));
+    public List<Vinile> doRetrieveAll(int offset, int limit) {
+        try {
+            Connection conn = ConPool.getConnection();
+            String query = " SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina\n"
+                    + " FROM Vinile ORDER BY RAND() LIMIT ?,? ";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, offset);
+            st.setInt(2, limit);
+            ResultSet rs = st.executeQuery();
+            List<Vinile> vinili = new ArrayList<>();
+            while (rs.next()) {
+                vinili.add(createVinile(rs));
+            }
+            rs.close();
+            st.close();
+            conn.close();
+            return vinili;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        rs.close();
-        st.close();
-        conn.close();
-        return vinili;
+        return null;
     }
 
     public Vinile doRetrieveByEan(String ean) {
