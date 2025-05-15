@@ -93,7 +93,7 @@ INSERT INTO utente (indirizzo, username, password, nome, cognome, sesso, email, 
 VALUES (1, 'utente1', SHA1('password1'), 'Tommaso', 'Spataro', 'M', 'utente1@email.com', 0, 0),
        (3, 'utente2', SHA1('password2'), 'Alfredo', 'Amendola', 'M', 'utente3@email.com', 0, 0),
        (2, 'AbSoluTe', SHA1('password2'), 'Angelo', 'Spataro', 'M', 'utente2@email.com', 0, 0),
-       (4, 'admin1', SHA1('adminpass'), 'Admin', 'Admin', 'F', 'admin@example.com', 1, 1);
+       (4, 'admin1', SHA1('adminpass'), 'Admin', 'Admin', 'F', 'admin@example.com', 1, 0);
 
 -- Inserimento dati nella tabella "vinile"
 
