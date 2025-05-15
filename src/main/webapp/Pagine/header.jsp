@@ -6,7 +6,7 @@
 <header class="container-fluid bg-light">
 	<div class="container-fluid">
 		<div class="row align-items-center">
-			<a class="display-2 col" href="home">
+			<a class="display-2 col" href="">
 				<h1 class="text-decoration-none text-dark fw-bold">
 					<img src="img/logo.png" alt="Logo"/>Record Road</h1>
 			</a>
@@ -50,19 +50,16 @@
 						</li>
 					</c:if>
 				</c:if>
-				<li class="nav-item justify-content-center">
-					<a class="nav-link" href="#">Carrello</a>
-				</li>
 				<c:if test="${utente != null}">
 					<c:if test="${!utente.admin}">
 						<li class="nav-item justify-content-center">
 							<a class="nav-link" href="lista-ordini-cliente">I miei ordini</a>
 						</li>
+						<li class="nav-item justify-content-center">
+							<a class="nav-link" href="#">Carrello</a>
+						</li>
 					</c:if>
 					<c:if test="${utente.admin}">
-						<li class="nav-item justify-content-center">
-							<a class="nav-link" href="inventario">Inventario</a>
-						</li>
 						<li class="nav-item justify-content-center">
 							<a class="nav-link" href="lista-ordini-amministratore">Elenco ordinazioni</a>
 						</li>
