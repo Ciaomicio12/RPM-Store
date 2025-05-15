@@ -40,7 +40,7 @@
 				</c:if>
 				<c:if test="${utente == null}">
 					<li class="nav-item justify-content-center">
-						<a class="nav-link" href="#">Assistenza</a>
+						<a class="nav-link" href="assistenza">Assistenza</a>
 					</li>
 				</c:if>
 				<c:if test="${utente != null}">
