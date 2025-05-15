@@ -39,7 +39,7 @@
 				<tbody>
 				<tr>
 					<td><img src="../img/Cover/${vinile.copertina}"></td>
-					<td><a href="record-road-pagina-impostazioni-prodotto.html">${vinile.titolo}</a></td>
+					<td><a href="impostazioni-prodotto.jsp">${vinile.titolo}</a></td>
 					<td>${vinile.autore}</td>
 					<td>${vinile.getGenereString()}</td>
 					<td>${vinile.prezzo}&euro;</td>

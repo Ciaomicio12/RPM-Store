@@ -37,7 +37,18 @@
       <div class="prezzo col-4 col-sm-3 mt-4 mt-sm-0">
         <h3 class="display-3"><strong>${vinile.prezzo}&euro;</strong></h3>
         <p>Prezzo</p>
-        <button class="add-to-cart btn btn btn-warning">Aggiungi al carrello</button>
+        <!-- <button class="add-to-cart btn btn btn-warning">Aggiungi al carrello</button> -->
+
+        <c:if test="${utente != null}">
+          <c:if test="${!utente.admin}">
+            <button id="add-to-cart-button">Aggiungi al carrello</button>
+          </c:if>
+          <c:if test="${utente.admin}">
+            <button id="go-to-modify-album-button">Modifica prodotto</button>
+          </c:if>
+
+        </c:if>
+
       </div>
     </div>
   </div>
