@@ -76,7 +76,7 @@ public class VinileDAO {
 
     public Vinile doRetrieveByEan(String ean) {
         try {
-            if (ean.length() != 12) return null;
+            if (ean.length() != 12 && ean.length() != 11) return null;
             Connection conn = ConPool.getConnection();
             String query = "SELECT v.ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina,nome,g.id\n" +
                     "FROM vinile v\n" +

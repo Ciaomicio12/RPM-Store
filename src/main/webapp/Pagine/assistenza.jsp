@@ -20,35 +20,40 @@
   <div class="row">
     <form class="border border-dark px-4 py-3 mx-4 mx-sm-auto mt-5 col-sm-6" method="POST" action="servlet_assistenza">
       <h2 class="title">Assistenza</h2>
-      <h4 class="explanation">Puoi contattare direttamente l'assistenza clienti inviando un messaggio tramite questo form. In questo modo, inserendo il tuo indirizzo email e l'argomento del tuo messaggio, ci aiuterai ad essere più veloci nel risponderti. Inoltre, tramite il form, eviti che il tuo messaggio possa essere considerato spam.</h4>
+      <h4 class="explanation">Puoi contattare direttamente l'assistenza clienti inviando un messaggio tramite questo
+        form. In questo modo, inserendo il tuo indirizzo email e l'argomento del tuo messaggio, ci aiuterai ad essere
+        più veloci nel risponderti. Inoltre, tramite il form, eviti che il tuo messaggio possa essere considerato
+        spam.</h4>
       <div class="border border-dark px-4 py-3 mx-1 mx-sm-auto mt-1 col-sm-6">
-        <div class="mx-auto" style="width: 110px;"> 
-          <label for="name">Nome e Cognome:</label>
-        </div> 
-        <div class="mx-auto" style="width: 200px;">
-          <input type="name" id="name" name="name" required>
-        </div>   
-        <div class="mx-auto" style="width: 110px;"> 
-          <label for="email">Indirizzo email:</label>
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input type="text" class="form-control" id="nome" name="nome" placeholder="Inserisci nome e cognome" required>
         </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="email" id="email" name="email" required>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="Inserisci email" required>
         </div>
-        <div class="mx-auto" style="width: 110px;">
-          <label for="object-mail">Oggetto:</label>
+        <div class="form-group">
+          <label for="oggetto">Oggetto</label>
+          <input type="text" class="form-control" id="oggetto" name="oggetto" placeholder="Oggetto:" required>
         </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="object-mail" id="object-mail" name="object-mail" required>
+        <div class="row">
+          <div class="col-50">
+            <label for="subject">Descrivi il problema</label>
+          </div>
+          <div class="col-125">
+                  <textarea
+                          id="subject"
+                          name="subject"
+                          placeholder="Scrivi qui"
+                          style="height: 200px;"
+                          required
+                  ></textarea>
+          </div>
         </div>
-        <div class="mx-auto" style="width: 110px;">
-          <label for="message">Messaggio:</label>
+        <div class="row">
+          <input id="contatti" type="submit" value="Invia messaggio"/>
         </div>
-        <div class="mx-auto" style="width: 200px;">
-          <textarea id="message" name="message" rows="10" required></textarea>
-        </div>
-      </div>
-      <div class="mx-auto" style="width: 100px;">
-        <input type="submit" value="Invia">
       </div>
     </form>
   </div>
