@@ -40,8 +40,12 @@
         <!-- <button class="add-to-cart btn btn btn-warning">Aggiungi al carrello</button> -->
 
         <c:if test="${utente != null}">
-          <c:if test="${!utente.admin}">
+          <c:if test="${!utente.admin && vinile.numeroDisponibili > 0}">
             <button id="add-to-cart-button">Aggiungi al carrello</button>
+            <p>${vinile.numeroDisponibili} copie disponibili</p>
+          </c:if>
+          <c:if test="${!utente.admin && vinile.numeroDisponibili == 0}">
+            <p>Prodotto NON disponibile all'acquisto.<br>Copie esaurite.</p>
           </c:if>
           <c:if test="${utente.admin}">
             <button id="go-to-modify-album-button">Modifica prodotto</button>
