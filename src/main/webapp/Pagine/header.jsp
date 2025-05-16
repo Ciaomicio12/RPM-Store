@@ -6,15 +6,44 @@
 <header class="container-fluid bg-light">
 	<div class="container-fluid">
 		<div class="row align-items-center">
-			<a class="display-2 col" href="">
-				<h1 class="text-decoration-none text-dark fw-bold">
-					<img src="img/logo.png" alt="Logo"/>Record Road</h1>
+			<a class="display-2 col" href="http://localhost:8080/ViniliProgetto_war_exploded/">
+				<h1 class="text-decoration-none text-dark fw-bold titleHeader">
+					<img class="logo" src="img/logo.png" alt="Logo"/>Record Road</h1>
 			</a>
 			<div class="w-100 d-md-none"></div>
-			<form class="col d-flex my-0 my-md-3">
-				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+			<form class="col d-flex my-0 my-md-3" method="get" action="cerca">
+				<input class="form-control me-2" list="ricerca-datalist" name="ricerca" type="search"
+					   onkeyup="ricercaajax(this.value)" placeholder="Search" aria-label="Search" required>
+				<datalist id="ricerca-datalist"></datalist>
 				<button class="btn btn-outline-success" type="submit">Search</button>
 			</form>
+			<script>function ricercaajax(str) {
+				var dataList = document.getElementById('ricerca-datalist');
+				if (str.length == 0) {
+					dataList.innerHTML = '';
+					return;
+				}
+
+				var xmlHttpReq = new XMLHttpRequest();
+				xmlHttpReq.responseType = 'json';
+				xmlHttpReq.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
+
+						dataList.innerHTML = '';
+
+						for (var i in this.response) {
+
+							var option = document.createElement('option');
+
+							option.value = this.response[i];
+
+							dataList.appendChild(option);
+						}
+					}
+				}
+				xmlHttpReq.open("GET", "ricercaajax?q=" + encodeURIComponent(str), true);
+				xmlHttpReq.send();
+			}</script>
 		</div>
 	</div>
 
@@ -27,29 +56,13 @@
 		<div class="row collapse navbar-collapse" id="navbarContent">
 			<ul class="navbar-nav mb-2 mb-sm-0 text-center d-flex flex-column flex-sm-row justify-content-evenly">
 				<c:if test="${utente != null}">
-					<c:if test="${utente.admin}">
-						<li class="nav-item justify-content-center">
-							<a class="nav-link" href="dati-personali-amministratore">Dati personali</a>
-						</li>
-					</c:if>
-					<c:if test="${!utente.admin}">
-						<li class="nav-item justify-content-center">
-							<a class="nav-link" href="dati-personali-cliente">Dati personali</a>
-						</li>
-					</c:if>
+					<li class="nav-item justify-content-center">
+						<a class="nav-link" href="profilo">Dati personali</a>
+					</li>
 				</c:if>
-				<c:if test="${utente == null}">
 					<li class="nav-item justify-content-center">
 						<a class="nav-link" href="assistenza">Assistenza</a>
 					</li>
-				</c:if>
-				<c:if test="${utente != null}">
-					<c:if test="${!utente.admin}">
-						<li class="nav-item justify-content-center">
-							<a class="nav-link" href="#">Assistenza</a>
-						</li>
-					</c:if>
-				</c:if>
 				<c:if test="${utente != null}">
 					<c:if test="${!utente.admin}">
 						<li class="nav-item justify-content-center">
@@ -84,3 +97,4 @@
 		</div>
 	</nav>
 </header>
+

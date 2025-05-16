@@ -12,13 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+//Serve per reinderizzare ed è collegata nelle jsp questo ad esempio è collegata nel form di Header.jsp
 @WebServlet("/cerca")
 public class SearchServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         VinileDAO viniledao = new VinileDAO();
-        List<Vinile> vinili = viniledao.doRetrieveByNome(request.getParameter("v"), 0, 20);
+        List<Vinile> vinili = viniledao.doRetrieveByNome(request.getParameter("ricerca"), 0, 20);
         request.setAttribute("vinili", vinili);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/search.jsp");
+        request.setAttribute("ricerca", request.getParameter("ricerca"));
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Pagine/search.jsp");
         requestDispatcher.forward(request, response);
     }
 

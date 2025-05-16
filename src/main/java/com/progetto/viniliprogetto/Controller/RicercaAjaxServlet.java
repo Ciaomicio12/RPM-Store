@@ -24,7 +24,7 @@ public class RicercaAjaxServlet extends HttpServlet {
 		JSONArray prodJson = new JSONArray();
 		String query = request.getParameter("q");
 		if (query != null) {
-			List<Vinile> vinile = vinileDAO.doRetrieveByNome(query + "*", 0, 10);
+			List<Vinile> vinile = vinileDAO.doRetrieveByNome(query, 0, 10);
 			for (Vinile p : vinile) {
 				prodJson.put(p.getTitolo());
 			}
