@@ -51,7 +51,14 @@
             <button id="go-to-modify-album-button">Modifica prodotto</button>
             <p>${vinile.numeroDisponibili} copie disponibili</p>
           </c:if>
-
+        </c:if>
+        <c:if test="${utente == null}">
+          <c:if test="${vinile.numeroDisponibili > 0}">
+            <p>${vinile.numeroDisponibili} copie disponibili.<br>Accedere al proprio profilo se si vuole acquistare.</p>
+          </c:if>
+          <c:if test="${vinile.numeroDisponibili == 0}">
+            <p>Prodotto NON disponibile all'acquisto.<br>Copie esaurite.</p>
+          </c:if>
         </c:if>
 
       </div>
