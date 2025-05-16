@@ -1,22 +1,17 @@
 package com.progetto.viniliprogetto.Controller;
 
-import com.progetto.viniliprogetto.Model.Utente;
-
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 
 public class MyServletException extends ServletException {
-    private static final long serialVersionUID = -8976023136478643816L;
+    private final int status;
 
     public MyServletException(String message) {
-        super(message);
+        this(message, 400);  // Bad request status
     }
 
-    public static void checkAdmin(HttpServletRequest request) throws MyServletException {
-        Utente utente = (Utente) request.getSession().getAttribute("utente");
-        if (utente == null || !utente.isAdmin()) {
-            throw new MyServletException("Utente non autorizzato");
-        }
+    public MyServletException(String message, int status) {
+        super(message);
+        this.status = status;
     }
 
 }
