@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/user/carrello")
+@WebServlet("/carrello")
 public class CarrelloServlet extends HttpServlet {
 
     public static final String AGGIUNGI_VINILE = "aggiungi";
@@ -43,13 +43,26 @@ public class CarrelloServlet extends HttpServlet {
                 aggiungiVinile(request, carrello);
                 break;
             case RIMUOVI_VINILE:
+                rimuoviVinile(request, carrello);
                 break;
             case MODIFICA_QUANTITA:
+                modificaQuantita(request, carrello);
                 break;
             default:
                 throw new MyServletException("campo action non valido: " + action, 400);
         }
         response.sendRedirect("/carrello");
+    }
+
+    public void rimuoviVinile(HttpServletRequest request, Carrello carrello) throws MyServletException {
+        String ean = request.getParameter("ean");
+        if (ean == null)
+            throw new MyServletException("campo ean non trovato: " + ean, 400);
+        VinileDAO dao = new VinileDAO();
+        Vinile vinile = dao.doRetrieveByEan("ean");
+        if (vinile == null)
+            throw new MyServletException("ean non valido: " + ean, 404);
+        carrello.rimuoviVinile(vinile);
     }
 
     private void aggiungiVinile(HttpServletRequest request, Carrello carrello) throws MyServletException {

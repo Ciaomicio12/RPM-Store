@@ -57,36 +57,38 @@
 			<ul class="navbar-nav mb-2 mb-sm-0 text-center d-flex flex-column flex-sm-row justify-content-evenly">
 				<c:if test="${utente != null}">
 					<li class="nav-item justify-content-center">
-						<a class="nav-link" href="profilo">Dati personali</a>
+						<a class="nav-link" href="<%= request.getContextPath() %>/profilo">Dati personali</a>
 					</li>
 				</c:if>
-					<li class="nav-item justify-content-center">
-						<a class="nav-link" href="assistenza">Assistenza</a>
-					</li>
+				<li class="nav-item justify-content-center">
+					<a class="nav-link" href="<%= request.getContextPath() %>/assistenza">Assistenza</a>
+				</li>
 				<c:if test="${utente != null}">
 					<c:if test="${!utente.admin}">
 						<li class="nav-item justify-content-center">
-							<a class="nav-link" href="lista-ordini-cliente">I miei ordini</a>
+							<a class="nav-link" href="<%= request.getContextPath() %>/lista-ordini-cliente">I miei
+								ordini</a>
 						</li>
 						<li class="nav-item justify-content-center">
-							<a class="nav-link" href="carrello">Carrello</a>
+							<a class="nav-link" href="<%= request.getContextPath() %>/carrello">Carrello</a>
 						</li>
 					</c:if>
 					<c:if test="${utente.admin}">
 						<li class="nav-item justify-content-center">
-							<a class="nav-link" href="lista-ordini-amministratore">Elenco ordinazioni</a>
+							<a class="nav-link" href="<%= request.getContextPath() %>/lista-ordini-amministratore">Elenco
+								ordinazioni</a>
 						</li>
 					</c:if>
 				</c:if>
 				<c:if test="${utente == null}">
 					<li class="nav-item justify-content-center">
-						<a class="nav-link" href="login">LogIn/Registrazione</a>
+						<a class="nav-link" href="<%= request.getContextPath() %>/login">LogIn/Registrazione</a>
 					</li>
 				</c:if>
 				<c:if test="${utente != null}">
 					<c:if test="${utente.admin}">
 						<li class="nav-item justify-content-center">
-							<a class="nav-link" href="inventario">Inventario</a>
+							<a class="nav-link" href="<%= request.getContextPath() %>/inventario">Inventario</a>
 						</li>
 					</c:if>
 					<li class="nav-item justify-content-center">
