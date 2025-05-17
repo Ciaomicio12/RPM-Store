@@ -46,7 +46,7 @@
 
         <c:if test="${utente != null}">
           <c:if test="${!utente.admin && vinile.numeroDisponibili > 0}">
-            <button id="add-to-cart-button">Aggiungi al carrello</button>
+            <button href="carrello?id=${vinile.ean}" id="add-to-cart-button">Aggiungi al carrello</button>
             <p>${vinile.numeroDisponibili} copie disponibili</p>
           </c:if>
           <c:if test="${!utente.admin && vinile.numeroDisponibili == 0}">

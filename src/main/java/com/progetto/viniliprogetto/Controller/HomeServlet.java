@@ -19,7 +19,7 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         VinileDAO vinileDAO = new VinileDAO();
-        List<Vinile> vinili = vinileDAO.doRetrieveAll(0, 5);
+        List<Vinile> vinili = vinileDAO.doRetrieveAll();
         Collections.shuffle(vinili);
         request.setAttribute("vinili", vinili);
         request.getRequestDispatcher("/Pagine/home.jsp").forward(request, response);
