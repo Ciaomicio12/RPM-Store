@@ -26,7 +26,7 @@ public class inventarioServlet extends HttpServlet {
         Utente utente = (Utente) session.getAttribute("utente");
         if (utente != null && utente.isAdmin() == true) {
             VinileDAO vinileDAO = new VinileDAO();
-            List<Vinile> vinili = vinileDAO.doRetrieveAll(0, 5);
+            List<Vinile> vinili = vinileDAO.doRetrieveAll();
             Collections.shuffle(vinili);
             request.setAttribute("vinili", vinili);
             request.getRequestDispatcher("/Pagine/Admin/inventario.jsp").forward(request, response);
