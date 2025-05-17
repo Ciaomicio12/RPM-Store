@@ -102,7 +102,7 @@ public class RegistrazioneServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("utente", utente);
             if (utente != null) {
-                response.sendRedirect(request.getContextPath());
+                response.sendRedirect("profilo");
             } else {
                 throw new MyServletException("errore");
             }

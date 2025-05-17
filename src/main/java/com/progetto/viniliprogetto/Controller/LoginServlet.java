@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
         if (utente != null && utente.isDisabled() == false) {
             HttpSession session = request.getSession();
             session.setAttribute("utente", utente);
-            response.sendRedirect(request.getContextPath());
+            response.sendRedirect("profilo");
         } else {
             if (utente != null && utente.isDisabled() == true) {
                 request.setAttribute("errorserverlogin", "Il tuo account é stato eliminato");

@@ -182,5 +182,7 @@ VALUES ('602557382594', 1),
        ('602552962104', 14),
        ('602552962104', 11);
 
+ALTER TABLE Vinile
+    ADD FULLTEXT (titolo);
 
 

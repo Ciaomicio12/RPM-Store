@@ -8,19 +8,24 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="http://localhost:8080/ViniliProgetto_war_exploded/styledettaglio.css"/>
+
   <style>
-      .nav-link:hover {
-        text-decoration: underline;
-      }
+    .nav-link:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
 <%@ include file="header.jsp" %>
 <section class="container">
   <div class="random-albums my-3" class="row">
-    <div class="album col-12 row my-5 my-sm-4 mx-auto">
-      <div class="col-12 col-sm-3 mx-auto">
-        <img src="img/Cover/${vinile.copertina}" alt="Copertina Album" class="img-fluid">
+    <div class="col-12 row my-5 my-sm-4 mx-auto">
+      <div class="album">
+        <div class="col-12 col-sm-3 mx-auto">
+          <img src="img/Cover/${vinile.copertina}" alt="Copertina Album" class="img-fluid">
+        </div>
       </div>
       <div class="information col-8 col-sm-6 mt-4 mt-sm-0">
         <h3 class="display-6"><strong>${vinile.titolo}</strong></h3>
