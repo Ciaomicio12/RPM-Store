@@ -146,7 +146,7 @@ public class CaricaVinileServlet extends HttpServlet {
             v.setNumeroDisponibili(nDisponibili);
             v.setAnnoPubblicazione(aPub);
             v.setPrezzo(prezzoint);
-            v.setGenere(listCatform);
+            v.setGeneri(listCatform);
             Part filePart = request.getPart("img");
             if (filePart.getSize() == 0 && edit == null) {
                 errore = errore + "Non hai inserito alcuna copertina<br>";

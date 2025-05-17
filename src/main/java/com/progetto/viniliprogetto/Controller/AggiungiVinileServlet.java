@@ -42,14 +42,14 @@ public class AggiungiVinileServlet extends HttpServlet {
                 Genere current = null;
                 while (iter1.hasNext()) {//iterazione sul genere da rimuovere
                     current = iter1.next();
-                    for (int i = 0; i < vinile.getGenere().size(); i++) {
-                        if (current.getId() == vinile.getGenere().get(i).getId()) {
+                    for (int i = 0; i < vinile.getGeneri().size(); i++) {
+                        if (current.getId() == vinile.getGeneri().get(i).getId()) {
                             iter1.remove();
                             break;
                         }
                     }
                 }
-                request.setAttribute("checked", vinile.getGenere());
+                request.setAttribute("checked", vinile.getGeneri());
             } else {
                 request.setAttribute("titolo", "Aggiugni vinile");
             }
