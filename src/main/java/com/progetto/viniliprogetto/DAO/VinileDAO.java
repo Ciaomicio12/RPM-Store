@@ -74,7 +74,7 @@ public class VinileDAO {
 
     public Vinile doRetrieveByEan(String ean) {
         try {
-            if (ean.length() != 12 && ean.length() != 11) return null;
+            //if (ean.length() < 11 || ean.length() > 13) return null;
             Connection conn = ConPool.getConnection();
             String query = "SELECT v.ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina,nome,g.id\n" +
                     "FROM vinile v\n" +
@@ -92,9 +92,10 @@ public class VinileDAO {
                 }
                 generi.add(new Genere(rs.getInt(9), rs.getString(8)));
             }
-            if (v != null) {
+            if (v != null)
                 v.setGenere(generi);
-            }
+            rs.close();
+            st.close();
             conn.close();
             return v;
         } catch (SQLException e) {

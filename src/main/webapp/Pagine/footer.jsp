@@ -1,4 +1,4 @@
-<footer class="container-fluid bg-light fixed-bottom overflow-hidden">
+<footer class="container-fluid bg-light overflow-hidden">
     <div class="barBottom row align-items-center">
         <div class="w-100 d-sm-none"></div>
         <div class="col">
