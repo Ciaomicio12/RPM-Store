@@ -6,9 +6,9 @@
 <header class="container-fluid bg-light">
 	<div class="container-fluid">
 		<div class="row align-items-center">
-			<a class="display-2 col" href="http://localhost:8080/ViniliProgetto_war_exploded/">
+			<a class="display-2 col" href="<%= request.getContextPath() %>/">
 				<h1 class="text-decoration-none text-dark fw-bold titleHeader">
-					<img class="logo" src="img/logo.png" alt="Logo"/>Record Road</h1>
+					<img class="logo" src="<%= request.getContextPath() %>/img/logo.png" alt="Logo"/>Record Road</h1>
 			</a>
 			<div class="w-100 d-md-none"></div>
 			<form class="col d-flex my-0 my-md-3" method="get" action="cerca">
@@ -69,7 +69,7 @@
 							<a class="nav-link" href="lista-ordini-cliente">I miei ordini</a>
 						</li>
 						<li class="nav-item justify-content-center">
-							<a class="nav-link" href="#">Carrello</a>
+							<a class="nav-link" href="carrello">Carrello</a>
 						</li>
 					</c:if>
 					<c:if test="${utente.admin}">
@@ -90,7 +90,7 @@
 						</li>
 					</c:if>
 					<li class="nav-item justify-content-center">
-						<a class="nav-link" href="logout">LogOut</a>
+						<a class="nav-link" href="<%= request.getContextPath() %>/user/logout">LogOut</a>
 					</li>
 				</c:if>
 			</ul>

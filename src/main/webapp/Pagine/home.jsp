@@ -13,7 +13,7 @@
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="http://localhost:8080/ViniliProgetto_war_exploded/style.css"/>
+    <link rel="stylesheet" href="<%= request.getContextPath()%>/style.css"/>
 </head>
 <body>
 <%@ include file="header.jsp" %>

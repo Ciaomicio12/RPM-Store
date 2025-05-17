@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet("/logout")
+@WebServlet("/user/logout")
 public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().removeAttribute("utente");
-        getServletContext().getRequestDispatcher("/").forward(request, response);
+        request.getSession().invalidate();
+        response.sendRedirect(this.getServletContext().getContextPath() + "/");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
