@@ -49,6 +49,7 @@
           </c:if>
           <c:if test="${utente.admin}">
             <button id="go-to-modify-album-button">Modifica prodotto</button>
+            <p>${vinile.numeroDisponibili} copie disponibili</p>
           </c:if>
 
         </c:if>
