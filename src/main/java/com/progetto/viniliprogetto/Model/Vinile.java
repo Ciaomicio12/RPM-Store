@@ -12,7 +12,7 @@ public class Vinile {
     private String titolo;
     private String copertina;
     private String genereString = "";
-    private List<Genere> genere = new ArrayList<>();
+    private List<Genere> generi = new ArrayList<>();
 
     public String getEan() {
         return ean;
@@ -38,17 +38,17 @@ public class Vinile {
         this.copertina = Copertina;
     }
 
-    public List<Genere> getGenere() {
-        return genere;
+    public List<Genere> getGeneri() {
+        return generi;
     }
 
-    public void setGenere(List<Genere> genere) {
-        this.genere = genere;
+    public void setGeneri(List<Genere> generi) {
+        this.generi = generi;
     }
 
     public String getGenereString() {
         List<String> generi = new ArrayList<>();
-        genere.forEach(genere1 -> generi.add(genere1.getNome()));
+        this.generi.forEach(genere1 -> generi.add(genere1.getNome()));
         return String.join(",", generi);
     }
 

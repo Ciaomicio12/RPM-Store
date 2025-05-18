@@ -17,8 +17,9 @@
 </head>
 <body>
 <%@ include file="header.jsp" %>
-<div class="container">
-    <div class="row">
+
+<section class="container">
+    <div class="row my-3">
         <div class="col">
             <div class="card">
                 <h2>Risultati per la parola chiave: ${ricerca}</h2>
@@ -31,19 +32,23 @@
             <c:if test="${vinili.size() > 0}">
                 <c:forEach items="${vinili}" var="vinile">
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-4">
-                        <img src="img/Cover/${vinile.copertina}" alt="vinile" height="215px"
-                             class="card-img-top img-fluid">
-                        <div class="card-body">
-                            <h3 class="card-title">${vinile.titolo}</h3>
-                            <h4 class="card-text">${vinile.prezzo}€</h4>
-                            <a href="vinile?ean=${vinile.ean}" class="btn btn-primary">Vai al vinile</a>
+                        <div class="card">
+                            <a href="vinile?ean=${vinile.ean}">
+                                <img src="img/Cover/${vinile.copertina}" class="card-img-top" alt="Copertina Album 1">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title">${vinile.titolo}</h5>
+                                <p class="card-text">${vinile.autore}</p>
+                                <p class="card-text"><strong>${vinile.prezzo}&euro;</strong></p>
+                                <a type="button" href="vinile?ean=${vinile.ean}" class="btn btn-outline-danger rounded-pill">Dettagli </a>
+                            </div>
                         </div>
                     </div>
                 </c:forEach>
             </c:if>
         </div>
     </div>
-</div>
+</section>
 
 <%@ include file="footer.jsp" %>
 
