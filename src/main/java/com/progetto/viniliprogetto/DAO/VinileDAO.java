@@ -9,7 +9,7 @@ import java.util.List;
 
 public class VinileDAO {
 
-    private ArrayList<Genere> getGenere(String ean) throws SQLException {
+    private ArrayList<Genere> getGeneri(String ean) throws SQLException {
         Connection conn = ConPool.getConnection();
         String sql = "SELECT genere.id, nome, descrizione " +
                 "FROM genere,vinile_genere " +
@@ -74,7 +74,7 @@ public class VinileDAO {
 
     public Vinile doRetrieveByEan(String ean) {
         try {
-            //if (ean.length() < 11 || ean.length() > 13) return null;
+            if (ean.length() < 11 || ean.length() > 13) return null;
             Connection conn = ConPool.getConnection();
             String query = "SELECT v.ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina,nome,g.id\n" +
                     "FROM vinile v\n" +
@@ -92,8 +92,9 @@ public class VinileDAO {
                 }
                 generi.add(new Genere(rs.getInt(9), rs.getString(8)));
             }
-            if (v != null)
-                v.setGenere(generi);
+            if (v != null) {
+                v.setGeneri(generi);
+            }
             rs.close();
             st.close();
             conn.close();
@@ -202,7 +203,7 @@ public class VinileDAO {
             psCa2.executeUpdate();
 
             PreparedStatement psCa = conn.prepareStatement("INSERT INTO vinile_genere (ean, id) VALUES (?, ?)");
-            for (Genere c : vinile.getGenere()) {
+            for (Genere c : vinile.getGeneri()) {
                 psCa.setString(1, vinile.getEan());
                 psCa.setInt(2, c.getId());
                 psCa.addBatch();
