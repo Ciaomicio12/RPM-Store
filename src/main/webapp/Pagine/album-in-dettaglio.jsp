@@ -23,7 +23,7 @@
   <div class="random-albums my-3" class="row">
     <div class="col-12 row my-5 my-sm-4 mx-auto">
       <div class="album">
-        <div class="col-12 col-sm-3 mx-auto">
+        <div class="col-12 col-sm-3">
           <img src="img/Cover/${vinile.copertina}" alt="Copertina Album" class="img-fluid">
         </div>
       </div>
@@ -59,7 +59,7 @@
         </c:if>
         <c:if test="${utente == null}">
           <c:if test="${vinile.numeroDisponibili > 0}">
-            <p>${vinile.numeroDisponibili} copie disponibili.<br>Accedere al proprio profilo se si vuole acquistare.</p>
+            <p>${vinile.numeroDisponibili} copie disponibili.<br><a href="login">Accedere</a> al proprio profilo se si vuole acquistare.</p>
           </c:if>
           <c:if test="${vinile.numeroDisponibili == 0}">
             <p>Prodotto NON disponibile all'acquisto.<br>Copie esaurite.</p>
