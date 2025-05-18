@@ -1,3 +1,5 @@
+<%@ page import="com.progetto.viniliprogetto.Controller.CarrelloServlet" %>
+<%@ page import="com.progetto.viniliprogetto.Model.Carrello" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
@@ -13,127 +15,62 @@
             text-decoration: underline;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 </head>
 <body>
 <%@ include file="header.jsp" %>
+<%
+    Carrello carrello = (Carrello) session.getAttribute("carrello");
+%>
 <section class="container">
     <div class="random-albums my-3" class="row">
 
         <c:forEach items="${carrello.vinili}" var="vinileincarrello">
-            <div class="cart-item">
-                <div class="col-12">
-                    <div class="album col-12 row my-5 my-sm-4 mx-auto">
-                        <div class="col-9 col-sm-3 mx-auto">
-                            <a href="dettaglio-album.html">
-                                <img src="img/Cover/${vinileincarrello.vinile.copertina}"
-                                     alt="Copertina Album 1" class="img-fluid">
-                            </a>
-                        </div>
-                        <div class="information col-12 col-sm-9">
-                            <h4>${vinileincarrello.vinile.titolo}</h4>
-                            <h4>${vinileincarrello.vinile.prezzo}&euro;</h4>
-                        </div>
+            <div class="cart-item col-12" id="${vinileincarrello.vinile.ean}">
+                <div class="album col-12 row my-5 my-sm-4 mx-auto">
+                    <div class="col-9 col-sm-3 mx-auto">
+                        <a href="dettaglio-album.html">
+                            <img src="<%= request.getContextPath()%>/img/Cover/${vinileincarrello.vinile.copertina}"
+                                 alt="Copertina Album 1" class="img-fluid">
+                        </a>
                     </div>
-                    <div class="item-quantity">
-                        <input value="1" type="number" placeholder="quantita">
-                        <input>
+                    <div class="information col-12 col-sm-9">
+                        <h4>${vinileincarrello.vinile.titolo}</h4>
+                        <h4>${vinileincarrello.vinile.prezzo}&euro;</h4>
                     </div>
-                    <div class="item-actions">
-                        <button href="carrello?action=rimuovi&ean=${vinile.ean}" class="delete-button">Rimuovi dal
-                            carrello
-                        </button>
-                    </div>
+                </div>
+                <div class="item-quantity">
+                    <input value="1" type="number" placeholder="quantita"/>
+                </div>
+                <div class="item-actions">
+                    <button class="delete-button" onclick="rimuovi(this)">Rimuovi dal carrello</button>
                 </div>
             </div>
         </c:forEach>
 
 
         <script>
-            function rimuovi(isbn) {
-                var xmlHttpReq = new XMLHttpRequest();
-                xmlHttpReq.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        console.log(this.responseText);
-                        var prezzi = this.responseText.split(" ");
-                        var conferma = prezzi[0];
-                        var totProdotti = prezzi[6];
-                        if (conferma == "ok" && totProdotti != "0") {
-                            var prezzoCarrelloNetto = prezzi[1];
-                            var prezzoTasse = prezzi[2];
-                            var prezzoTotale = prezzi[3];
-                            var prezzoSpedizione = prezzi[4];
-                            var prezzoCarrelloLordo = prezzi[5];
-                            var cod = "<b>Subtotale:</b> " + prezzoCarrelloNetto + " €" + "<br>\n" +
-                                "<b>Tasse (22%):</b> " + prezzoTasse + " €" + "<br>\n" +
-                                "<b>Totale netto:</b> " + prezzoTotale + " €" + "<br>\n" +
-                                "<b>Costo Spedizione:</b> " + prezzoSpedizione + " €" + "<br>\n" +
-                                "<b>Totale Lordo:</b> " + prezzoCarrelloLordo + " €";
-                            $("#tot").html(cod);
-                        } else if (conferma == "ok" && totProdotti == "0") {
-                            $("#totale").fadeOut("normal", function () {
-                                $(this).remove();
-                            });
-                            document.getElementById('titolo').insertAdjacentHTML('afterend', '<div class="card" id="carrellovuoto" style="display: none">\n' +
-                                '                <h3>Al momento non ci sono prodotti nel carrello</h3>\n' +
-                                '            </div>');
-                            $("#carrellovuoto").fadeIn("slow");
-                        }
-                        $("#carrellonavbar").text("Carrello (" + totProdotti + ")");
+            function rimuovi(button) {
+                let method = "Post";
+                let url = "<%= request.getContextPath()%>/cliente/carrello";
+                let action = "<%=CarrelloServlet.RIMUOVI_VINILE%>";
+                let cartItem = $(button).parent().parent();
+                let ean = cartItem.attr("id");
+                $.ajax({
+                    method: method,
+                    url: url,
+                    data: {
+                        action: action,
+                        ean: ean
                     }
-                }
-                xmlHttpReq.open("GET", "rimuovicarrello?id=" + isbn, true);
-                xmlHttpReq.send();
-                $("#" + isbn).fadeOut("normal", function () {
-                    $(this).remove();
+                }).then(resp => {
+                    console.log(resp);
+                    cartItem.remove();
+                }).catch(resp => {
+                    console.error(resp);
                 });
             }
-
-            $(document).ready(function () {
-
-
-                $("input[type=\"number\"] ").change((event) => {
-                    var id = (event.target.id).slice(16, event.target.id.lenght);
-                    var quantita = (event.target.value);
-                    $.ajax({
-                        url: "ModificaCarrello",
-                        data: {
-                            id,
-                            quantita
-                        },
-                        error: () => console.error("errore Ajax Carrello"),
-                        success: (responseText) => {
-                            var prezzi = responseText.split(" ");
-                            var prezzoProdottoTot = prezzi[0];
-                            var prezzoCarrelloNetto = prezzi[1];
-                            var prezzoTasse = prezzi[2];
-                            var prezzoTotale = prezzi[3];
-                            var prezzoSpedizione = prezzi[4];
-                            var prezzoCarrelloLordo = prezzi[5];
-                            var totProdotti = prezzi[6];
-                            var disponibili = prezzi[7];
-                            var cod = "<b>Subtotale:</b> " + prezzoCarrelloNetto + " €" + "<br>\n" +
-                                "<b>Tasse (22%):</b> " + prezzoTasse + " €" + "<br>\n" +
-                                "<b>Totale netto:</b> " + prezzoTotale + " €" + "<br>\n" +
-                                "<b>Costo Spedizione:</b> " + prezzoSpedizione + " €" + "<br>\n" +
-                                "<b>Totale Lordo:</b> " + prezzoCarrelloLordo + " €";
-                            $("#tot").html(cod);
-                            $("#prezzoProdotto" + id).text(prezzoProdottoTot + " €");
-                            $("#carrellonavbar").text("Carrello (" + totProdotti + ")");
-
-                            if (quantita.length > 8) {
-                                quantita = quantita.substring(0, 7);
-                            }
-
-                            if (parseInt(disponibili) <= parseInt(quantita)) {
-                                $("#modificaQuantita" + id).val("" + disponibili);
-                            }
-                            if (quantita <= 0 || quantita == "") {
-                                $("#modificaQuantita" + id).val("1");
-                            }
-                        }
-                    })
-                })
-            });
         </script>
 
         <!--
@@ -193,8 +130,8 @@
 
 
         <div class="prezzo col-4 col-sm-3 mt-4 mt-sm-0">
-            <h3>Totale provvisorio (3 articoli): </h3>
-            <h2 class="display-3"><strong>105.95&euro;</strong></h2>
+            <h3>Totale provvisorio (<%= carrello.getQuantita() %>articoli): </h3>
+            <h2 class="display-3"><strong><%= carrello.getTotale() %>&euro;</strong></h2>
             <button class="add-to-cart btn btn btn-warning">Procedi all'ordine</button>
         </div>
     </div>

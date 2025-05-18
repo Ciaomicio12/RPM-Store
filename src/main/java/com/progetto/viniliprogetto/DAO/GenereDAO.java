@@ -59,7 +59,7 @@ public class GenereDAO {
         try {
             Connection conn = ConPool.getConnection();
             PreparedStatement ps = conn.prepareStatement("SELECT id, nome " +
-                    "FROM categoria");
+                    "FROM genere");
             ArrayList<Genere> genere = new ArrayList<>();
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -87,7 +87,7 @@ public class GenereDAO {
 
     public void doUpdate(Genere genere) throws SQLException {
         Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement("UPDATE categoria SET nome=? " +
+        PreparedStatement ps = conn.prepareStatement("UPDATE genere SET nome=? " +
                 "WHERE id=?");
         ps.setInt(2, genere.getId());
         ps.setString(1, genere.getNome());

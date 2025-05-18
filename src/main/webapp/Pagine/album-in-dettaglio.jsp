@@ -1,3 +1,8 @@
+<%@ page import="com.progetto.viniliprogetto.Model.Vinile" %>
+<%@ page import="com.progetto.viniliprogetto.Controller.CarrelloServlet" %>
+<%
+  Vinile vinile = (Vinile) request.getAttribute("vinile");
+%>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
@@ -46,7 +51,12 @@
 
         <c:if test="${utente != null}">
           <c:if test="${!utente.admin && vinile.numeroDisponibili > 0}">
-            <button href="carrello?id=${vinile.ean}" id="add-to-cart-button">Aggiungi al carrello</button>
+            <form method="post" action="<%=request.getContextPath()%>/cliente/carrello">
+              <button type="submit" id="add-to-cart-button" name="action"
+                      value="<%= CarrelloServlet.AGGIUNGI_VINILE %>">Aggiungi al carrello
+              </button>
+              <input type="hidden" name="ean" value="${vinile.ean}"/>
+            </form>
             <p>${vinile.numeroDisponibili} copie disponibili</p>
           </c:if>
           <c:if test="${!utente.admin && vinile.numeroDisponibili == 0}">
