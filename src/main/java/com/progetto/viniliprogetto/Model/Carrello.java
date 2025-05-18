@@ -18,7 +18,7 @@ public class Carrello {
         }
     }
 
-    public int getQuantitaCarrello() {
+    public int getQuantita() {
         int i = 0;
         for (VinileInCarrello vic : vinili) i++;
         return i;
@@ -43,6 +43,14 @@ public class Carrello {
 
     public ArrayList<VinileInCarrello> getVinili() {
         return vinili;
+    }
+
+    public float getTotale() {
+        int sum = 0;
+        for (VinileInCarrello v : vinili) {
+            sum += (v.getVinile().getPrezzo() * v.getQuantita());
+        }
+        return sum;
     }
     /*
     public int getTotprodotti() {

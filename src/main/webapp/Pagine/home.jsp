@@ -23,7 +23,8 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 my-4">
                 <div class="card">
                     <a href="vinile?ean=${vinile.ean}">
-                        <img src="img/Cover/${vinile.copertina}" class="card-img-top" alt="Copertina Album 1">
+                        <img src="<%= request.getContextPath()%>/img/Cover/${vinile.copertina}" class="card-img-top"
+                             alt="Copertina Album 1">
                     </a>
                     <div class="card-body">
                         <h5 class="card-title">${vinile.titolo}</h5>
