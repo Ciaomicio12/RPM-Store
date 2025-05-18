@@ -130,6 +130,36 @@
 					return false; // Blocca l'aggiornamento
 				}
 			}
+
+			function validateAnno(){
+				const annoInput = document.getElementById('code');
+				const annoValue = annoInput.value;
+
+				if (annoValue < 1948) {
+					alert('L\'anno di uscita non è valido.');
+					return false; // Blocca l'aggiornamento
+				}
+			}
+
+			function validatePrezzo(){
+				const prezzoInput = document.getElementById('code');
+				const prezzoValue = prezzoInput.value;
+
+				if (prezzoValue < 0) {
+					alert('Prezzo non valido.');
+					return false; // Blocca l'aggiornamento
+				}
+			}
+
+			function validateQuantity(){
+				const quantityInput = document.getElementById('code');
+				const quantityValue = quantityInput.value;
+
+				if (quantityValue < 0) {
+					alert('Numero di copie valido.');
+					return false; // Blocca l'aggiornamento
+				}
+			}
 		</script>
 </body>
 
