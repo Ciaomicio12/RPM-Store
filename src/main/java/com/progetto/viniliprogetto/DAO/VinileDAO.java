@@ -203,7 +203,7 @@ public class VinileDAO {
             psCa2.executeUpdate();
 
             PreparedStatement psCa = conn.prepareStatement("INSERT INTO vinile_genere (ean, id) VALUES (?, ?)");
-            for (Genere c : vinile.getGeneri()) {
+            for (Genere c : vinile.getGenere()) {
                 psCa.setString(1, vinile.getEan());
                 psCa.setInt(2, c.getId());
                 psCa.addBatch();
