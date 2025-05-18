@@ -17,46 +17,53 @@
 <body>
 <%@ include file="../header.jsp" %>
 
-<div class="search-bar">
-    <input type="text" id="search-input" placeholder="Cerca per titolo, artista, genere...">
-    <button id="search-button">Cerca</button>
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <input type="text" id="search-input" class="form-control"
+                       placeholder="Cerca per titolo, artista, genere...">
+                <button id="search-button" class="btn btn-primary" type="button">Cerca</button>
+            </div>
+        </div>
+        <div class="col-md-6 text-end">
+            <a href="<%= request.getContextPath() %>/aggiungivinile" class="btn btn-success">Aggiungi Nuovo Album</a>
+        </div>
+    </div>
 </div>
 
-<button href="<%= request.getContextPath() %>/aggiungivinile" id="add-album-button">Aggiungi Nuovo Album</button>
-
-<table id="inventory-table">
-    <thead>
-    <tr>
-        <th>Copertina</th>
-        <th onclick="sortTable(0)">Titolo</th>
-        <th onclick="sortTable(1)">Artista</th>
-        <th onclick="sortTable(2)">Genere</th>
-        <th onclick="sortTable(3)">Prezzo</th>
-        <th onclick="sortTable(4)">EAN</th>
-        <th onclick="sortTable(5)">Quantità</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Copertina</th>
+            <th onclick="sortTable(0)">Titolo</th>
+            <th onclick="sortTable(1)">Artista</th>
+            <th onclick="sortTable(2)">Genere</th>
+            <th onclick="sortTable(3)">Prezzo</th>
+            <th onclick="sortTable(4)">EAN</th>
+            <th onclick="sortTable(5)">Quantità</th>
+        </tr>
+        </thead>
+        <tbody>
         <c:forEach items="${vinili}" var="vinile">
-            <td><img src="img/Cover/${vinile.copertina}"></td>
-            <td><a href="impostazioni-prodotto.jsp">${vinile.titolo}</a></td>
-            <td>${vinile.autore}</td>
-            <td>${vinile.getGenereString()}</td>
-            <td>${vinile.prezzo}&euro;</td>
-            <td>${vinile.ean}</td>
-            <td>${vinile.numeroDisponibili}</td>
+            <tr>
+                <td><img src="img/Cover/${vinile.copertina}" width="120px" class="img-fluid"></td>
+                <td><a href="impostazioni-prodotto.jsp">${vinile.titolo}</a></td>
+                <td>${vinile.autore}</td>
+                <td>${vinile.getGenereString()}</td>
+                <td>${vinile.prezzo}&euro;</td>
+                <td>${vinile.ean}</td>
+                <td>${vinile.numeroDisponibili}</td>
+            </tr>
         </c:forEach>
-    </tr>
-    </tbody>
-</table>
-
-<script src="script.js"></script>
+        </tbody>
+    </table>
+</div>
 
 <%@ include file="../footer.jsp" %>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 </body>
-
 </html>
