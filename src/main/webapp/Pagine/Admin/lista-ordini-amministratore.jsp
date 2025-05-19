@@ -15,7 +15,50 @@
 	</style>
 </head>
 <body>
-		<%@ include file = "../header.jsp" %>
+<%@ include file = "../header.jsp" %>
+
+<!--
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <input type="text" id="search-input" class="form-control"
+                       placeholder="Cerca per acquirente, destinatario, numero ordine...">
+                <button id="search-button" class="btn btn-primary" type="button">Cerca</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+			<tr>
+				<th onclick="sortTable(0)">Numero ordine</th>
+				<th onclick="sortTable(1)">Destinatario</th>
+				<th onclick="sortTable(2)">Acquirente</th>
+				<th onclick="sortTable(3)">Data Acquisto</th>
+				<th onclick="sortTable(4)">Totale</th>
+				<th onclick="sortTable(5)">Stato</th>
+			</tr>
+        </thead>
+        <tbody>
+			<c:forEach items="${ordini}" var="ordine">
+				<tr>
+					<td><a href="ordine-in-dettaglio.jsp">${ordine.numero-ordine}</a></td>
+					<td>${ordine.destinatario}</td>
+					<td>${ordine.acquirente}</td>
+					<td>${ordine.data-acquisto}</td>
+					<td>${ordine.totale-acquisto}&euro;</td>
+					<td>${ordine.stato}</td>
+				</tr>
+			</c:forEach>
+        </tbody>
+    </table>
+</div>
+
+-->
 
 	  		<form action="#" method="GET" class="search-bar">	  			
 			    <input type="text" id="search-input" placeholder="Cerca per ordine, cliente...">
