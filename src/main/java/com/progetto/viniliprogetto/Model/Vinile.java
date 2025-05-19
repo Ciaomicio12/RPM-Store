@@ -1,12 +1,14 @@
 package com.progetto.viniliprogetto.Model;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Vinile {
     private String ean;
     private int annoPubblicazione;
-    private int prezzo;
+    private float prezzo;
     private int numeroDisponibili;
     private String autore;
     private String titolo;
@@ -60,12 +62,16 @@ public class Vinile {
         this.annoPubblicazione = annoPubblicazione;
     }
 
-    public int getPrezzo() {
+    public float getPrezzo() {
         return prezzo;
     }
 
-    public void setPrezzo(int prezzo) {
+    public void setPrezzo(float prezzo) {
         this.prezzo = prezzo;
+    }
+
+    public String getPrezzoString() {
+        return DecimalFormat.getCurrencyInstance(Locale.GERMANY).format(prezzo).replace("€", "");
     }
 
     public int getNumeroDisponibili() {

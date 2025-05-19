@@ -45,7 +45,7 @@
         <p>EAN</p>
       </div>
       <div class="prezzo col-4 col-sm-3 mt-4 mt-sm-0">
-        <h3 class="display-3"><strong>${vinile.prezzo}&euro;</strong></h3>
+        <h3 class="display-3"><strong>${vinile.getPrezzoString()}&euro;</strong></h3>
         <p>Prezzo</p>
         <!-- <button class="add-to-cart btn btn btn-warning">Aggiungi al carrello</button> -->
 

@@ -4,7 +4,7 @@ public class VinileInOrdine {
     private Ordine ordine;
     private Vinile vinile;
     private int quantita;
-    private int prezzo;
+    private float prezzo;
 
     public Ordine getOrdine() {
         return ordine;
@@ -30,11 +30,11 @@ public class VinileInOrdine {
         this.quantita = quantita;
     }
 
-    public int getPrezzo() {
+    public float getPrezzo() {
         return prezzo;
     }
 
-    public void setPrezzo(int prezzo) {
+    public void setPrezzo(float prezzo) {
         this.prezzo = prezzo;
     }
 }

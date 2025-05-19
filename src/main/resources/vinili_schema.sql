@@ -33,12 +33,12 @@ CREATE TABLE utente
 CREATE TABLE vinile
 (
     EAN                varchar(14),
-    anno_pubblicazione int           not null,
-    prezzo             DECIMAL(5, 2) not null,
+    anno_pubblicazione int         not null,
+    prezzo             float       not null,
     numero_disponibili int,
     autore             varchar(50),
-    titolo             text          not null,
-    copertina          varchar(50)   not null unique,
+    titolo             text        not null,
+    copertina          varchar(50) not null unique,
     primary key (EAN)
 );
 
