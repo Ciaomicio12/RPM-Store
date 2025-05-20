@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 
 @MultipartConfig
-@WebServlet("/caricavinile")
+@WebServlet("/admin/caricavinile")
 public class CaricaVinileServlet extends HttpServlet {
     private static final String CARTELLA_UPLOAD = "img/Cover";
 
@@ -150,7 +150,7 @@ public class CaricaVinileServlet extends HttpServlet {
         } else if (edit != null) {
             vdao.doUpdate(v);
         }
-        response.sendRedirect("vinile?ean=" + v.getEan());
+        response.sendRedirect(request.getContextPath().concat("/vinile?ean=").concat(v.getEan()));
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

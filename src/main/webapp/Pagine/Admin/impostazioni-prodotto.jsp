@@ -26,7 +26,7 @@
 <%@ include file="../header.jsp" %>
 <h2>Impostazioni prodotto</h2>
 <form class="container" enctype="multipart/form-data" method="POST"
-      action="<%= request.getContextPath() %>/caricavinile">
+      action="<%= request.getContextPath() %>/admin/caricavinile">
 
     <div class="input-group mb-3">
         <div class="d-flex align-items-start">
