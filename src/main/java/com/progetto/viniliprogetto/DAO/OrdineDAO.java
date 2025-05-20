@@ -128,7 +128,7 @@ public class OrdineDAO {
         }
     }
 
-    public Ordine doRetriveById(int idutente) {
+    public Ordine doRetriveById(int idordine) {
         try {
             Connection con = ConPool.getConnection();
             PreparedStatement ps = con.prepareStatement("SELECT o.id AS idordine, o.id_utente AS idutenteordine, o.oradiordine AS oradiordine,\n" +
@@ -149,7 +149,7 @@ public class OrdineDAO {
                     "        inner join utente u on o.id_utente = u.id\n" +
                     "        inner join indirizzo i on o.indirizzo = i.id\n" +
                     "        where o.id=?");
-            ps.setInt(1, idutente);
+            ps.setInt(1, idordine);
             Ordine ordine = null;
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
