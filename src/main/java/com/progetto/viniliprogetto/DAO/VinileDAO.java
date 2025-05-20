@@ -42,7 +42,7 @@ public class VinileDAO {
         Vinile v = new Vinile();
         v.setEan(rs.getString(1));
         v.setAnnoPubblicazione(rs.getInt(2));
-        v.setPrezzo(rs.getInt(3));
+        v.setPrezzo(rs.getFloat(3));
         v.setNumeroDisponibili(rs.getInt(4));
         v.setAutore(rs.getString(5));
         v.setTitolo(rs.getString(6));
@@ -159,21 +159,28 @@ public class VinileDAO {
         return rs.getInt(1);
     }
 
-    public void doSave(Vinile vinile) {
+    public void doSave(Vinile vinile, List<Genere> generi) {
         try {
             Connection conn = ConPool.getConnection();
             String sql = "INSERT INTO vinile(ean,anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina) " +
-                    "VALUES (?,?,?,?,?,?,?,?,?,?)";
+                    "VALUES (?,?,?,?,?,?,?)";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, vinile.getEan());
             st.setInt(2, vinile.getAnnoPubblicazione());
-            st.setInt(3, vinile.getPrezzo());
+            st.setFloat(3, vinile.getPrezzo());
             st.setInt(4, vinile.getNumeroDisponibili());
             st.setString(5, vinile.getAutore());
             st.setString(6, vinile.getTitolo());
             st.setString(7, vinile.getCopertina());
             st.executeUpdate();
             st.close();
+            PreparedStatement psCa = conn.prepareStatement("INSERT INTO vinile_genere (ean, id) VALUES (?, ?)");
+            for (Genere genere : generi) {
+                psCa.setString(1, vinile.getEan());
+                psCa.setInt(2, genere.getId());
+                psCa.addBatch();
+            }
+            psCa.executeBatch();
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -190,7 +197,7 @@ public class VinileDAO {
                     "WHERE ean=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, vinile.getAnnoPubblicazione());
-            ps.setInt(2, vinile.getPrezzo());
+            ps.setFloat(2, vinile.getPrezzo());
             ps.setInt(3, vinile.getNumeroDisponibili());
             ps.setString(4, vinile.getAutore());
             ps.setString(5, vinile.getTitolo());
@@ -203,7 +210,7 @@ public class VinileDAO {
             psCa2.executeUpdate();
 
             PreparedStatement psCa = conn.prepareStatement("INSERT INTO vinile_genere (ean, id) VALUES (?, ?)");
-            for (Genere c : vinile.getGenere()) {
+            for (Genere c : vinile.getGeneri()) {
                 psCa.setString(1, vinile.getEan());
                 psCa.setInt(2, c.getId());
                 psCa.addBatch();

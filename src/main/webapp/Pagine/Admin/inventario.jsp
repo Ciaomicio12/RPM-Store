@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="col-md-6 text-end">
-            <a href="<%= request.getContextPath() %>/aggiungivinile" class="btn btn-success">Aggiungi Nuovo Album</a>
+            <a href="<%= request.getContextPath() %>/admin/aggiunta" class="btn btn-success">Aggiungi Nuovo Album</a>
         </div>
     </div>
 </div>
@@ -48,8 +48,9 @@
         <tbody>
         <c:forEach items="${vinili}" var="vinile">
             <tr>
-                <td><img src="img/Cover/${vinile.copertina}" width="120px" class="img-fluid"></td>
-                <td><a href="impostazioni-prodotto.jsp">${vinile.titolo}</a></td>
+                <td><img src="${pageContext.request.contextPath}/img/Cover/${vinile.copertina}" width="120px"
+                         class="img-fluid"></td>
+                <td><a href="impostazioni-prodotto">${vinile.titolo}</a></td>
                 <td>${vinile.autore}</td>
                 <td>${vinile.getGenereString()}</td>
                 <td>${vinile.prezzo}&euro;</td>

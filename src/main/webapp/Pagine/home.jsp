@@ -29,7 +29,7 @@
                     <div class="card-body">
                         <h5 class="card-title">${vinile.titolo}</h5>
                         <p class="card-text">${vinile.autore}</p>
-                        <p class="card-text"><strong>${vinile.prezzo}&euro;</strong></p>
+                        <p class="card-text"><strong>${vinile.getPrezzoString()}&euro;</strong></p>
                         <a type="button" href="vinile?ean=${vinile.ean}" class="btn btn-outline-danger rounded-pill">Dettagli </a>
                     </div>
                 </div>

@@ -3,7 +3,6 @@ package com.progetto.viniliprogetto.Controller;
 import com.progetto.viniliprogetto.DAO.GenereDAO;
 import com.progetto.viniliprogetto.DAO.VinileDAO;
 import com.progetto.viniliprogetto.Model.Genere;
-import com.progetto.viniliprogetto.Model.Utente;
 import com.progetto.viniliprogetto.Model.Vinile;
 
 import javax.servlet.ServletException;
@@ -23,12 +22,10 @@ import java.util.regex.Pattern;
 @MultipartConfig
 @WebServlet("/caricavinile")
 public class CaricaVinileServlet extends HttpServlet {
-    private static final String CARTELLA_UPLOAD = "img";
+    private static final String CARTELLA_UPLOAD = "img/Cover";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Utente user = (Utente) session.getAttribute("utente");
-        if (user != null && user.isAdmin() == true) {
             String titolo = request.getParameter("titolo");
             String autore = request.getParameter("autore");
             String numeroDisponibili = request.getParameter("numerodisponibile");
@@ -39,45 +36,24 @@ public class CaricaVinileServlet extends HttpServlet {
             if (ean == null) {
                 ean = edit;
             }
-            String errore = "";
-            int nDisponibili = -1, aPub = -1;
-            int prezzoint = -1;
-            VinileDAO vdao = new VinileDAO();
+        int nDisponibili = -1, aPub = -1;
+        float prezzoint = -1;
+        VinileDAO vdao = new VinileDAO();
 
             if (titolo.length() == 0) {
-                errore = errore + "Il campo titolo non può essere vuoto<br>";
+                throw new MyServletException("il titolo non può essere vuoto", 400);
             }
             if (autore.length() == 0) {
-                errore = errore + "Il campo autore non può essere vuoto<br>";
+                throw new MyServletException("il campo autore non può essere vuoto", 400);
             }
             if (prezzo.length() == 0) {
-                errore = errore + "Il campo prezzo non può essere vuoto<br>";
+                throw new MyServletException("il campo prezzo non può essere vuoto", 400);
             }
             try {
-                prezzo = prezzo.replace("-", "");
-                String[] array = new String[0];
-                if (prezzo.contains(",") || prezzo.contains(".")) {
-                    if (prezzo.contains(",")) {
-                        array = prezzo.split(",");
-                    } else if (prezzo.contains(".")) {
-                        array = prezzo.split(Pattern.quote("."));
-                    }
-                    if (array.length == 2) {
-                        try {
-                            prezzoint = Integer.parseInt(array[0] + array[1].substring(0, 2));
-                        } catch (StringIndexOutOfBoundsException er) {
-                            prezzoint = Integer.parseInt(array[0] + array[1]);
-                        }
-
-                    } else {
-                        errore = errore + "Il prezzo non é valido";
-                    }
-                } else {
-                    prezzoint = Integer.parseInt(prezzo);
-                    prezzoint = prezzoint * 100;
-                }
+                prezzoint = Float.parseFloat(prezzo);
             } catch (NumberFormatException er) {
-                errore = errore + "Il campo prezzo deve contenere solo numeri<br>";
+                throw new MyServletException("Il campo prezzo deve contenere solo numeri", 400);
+
             }
             if (numeroDisponibili == null) {
                 numeroDisponibili = "0";
@@ -86,38 +62,39 @@ public class CaricaVinileServlet extends HttpServlet {
                 try {
                     nDisponibili = Integer.parseInt(numeroDisponibili);
                 } catch (NumberFormatException er) {
-                    errore = errore + "Il campo numero disponibili deve contenere solo numeri<br>";
+                    throw new MyServletException("il campo numeri disponibili, deve contenre solo numeri ", 400);
                 }
             }
-            if (ean.length() == 0) {
-                errore = errore + "Il campo isbn non può essere vuoto<br>";
-            }
+        if (ean.length() == 0) {
+            throw new MyServletException("il campo ean non può essere null", 400);
+        }
 
-            if (edit != null && edit.equals(ean) == false) {
-                errore = errore + "Il campo isbn non può essere modificato<br>";
-            }
-            if (ean.matches("/^[0-9]{13}$/g")) {
-                errore = errore + "Il campo isbn deve contenere solo numeri e deve essere lungo 13 caratteri<br>";
-            }
+        if (edit != null && edit.equals(ean) == false) {
+            throw new MyServletException("il campo ean non può essere modificato", 400);
+        }
+        if (Pattern.matches("[a-zA-Z]+", ean) == false && ean.length() == 13) {
+            throw new MyServletException("il campo ean può contenre solo numeri e deve essere da 13 carratteri", 400);
+        }
 
-            if (vdao.doRetrieveByEan(ean) != null && edit == null) {
-                errore = errore + "Esiste già un libro con questo isbn<br>";
-            }
-            if (annoPubblicazione.length() == 0) {
-                errore = errore + "Il campo anno pubblicazioni non può essere vuoto<br>";
-            }
-            try {
-                Date date = new Date();
+        if (vdao.doRetrieveByEan(ean) != null && edit == null) {
+            throw new MyServletException("esiste già un vinile con questo ean", 400);
+        }
+        if (annoPubblicazione.length() == 0) {
+            throw new MyServletException("il campo anno non può essere vuoto", 400);
+        }
+        try {
+            Date date = new Date();
                 Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
                 cal.setTime(date);
                 int year = cal.get(Calendar.YEAR);
                 aPub = Integer.parseInt(annoPubblicazione);
                 if (aPub > year) {
-                    errore = errore + "L'anno inserito da te non é valido, l'anno deve essere inferiore alla date attuale<br>";
+                    throw new MyServletException("L'anno inserito da te non é valido, l'anno deve essere inferiore alla date attuale", 400);
                 }
             } catch (NumberFormatException er) {
-                errore = errore + "Il campo anno pubblicazione deve contenere solo numeri<br>";
-            }
+            throw new MyServletException("Il campo anno pubblicazione deve contenere solo numeri", 400);
+
+        }
             GenereDAO cdao = new GenereDAO();
             List<Genere> listCat = cdao.doRetrieveAll();
             ArrayList<Genere> listCatform = new ArrayList<Genere>();
@@ -127,8 +104,7 @@ public class CaricaVinileServlet extends HttpServlet {
                     String f = request.getParameter(String.valueOf(listCat.get(i).getId()));
                     if (f != null) id = Integer.parseInt(f);
                 } catch (NumberFormatException er) {
-                    errore = errore + "Il campo categoria non é valido<br>";
-                    break;
+                    throw new MyServletException("Il campo genere non é valido", 400);
                 }
                 if (listCat.get(i).getId() == id) {
                     listCatform.add(listCat.get(i));
@@ -147,15 +123,11 @@ public class CaricaVinileServlet extends HttpServlet {
             v.setAnnoPubblicazione(aPub);
             v.setPrezzo(prezzoint);
             v.setGeneri(listCatform);
-            Part filePart = request.getPart("img");
+        Part filePart = request.getPart("cover");
             if (filePart.getSize() == 0 && edit == null) {
-                errore = errore + "Non hai inserito alcuna copertina<br>";
+                throw new MyServletException("Non hai inserito alcuna copertina", 400);
             } else if (edit == null && filePart.getContentType().endsWith("jpg") == false && filePart.getContentType().endsWith("jpeg") == false && filePart.getContentType().endsWith("png") == false) {
-                errore = errore + "La copertina non ha un estensione valida<br>";
-            }
-
-            if (errore.length() > 0) {
-                throw new MyServletException("Sono stati trovati i seguenti errori:<br><br>" + errore);
+                throw new MyServletException("La copertina non ha un estensione valida", 400);
             }
 
             if (filePart.getSize() != 0) {
@@ -173,15 +145,12 @@ public class CaricaVinileServlet extends HttpServlet {
                 v.setCopertina(fileName);
             }
 
-            if (edit == null) {
-                vdao.doSave(v);
-            } else if (edit != null) {
-                vdao.doUpdate(v);
-            }
-            response.sendRedirect("vinile?id=" + v.getEan());
-        } else {
-            throw new MyServletException("Sezione dedicata ai soli amministratori, perfavore prima fai il login");
+        if (edit == null) {
+            vdao.doSave(v, listCatform);
+        } else if (edit != null) {
+            vdao.doUpdate(v);
         }
+        response.sendRedirect("vinile?ean=" + v.getEan());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
