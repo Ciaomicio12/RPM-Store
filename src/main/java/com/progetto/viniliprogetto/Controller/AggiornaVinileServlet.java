@@ -21,26 +21,32 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Pattern;
 
-
 @MultipartConfig
-@WebServlet("/admin/caricavinile")
-public class CaricaVinileServlet extends HttpServlet {
+@WebServlet("/admin/aggiornamodifiche")
+public class AggiornaVinileServlet extends HttpServlet {
     private static final String CARTELLA_UPLOAD = "img/Cover";
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String ean = (String) request.getParameter("ean");
+        if (ean == null) {
+            throw new MyServletException("Manca ean", 400);
+        } else {
+            VinileDAO vinileDAO = new VinileDAO();
+            Vinile vinile = vinileDAO.doRetrieveByEan(ean);
+            if (vinile == null) {
+                throw new MyServletException("Errore vinile non trovato", 404);
+            }
+            request.setAttribute("vinile", vinile);
             String titolo = request.getParameter("titolo");
             String autore = request.getParameter("autore");
             String numeroDisponibili = request.getParameter("numerodisponibile");
-            String ean = request.getParameter("ean");
             String annoPubblicazione = request.getParameter("anno");
             String prezzo = request.getParameter("prezzo");
-            String edit = request.getParameter("edit");
-            if (ean == null) {
-                ean = edit;
-            }
-        int nDisponibili = -1, aPub = -1;
-        float prezzoint = -1;
-        VinileDAO vdao = new VinileDAO();
+
+            int nDisponibili = -1, aPub = -1;
+            float prezzoint = -1;
+            VinileDAO vdao = new VinileDAO();
 
             if (titolo.length() == 0) {
                 throw new MyServletException("il titolo non può essere vuoto", 400);
@@ -67,25 +73,19 @@ public class CaricaVinileServlet extends HttpServlet {
                     throw new MyServletException("il campo numeri disponibili, deve contenre solo numeri ", 400);
                 }
             }
-        if (ean.length() == 0) {
-            throw new MyServletException("il campo ean non può essere null", 400);
-        }
+            if (ean.length() == 0) {
+                throw new MyServletException("il campo ean non può essere null", 400);
+            }
 
-        if (edit != null && edit.equals(ean) == false) {
-            throw new MyServletException("il campo ean non può essere modificato", 400);
-        }
-        if (Pattern.matches("[a-zA-Z]+", ean) == false && ean.length() == 13) {
-            throw new MyServletException("il campo ean può contenre solo numeri e deve essere da 13 carratteri", 400);
-        }
+            if (Pattern.matches("[a-zA-Z]+", ean) == false && ean.length() == 13) {
+                throw new MyServletException("il campo ean può contenre solo numeri e deve essere da 13 carratteri", 400);
+            }
 
-        if (vdao.doRetrieveByEan(ean) != null && edit == null) {
-            throw new MyServletException("esiste già un vinile con questo ean", 400);
-        }
-        if (annoPubblicazione.length() == 0) {
-            throw new MyServletException("il campo anno non può essere vuoto", 400);
-        }
-        try {
-            Date date = new Date();
+            if (annoPubblicazione.length() == 0) {
+                throw new MyServletException("il campo anno non può essere vuoto", 400);
+            }
+            try {
+                Date date = new Date();
                 Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
                 cal.setTime(date);
                 int year = cal.get(Calendar.YEAR);
@@ -94,9 +94,9 @@ public class CaricaVinileServlet extends HttpServlet {
                     throw new MyServletException("L'anno inserito da te non é valido, l'anno deve essere inferiore alla date attuale", 400);
                 }
             } catch (NumberFormatException er) {
-            throw new MyServletException("Il campo anno pubblicazione deve contenere solo numeri", 400);
+                throw new MyServletException("Il campo anno pubblicazione deve contenere solo numeri", 400);
 
-        }
+            }
             GenereDAO cdao = new GenereDAO();
             List<Genere> listCat = cdao.doRetrieveAll();
             ArrayList<Genere> listCatform = new ArrayList<Genere>();
@@ -113,22 +113,16 @@ public class CaricaVinileServlet extends HttpServlet {
                 }
             }
             Vinile v = null;
-            if (edit != null) {
-                v = vdao.doRetrieveByEan(ean);
-            } else {
-                v = new Vinile();
-                v.setEan(ean);
-            }
             v.setTitolo(titolo);
             v.setAutore(autore);
             v.setNumeroDisponibili(nDisponibili);
             v.setAnnoPubblicazione(aPub);
             v.setPrezzo(prezzoint);
             v.setGeneri(listCatform);
-        Part filePart = request.getPart("cover");
-            if (filePart.getSize() == 0 && edit == null) {
+            Part filePart = request.getPart("cover");
+            if (filePart.getSize() == 0) {
                 throw new MyServletException("Non hai inserito alcuna copertina", 400);
-            } else if (edit == null && filePart.getContentType().endsWith("jpg") == false && filePart.getContentType().endsWith("jpeg") == false && filePart.getContentType().endsWith("png") == false) {
+            } else if (filePart.getContentType().endsWith("jpg") == false && filePart.getContentType().endsWith("jpeg") == false && filePart.getContentType().endsWith("png") == false) {
                 throw new MyServletException("La copertina non ha un estensione valida", 400);
             }
 
@@ -146,18 +140,7 @@ public class CaricaVinileServlet extends HttpServlet {
                 Files.copy(fileInputStream, pathDestinazione);
                 v.setCopertina(fileName);
             }
-
-        if (edit == null) {
-            vdao.doSave(v, listCatform);
-        } else if (edit != null) {
-            vdao.doUpdate(v);
+            response.sendRedirect(request.getContextPath().concat("/vinile?ean=").concat(v.getEan()));
         }
-        response.sendRedirect(request.getContextPath().concat("/vinile?ean=").concat(v.getEan()));
     }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        throw new MyServletException("Metodo non permesso");
-    }
-
 }
