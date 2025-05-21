@@ -98,7 +98,6 @@
                class="quantity-input"/>
     </div>
 
-    <button type="submit" value="elimina_prodotto" name="azione">Elimina prodotto</button>
     <button type="submit" value="pubblica" name="azione">Pubblica Vinile</button>
 </form>
 <%@ include file="../footer.jsp" %>

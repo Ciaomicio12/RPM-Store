@@ -65,6 +65,7 @@
           <c:if test="${utente.admin}">
             <button id="go-to-modify-album-button">Modifica prodotto</button>
             <p>${vinile.numeroDisponibili} copie disponibili</p>
+            <button id="remove-album">Elimina prodotto</button>
           </c:if>
         </c:if>
         <c:if test="${utente == null}">
