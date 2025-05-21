@@ -23,30 +23,21 @@ public class DettagliOrdineServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Utente utente = (Utente) session.getAttribute("utente");
         if (utente != null && utente.isAdmin() == false) {
+            request.setAttribute("utente", utente);
             String id = request.getParameter("id");
             OrdineDAO dao = new OrdineDAO();
-            Ordine ordine = dao.doRetrievebyUserIdAndOra(id, utente.getId());
-            if (ordine == null) throw new MyServletException("Errore");
+            Ordine ordine = dao.doRetriveById(Integer.parseInt(id));
+            if (ordine == null) throw new MyServletException("Ordine non trovato");
             request.setAttribute("ordine", ordine);
-            request.getRequestDispatcher("WEB-INF/jsp/dettagliordine.jsp").forward(request, response);
+            request.getRequestDispatcher("Pagine/ordine-in-dettaglio.jsp").forward(request, response);
         } else if (utente != null && utente.isAdmin() == true) {
+            request.setAttribute("utente", utente);
             String id = request.getParameter("id");
-            String userid = request.getParameter("userid");
-            int useridn;
-            try {
-                useridn = Integer.parseInt(userid);
-            } catch (NumberFormatException er) {
-                throw new MyServletException("Utente non trovato");
-            }
             OrdineDAO dao = new OrdineDAO();
-            Ordine ordine = dao.doRetrievebyUserIdAndOra(id, useridn);
-            Utente user = new Utente();
-            UtenteDAO ldao = new UtenteDAO();
-            user = ldao.doRetrieveById(useridn);
-            if (ordine == null) throw new MyServletException("Errore");
+            Ordine ordine = dao.doRetriveById(Integer.parseInt(id));
+            if (ordine == null) throw new MyServletException("Ordine non trovato");
             request.setAttribute("ordine", ordine);
-            request.setAttribute("utenteo", user);
-            request.getRequestDispatcher("WEB-INF/jsp/dettagliordine.jsp").forward(request, response);
+            request.getRequestDispatcher("Pagine/ordine-in-dettaglio.jsp").forward(request, response);
         } else {
             throw new MyServletException("Sezione dedicata agli utenti registrati");
         }

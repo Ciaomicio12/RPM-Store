@@ -50,7 +50,7 @@ public class OrdineDAO {
             PreparedStatement ps = con.prepareStatement("SELECT O.oradiordine AS ora,O.totale,U.username AS Username, O.id, U.id AS idutente " +
                     "FROM ordine O " +
                     "  INNER JOIN utente U on o.id_utente = u-id " +
-                    "where O.id_utente=U.id order by O.oradiordine DASH LIMIT ?,?");
+                    "where O.id_utente=U.id order by O.oradiordine DESC LIMIT ?,?");
             ps.setInt(1, offset);
             ps.setInt(2, limit);
             ResultSet rs = ps.executeQuery();
@@ -101,7 +101,7 @@ public class OrdineDAO {
             while (rs.next()) {
                 ordine.setOraordine(rs.getString(1));
                 ordine.setTotale(rs.getInt(2));
-                if (ordine.getVinile().size() > 0) {
+                if (ordine.getVinili().size() > 0) {
                     return ordine;
                 }
             }
@@ -128,7 +128,7 @@ public class OrdineDAO {
         }
     }
 
-    public Ordine doRetriveById(int idutente) {
+    public Ordine doRetriveById(int idOrdine) {
         try {
             Connection con = ConPool.getConnection();
             PreparedStatement ps = con.prepareStatement("SELECT o.id AS idordine, o.id_utente AS idutenteordine, o.oradiordine AS oradiordine,\n" +
@@ -149,7 +149,7 @@ public class OrdineDAO {
                     "        inner join utente u on o.id_utente = u.id\n" +
                     "        inner join indirizzo i on o.indirizzo = i.id\n" +
                     "        where o.id=?");
-            ps.setInt(1, idutente);
+            ps.setInt(1, idOrdine);
             Ordine ordine = null;
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -163,11 +163,11 @@ public class OrdineDAO {
                     ordine.setOraordine(rs.getString(3));
                     ordine.setId(rs.getInt(1));
                     ordine.setStato(rs.getString(5));
-                    indirizzo.setId(rs.getInt("cittaindirizzo"));
+                    indirizzo.setId(rs.getInt("idindirizzo"));
                     indirizzo.setCap(rs.getString("capindirizzo"));
                     indirizzo.setCitta(rs.getString("cittaindirizzo"));
                     indirizzo.setStrada(rs.getString("stradaindirizzo"));
-                    indirizzo.setNumero_civico(rs.getString("numerocivicoindirizzo"));
+                    indirizzo.setNumeroCivico(rs.getString("numerocivicoindirizzo"));
                     indirizzo.setTelefono(rs.getString("indirizzotelefono"));
                     utente.setNome(rs.getString("nomeutente"));
                     utente.setCognome(rs.getString("cognomeutente"));
@@ -186,11 +186,11 @@ public class OrdineDAO {
                 vinile.setAnnoPubblicazione(rs.getInt("vinileanno"));
                 vinile.setNumeroDisponibili(rs.getInt("vinilenumero"));
                 vinile.setAutore(rs.getString("vinileautore"));
-
+                ordine.aggiungiVinile(vio);
             }
+            return ordine;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 }

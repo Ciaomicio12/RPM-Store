@@ -5,7 +5,7 @@ public class Indirizzo {
     private String strada;
     private String citta;
     private String cap;
-    private String numero_civico;
+    private String numeroCivico;
     private String telefono;
 
     public int getId() {
@@ -40,12 +40,12 @@ public class Indirizzo {
         this.cap = cap;
     }
 
-    public String getNumero_civico() {
-        return numero_civico;
+    public String getNumeroCivico() {
+        return numeroCivico;
     }
 
-    public void setNumero_civico(String numero_civico) {
-        this.numero_civico = numero_civico;
+    public void setNumeroCivico(String numeroCivico) {
+        this.numeroCivico = numeroCivico;
     }
 
     public String getTelefono() {
