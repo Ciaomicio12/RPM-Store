@@ -174,8 +174,31 @@ public class VinileDAO {
             st.setString(7, vinile.getCopertina());
             st.executeUpdate();
             st.close();
+            this.doAggiungiGeneriVinile(vinile);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void doRemoveGenereVinile(Vinile vinile) {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement psCa = conn.prepareStatement("DELETE from  Vinile_genere " +
+                    "Where ean = ?");
+            psCa.setString(1, vinile.getEan());
+            psCa.executeUpdate();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void doAggiungiGeneriVinile(Vinile vinile) {
+        try {
+            Connection conn = ConPool.getConnection();
             PreparedStatement psCa = conn.prepareStatement("INSERT INTO vinile_genere (ean, id) VALUES (?, ?)");
-            for (Genere genere : generi) {
+            for (Genere genere : vinile.getGeneri()) {
                 psCa.setString(1, vinile.getEan());
                 psCa.setInt(2, genere.getId());
                 psCa.addBatch();
@@ -185,9 +208,7 @@ public class VinileDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
-
 
     public void doUpdate(Vinile vinile) {
         try {
@@ -203,20 +224,8 @@ public class VinileDAO {
             ps.setString(5, vinile.getTitolo());
             ps.setString(6, vinile.getCopertina());
             ps.setString(7, vinile.getEan());
-
-
-            PreparedStatement psCa2 = conn.prepareStatement("DELETE FROM vinile_genere WHERE ean=?");
-            psCa2.setString(1, vinile.getEan());
-            psCa2.executeUpdate();
-
-            PreparedStatement psCa = conn.prepareStatement("INSERT INTO vinile_genere (ean, id) VALUES (?, ?)");
-            for (Genere c : vinile.getGeneri()) {
-                psCa.setString(1, vinile.getEan());
-                psCa.setInt(2, c.getId());
-                psCa.addBatch();
-            }
-            psCa.executeBatch();
-            conn.close();
+            this.doRemoveGenereVinile(vinile);
+            this.doAggiungiGeneriVinile(vinile);
         } catch (SQLException e) {
             e.printStackTrace();
         }
