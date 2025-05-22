@@ -14,35 +14,39 @@
             text-decoration: underline;
         }
     </style>
+    <link rel="stylesheet" href="<%= request.getContextPath()%>/styleLogin.css"/>
 </head>
 <body>
 
 <%@ include file="header.jsp" %>
 
-<section class="container-fluid">
+<section>
     <div class="row">
-        <form class="border border-dark px-4 py-3 mx-auto mt-5 col-sm-6 col-md-8" method="POST" action="login">
+        <form class="px-4 py-3 mx-auto mt-5 col-sm-6 col-md-8" method="POST" action="login"
+              style="margin-bottom: 100px;">
             <h2 class="title">Accedi</h2>
-            <div class="border border-dark px-4 py-3 mx-1 mx-sm-auto mt-1 col-sm-6">
+            <div class="px-4 py-3 mx-1 mx-sm-auto mt-1 col-sm-6">
                 <h3> ${errorserverlogin}</h3>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Inserisci email"
+                    <div></div>
+                    <input type="email" class="textForm" id="email" name="email" placeholder="Inserisci email"
                            required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password"
+                    <div></div>
+                    <input type="password" class="textForm" id="password" name="password"
                            placeholder="Inserisci password" required>
                 </div>
             </div>
             <div class="mx-auto" style="width: 100px;">
-                <button type="submit" class="btn btn-primary">Accedi</button>
+                <button type="submit" class="btn-outline-danger rounded-pill">Accedi</button>
             </div>
         </form>
     </div>
     <div class="text-center">
-        <h6>Sei nuovo su Record Road? <a href="registrazione">Registrati</a></h6>
+        <h6><a href="registrazione" class="regLink">Sei nuovo su Record Road? Registrati</a></h6>
     </div>
 </section>
 

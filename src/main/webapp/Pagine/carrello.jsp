@@ -17,6 +17,7 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
             integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="http://localhost:8080/ViniliProgetto_war_exploded/styledettaglio.css"/>
 </head>
 <body>
 <%@ include file="header.jsp" %>
@@ -28,7 +29,7 @@
 
         <c:forEach items="${carrello.viniliInCarrello}" var="vinileincarrello">
             <div class="cart-item col-12" id="${vinileincarrello.vinile.ean}">
-                <div class="album col-12 row my-5 my-sm-4 mx-auto">
+                <div class="col-12 row my-5 my-sm-4 mx-auto">
                     <div class="col-9 col-sm-3 mx-auto">
                         <a href="dettaglio-album.html">
                             <img src="<%= request.getContextPath()%>/img/Cover/${vinileincarrello.vinile.copertina}"
@@ -36,15 +37,18 @@
                         </a>
                     </div>
                     <div class="information col-12 col-sm-9">
+                        <h4>${vinileincarrello.vinile.autore}</h4>
                         <h4>${vinileincarrello.vinile.titolo}</h4>
                         <h4>${vinileincarrello.vinile.prezzo}&euro;</h4>
+                        <h4>${vinileincarrello.vinile.ean}</h4>
                     </div>
                 </div>
                 <div class="item-quantity">
-                    <input value="1" type="number" placeholder="quantita"/>
+                    <input class="textForm" value="1" type="number" placeholder="quantita"/>
                 </div>
                 <div class="item-actions">
-                    <button class="delete-button" onclick="rimuovi(this)">Rimuovi dal carrello</button>
+                    <button class="btn-outline-danger rounded-pill" onclick="rimuovi(this)">Rimuovi dal carrello
+                    </button>
                 </div>
             </div>
         </c:forEach>
@@ -132,7 +136,7 @@
         <div class="prezzo col-4 col-sm-3 mt-4 mt-sm-0">
             <h3>Totale provvisorio (<%= carrello.getQuantita() %>articoli): </h3>
             <h2 class="display-3"><strong><%= carrello.getTotale() %>&euro;</strong></h2>
-            <a href="<%= request.getContextPath() %>/effettuaordine" class="add-to-cart btn btn btn-warning">Procedi
+            <a class="btn-outline-danger rounded-pill" href="<%= request.getContextPath() %>/effettuaordine">Procedi
                 all'ordine</a>
         </div>
     </div>

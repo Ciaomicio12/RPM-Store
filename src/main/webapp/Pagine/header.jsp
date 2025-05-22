@@ -58,7 +58,7 @@
             <ul class="navbar-nav mb-2 mb-sm-0 text-center d-flex flex-column flex-sm-row justify-content-evenly">
                 <c:if test="${utente != null}">
                     <li class="nav-item justify-content-center">
-                        <a class="nav-link" href="<%= request.getContextPath() %>/user/profilo">Dati personali</a>
+                        <a class="nav-link" href="<%= request.getContextPath() %>/profilo">Dati personali</a>
                     </li>
                 </c:if>
                 <c:if test="${(utente != null && !utente.admin) || utente == null}">
