@@ -63,7 +63,9 @@
             <p>Prodotto NON disponibile all'acquisto.<br>Copie esaurite.</p>
           </c:if>
           <c:if test="${utente.admin}">
-            <button id="go-to-modify-album-button">Modifica prodotto</button>
+            <button href="<%= request.getContextPath() %>/admin/aggiunta-modifica" id="go-to-modify-album-button">
+              Modifica prodotto
+            </button>
             <p>${vinile.numeroDisponibili} copie disponibili</p>
             <button id="remove-album">Elimina prodotto</button>
           </c:if>
