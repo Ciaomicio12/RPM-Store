@@ -4,29 +4,38 @@
         <div class="col">
             <ul class="d-flex nav justify-content-evenly">
                 <c:if test="${utente != null}">
-                    <li><a class="nav-link" href="<%= request.getContextPath() %>/profilo">Dati personali</a></li>
+                    <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/profilo'">Dati
+                        personali</p></li>
                 </c:if>
-                <li><a class="nav-link" href="<%= request.getContextPath() %>/assistenza">Assistenza</a></li>
+                <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/assistenza'">Assistenza</p>
+                </li>
                 <c:if test="${utente != null}">
                     <c:if test="${!utente.admin}">
-                        <a class="nav-link" href="<%= request.getContextPath() %>/lista-ordini-cliente">I miei
-                            ordini</a>
+                        <p class="fut" onclick="location.href = '<%= request.getContextPath() %>/lista-ordini-cliente'">
+                            I miei
+                            ordini</p>
                     </c:if>
                 </c:if><c:if test="${utente != null}">
                 <c:if test="${utente.admin}">
-                    <li><a class="nav-link" href="<%= request.getContextPath() %>/lista-ordini-amministratore">Elenco
-                        ordinazioni</a></li>
-                    <li><a class="nav-link" href="<%= request.getContextPath() %>/inventario">Inventario</a></li>
+                    <li><p class="fut"
+                           onclick="location.href = '<%= request.getContextPath() %>/lista-ordini-amministratore'">
+                        Elenco
+                        ordinazioni</p></li>
+                    <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/inventario'">
+                        Inventario</p></li>
                 </c:if>
             </c:if>
                 <c:if test="${utente == null}">
-                    <li><a class="nav-link" href="<%= request.getContextPath() %>/login">LogIn/Registrazione</a></li>
+                    <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/login'">
+                        LogIn/Registrazione</p></li>
                 </c:if>
                 <c:if test="${utente != null}">
                     <c:if test="${!utente.admin}">
-                        <li><a class="nav-link" href="<%= request.getContextPath() %>/carrello">Carrello</a></li>
+                        <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/carrello'">
+                            Carrello</p></li>
                     </c:if>
-                    <li><a class="nav-link" href="<%= request.getContextPath() %>/user/logout">LogOut</a></li>
+                    <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/user/logout'">
+                        LogOut</p></li>
                 </c:if>
             </ul>
         </div>

@@ -13,13 +13,14 @@
       text-decoration: underline;
     }
   </style>
+  <link rel="stylesheet" href="<%= request.getContextPath()%>/styleLogin.css"/>
 </head>
 <body>
 <%@ include file="header.jsp" %>
-<section class="container-fluid">
+<section>
   <div class="row">
-    <div class="col-sm-6 mx-auto mt-5">
-      <form class="border border-dark px-4 py-3" method="POST" action="servlet_assistenza">
+    <div>
+      <form class="px-4 py-3" method="POST" action="servlet_assistenza" style="margin-bottom: 100px;">
         <h2 class="title">Assistenza</h2>
         <h4 class="explanation">Puoi contattare direttamente l'assistenza clienti inviando un messaggio tramite questo
           form. In questo modo, inserendo il tuo indirizzo email e l'argomento del tuo messaggio, ci aiuterai ad essere
@@ -27,22 +28,26 @@
           spam.</h4>
         <div class="mb-3">
           <label for="nome" class="form-label">Nome</label>
-          <input type="text" class="form-control" id="nome" name="nome" placeholder="Inserisci nome e cognome" required>
+          <div></div>
+          <input type="text" class="textForm" id="nome" name="nome" placeholder="Inserisci nome e cognome" required>
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="Inserisci email" required>
+          <div></div>
+          <input type="email" class="textForm" id="email" name="email" placeholder="Inserisci email" required>
         </div>
         <div class="mb-3">
           <label for="oggetto" class="form-label">Oggetto</label>
-          <input type="text" class="form-control" id="oggetto" name="oggetto" placeholder="Oggetto:" required>
+          <div></div>
+          <input type="text" class="textForm" id="oggetto" name="oggetto" placeholder="Oggetto:" required>
         </div>
         <div class="mb-3">
           <label for="subject" class="form-label">Descrivi il problema</label>
-          <textarea class="form-control" id="subject" name="subject" placeholder="Scrivi qui" style="height: 200px;"
+          <div></div>
+          <textarea class="textForm" id="subject" name="subject" placeholder="Scrivi qui" style="height: 200px;"
                     required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Invia messaggio</button>
+        <button type="submit" class="btn-outline-danger rounded-pill">Invia messaggio</button>
       </form>
     </div>
   </div>

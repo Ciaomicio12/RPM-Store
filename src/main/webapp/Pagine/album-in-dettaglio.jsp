@@ -27,10 +27,8 @@
 <section class="container">
   <div class="random-albums my-3" class="row">
     <div class="col-12 row my-5 my-sm-4 mx-auto">
-      <div class="album">
         <div class="col-12 col-sm-3">
           <img src="img/Cover/${vinile.copertina}" alt="Copertina Album" class="img-fluid">
-        </div>
       </div>
       <div class="information col-8 col-sm-6 mt-4 mt-sm-0">
         <h3 class="display-6"><strong>${vinile.titolo}</strong></h3>
@@ -52,7 +50,7 @@
         <c:if test="${utente != null}">
           <c:if test="${!utente.admin && vinile.numeroDisponibili > 0}">
             <form method="post" action="<%=request.getContextPath()%>/cliente/carrello">
-              <button type="submit" id="add-to-cart-button" name="action"
+              <button type="submit" class="btn-outline-danger rounded-pill" id="add-to-cart-button" name="action"
                       value="<%= CarrelloServlet.AGGIUNGI_VINILE %>">Aggiungi al carrello
               </button>
               <input type="hidden" name="ean" value="${vinile.ean}"/>
@@ -63,11 +61,12 @@
             <p>Prodotto NON disponibile all'acquisto.<br>Copie esaurite.</p>
           </c:if>
           <c:if test="${utente.admin}">
-            <button href="<%= request.getContextPath() %>/admin/aggiunta-modifica" id="go-to-modify-album-button">
+            <button href="<%= request.getContextPath() %>/admin/aggiunta-modifica"
+                    class="btn-outline-danger rounded-pill" id="go-to-modify-album-button">
               Modifica prodotto
             </button>
             <p>${vinile.numeroDisponibili} copie disponibili</p>
-            <button id="remove-album">Elimina prodotto</button>
+            <button id="remove-album" class="btn-outline-danger rounded-pill">Elimina prodotto</button>
           </c:if>
         </c:if>
         <c:if test="${utente == null}">

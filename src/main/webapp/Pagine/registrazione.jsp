@@ -9,60 +9,69 @@
         rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <style>
-      .nav-link:hover {
-          text-decoration: underline;
-      }
+    .nav-link:hover {
+      text-decoration: underline;
+    }
   </style>
+  <link rel="stylesheet" href="<%= request.getContextPath()%>/styleLogin.css"/>
 </head>
 <body>
 <%@ include file="header.jsp" %>
-<section class="container-fluid">
+<section>
   <div class="row">
-    <form class="border border-dark px-4 py-3 mx-auto mt-5 col-sm-6 col-md-8" method="POST" action="registrazione">
+    <form class="px-4 py-3 mx-auto mt-5 col-sm-6 col-md-8" method="POST" action="registrazione"
+          style="margin-bottom: 100px;">
       <h2 class="title">Creare account</h2>
-      <div class="border border-dark px-4 py-3 mx-3 mx-sm-auto mt-1 col-sm-6">
+      <div class="px-4 py-3 mx-3 mx-sm-auto mt-1 col-sm-6">
         <p> ${formerror}</p>
         <br>
         <div class="form-group">
           <label for="nome">Nome</label>
-          <input type="text" class="form-control" id="nome" name="nome" placeholder="Inserisci nome" required>
+          textForm
+          <input type="text" class="textForm" id="nome" name="nome" placeholder="Inserisci nome" required>
         </div>
         <div class="form-group">
           <label for="cognome">Cognome</label>
-          <input type="text" class="form-control" id="cognome" name="cognome" placeholder="Inserisci cognome" required>
+          <div></div>
+          <input type="text" class="textForm" id="cognome" name="cognome" placeholder="Inserisci cognome" required>
         </div>
         <div class="form-group">
           <label for="username">Username</label>
-          <input type="text" class="form-control" id="username" name="username" placeholder="Inserisci username"
+          <div></div>
+          <input type="text" class="textForm" id="username" name="username" placeholder="Inserisci username"
                  required>
         </div>
         <div class="form-group">
           <label for="sesso">Sesso</label>
-          <select name="sesso" id="sesso" class="form-select">
+          <div></div>
+          <select name="sesso" id="sesso" class="textForm">
             <option value="Maschio">Maschio</option>
             <option value="Femmina">Femmina</option>
           </select>
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="Inserisci email" required>
+          <div></div>
+          <input type="email" class="textForm" id="email" name="email" placeholder="Inserisci email" required>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Inserisci password"
+          <div></div>
+          <input type="password" class="textForm" id="password" name="password" placeholder="Inserisci password"
                  required pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$"
                  title="La password é mal formata! La password deve essere lunga 8 caratteri e al massimo 32. Deve contenere una lettere maiuscola e una minuscola. Deve contenere un numero"
           >
         </div>
         <div class="form-group">
           <label for="confirm-password">Conferma Password</label>
-          <input type="password" class="form-control" id="confirm-password" name="confirm-password"
+          <div></div>
+          <input type="password" class="textForm" id="confirm-password" name="confirm-password"
                  placeholder="Inserisci nuovamente la password" required>
         </div>
       </div>
 
       <div class="mx-auto" style="width: 90px;">
-        <button type="submit" class="btn btn-danger">Conferma</button>
+        <button type="submit" class="btn-outline-danger rounded-pill">Conferma</button>
       </div>
 
     </form>

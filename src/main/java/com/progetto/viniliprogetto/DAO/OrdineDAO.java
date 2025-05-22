@@ -1,34 +1,49 @@
 package com.progetto.viniliprogetto.DAO;
 
+import com.progetto.viniliprogetto.Controller.MyServletException;
 import com.progetto.viniliprogetto.Model.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrdineDAO {
-/*
-    public void doSave(Ordine ordini, Utente utente) throws MyServletException {
-        try (Connection con = ConPool.getConnection()) {
-            String sql = "Insert into ordini (oradiordine,id_utente,ean,anno_pubblicazione,prezzo,autore,titolo,copertina,quantita,totale) values";
-            for (int i = 0; i < ordini.getVinile().size(); i++) {
-                Vinile v = ordini.getVinile().get(i);
 
-                if (i != ordini.getVinile().size() - 1) {
-                    sql = sql + ",";
-                }
-            }
-            sql = sql + ";";
-            PreparedStatement ps = con.prepareStatement(sql);
+    public void doSave(Ordine ordine, Utente utente) {
+        int ordine_id = -1;
+        try (Connection conn = ConPool.getConnection()) {
+            String sql = "Insert into ordine (indirizzo,oradiordine,id_utente,totale,stato) values(?,?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, utente.getIndirizzo().getId());
+            ps.setString(2, ordine.getOraordine());
+            ps.setInt(3, utente.getId());
+            ps.setFloat(4, ordine.getTotale());
+            ps.setString(5, ordine.getStato());
             ps.executeUpdate();
-        } catch (SQLException e) {
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                ordine_id = rs.getInt(1);
+                ordine.setId(ordine_id);
+            } else {
+                throw new MyServletException("Errore doSave in ordineDao");
+            }
+            rs.close();
+            String sql2 = "Insert into vinile_in_ordine (ordine_id,quantita,vinile_ean,prezzoacq) values(?,?,?,?)";
+            for (VinileInOrdine vinile : ordine.getViniliInOrdineList()) {
+                ps = conn.prepareStatement(sql2);
+                ps.setInt(1, ordine_id);
+                ps.setInt(2, vinile.getQuantita());
+                ps.setString(3, vinile.getVinile().getEan());
+                ps.setFloat(4, vinile.getPrezzo());
+                ps.executeUpdate();
+            }
+            conn.close();
+            ps.close();
+        } catch (SQLException | MyServletException e) {
             throw new RuntimeException(e);
         }
 
     }
-*/
 
     private Ordine creaOrdine(ResultSet rs) throws SQLException {
         Ordine o = new Ordine();
@@ -43,16 +58,14 @@ public class OrdineDAO {
         return o;
     }
 
-    public ArrayList<Ordine> doRetrieveAll(int limit, int offset) {
+    public ArrayList<Ordine> doRetrieveAll() {
         try {
             ArrayList<Ordine> ordini = new ArrayList<Ordine>();
             Connection con = ConPool.getConnection();
             PreparedStatement ps = con.prepareStatement("SELECT O.oradiordine AS ora,O.totale,U.username AS Username, O.id, U.id AS idutente " +
                     "FROM ordine O " +
                     "  INNER JOIN utente U on o.id_utente = u-id " +
-                    "where O.id_utente=U.id order by O.oradiordine DESC LIMIT ?,?");
-            ps.setInt(1, offset);
-            ps.setInt(2, limit);
+                    "where O.id_utente=U.id order by O.oradiordine DESC ");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ordini.add(creaOrdine(rs));
@@ -82,10 +95,10 @@ public class OrdineDAO {
             return ordini;
         } catch (SQLException e) {
             e.printStackTrace();
-            }
-            ;
-            return null;
         }
+        ;
+        return null;
+    }
 
     //da controllare
     public Ordine doRetrievebyUserIdAndOra(String ora, int idutente) {
@@ -101,7 +114,7 @@ public class OrdineDAO {
             while (rs.next()) {
                 ordine.setOraordine(rs.getString(1));
                 ordine.setTotale(rs.getInt(2));
-                if (ordine.getVinili().size() > 0) {
+                if (ordine.getViniliInOrdineList().size() > 0) {
                     return ordine;
                 }
             }
@@ -131,62 +144,72 @@ public class OrdineDAO {
     public Ordine doRetriveById(int idOrdine) {
         try {
             Connection con = ConPool.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT o.id AS idordine, o.id_utente AS idutenteordine, o.oradiordine AS oradiordine,\n" +
-                    "        o.totale AS totaleordine, o.stato AS ordinestato,\n" +
-                    "        vio.quantita AS vinileordinequantita, vio.vinile_ean AS vinileordineean,\n" +
-                    "        vio.prezzoacq AS vinileordineprezzoacq, v.anno_pubblicazione AS vinileanno,\n" +
-                    "        v.prezzo AS vinileprezzo, v.numero_disponibili AS vinilenumero,\n" +
-                    "        v.autore AS vinileautore, v.titolo AS viniletitolo,\n" +
-                    "        v.copertina AS vinilecopertina,\n" +
-                    "        u.nome AS nomeutente, u.cognome AS cognomeutente,\n" +
-                    "        u.username AS username, i.id AS idindirizzo,\n" +
-                    "        i.cap AS capindirizzo, i.citta AS cittaindirizzo,\n" +
-                    "        i.numero_civico AS numerocivicoindirizzo, i.strada AS stradaindirizzo,\n" +
-                    "        i.telefono AS indirizzotelefono\n" +
-                    "        from ordine o\n" +
-                    "        inner join vinile_in_ordine vio on o.id = vio.ordine_id\n" +
-                    "        inner join vinile v on vio.vinile_ean = v.EAN\n" +
-                    "        inner join utente u on o.id_utente = u.id\n" +
-                    "        inner join indirizzo i on o.indirizzo = i.id\n" +
-                    "        where o.id=?");
+            PreparedStatement ps = con.prepareStatement("SELECT o.id AS idordine,\n" +
+                    "       o.id_utente          AS idutenteordine,\n" +
+                    "       o.oradiordine        AS oradiordine,\n" +
+                    "       o.totale             AS totaleordine,\n" +
+                    "       o.stato              AS ordinestato,\n" +
+                    "       u.nome               AS nomeutente,\n" +
+                    "       u.cognome            AS cognomeutente,\n" +
+                    "       u.username           AS username,\n" +
+                    "       i.id                 AS idindirizzo,\n" +
+                    "       i.cap                AS capindirizzo,\n" +
+                    "       i.citta              AS cittaindirizzo,\n" +
+                    "       i.numero_civico      AS numerocivicoindirizzo,\n" +
+                    "       i.strada             AS stradaindirizzo,\n" +
+                    "       i.telefono           AS indirizzotelefono\n" +
+                    "from ordine o\n" +
+                    "         inner join utente u on o.id_utente = u.id\n" +
+                    "         inner join indirizzo i on o.indirizzo = i.id\n" +
+                    "where o.id = ?");
             ps.setInt(1, idOrdine);
             Ordine ordine = null;
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                if (ordine == null) { //creare ordine indirizzo e utente dal result set
-                    ordine = new Ordine();
-                    Utente utente = new Utente();
-                    Indirizzo indirizzo = new Indirizzo();
-                    ordine.setUtente(utente);
-                    ordine.setIndirizzo(indirizzo);
-                    ordine.setTotale(rs.getInt(4));
-                    ordine.setOraordine(rs.getString(3));
-                    ordine.setId(rs.getInt(1));
-                    ordine.setStato(rs.getString(5));
-                    indirizzo.setId(rs.getInt("idindirizzo"));
-                    indirizzo.setCap(rs.getString("capindirizzo"));
-                    indirizzo.setCitta(rs.getString("cittaindirizzo"));
-                    indirizzo.setStrada(rs.getString("stradaindirizzo"));
-                    indirizzo.setNumeroCivico(rs.getString("numerocivicoindirizzo"));
-                    indirizzo.setTelefono(rs.getString("indirizzotelefono"));
-                    utente.setNome(rs.getString("nomeutente"));
-                    utente.setCognome(rs.getString("cognomeutente"));
-                    utente.setUsername(rs.getString("username"));
-                    utente.setIndirizzo(indirizzo);
+            if (rs.next()) {
+                //creare ordine indirizzo e utente dal result set
+                ordine = new Ordine();
+                Utente utente = new Utente();
+                Indirizzo indirizzo = new Indirizzo();
+                ordine.setTotale(rs.getInt(4));
+                ordine.setOraordine(rs.getString(3));
+                ordine.setId(rs.getInt(1));
+                ordine.setStato(rs.getString(5));
+                indirizzo.setId(rs.getInt("idindirizzo"));
+                indirizzo.setCap(rs.getString("capindirizzo"));
+                indirizzo.setCitta(rs.getString("cittaindirizzo"));
+                indirizzo.setStrada(rs.getString("stradaindirizzo"));
+                indirizzo.setNumeroCivico(rs.getString("numerocivicoindirizzo"));
+                indirizzo.setTelefono(rs.getString("indirizzotelefono"));
+                utente.setNome(rs.getString("nomeutente"));
+                utente.setCognome(rs.getString("cognomeutente"));
+                utente.setUsername(rs.getString("username"));
+                utente.setIndirizzo(indirizzo);
+                ordine.setUtente(utente);
+                ordine.setIndirizzo(indirizzo);
+
+                ps = con.prepareStatement("SELECT *\n" +
+                        "from vinile_in_ordine\n" +
+                        "inner join vinile v on vinile_in_ordine.vinile_ean = v.EAN\n" +
+                        "where ordine_id = ?");
+                ps.setInt(1, idOrdine);
+                rs = ps.executeQuery();
+                List<VinileInOrdine> vinileInOrdineList = new ArrayList<>();
+                while (rs.next()) {
+                    VinileInOrdine vinileInOrdine = new VinileInOrdine();
+                    vinileInOrdine.setQuantita(rs.getInt(2));
+                    vinileInOrdine.setPrezzo(rs.getFloat(3));
+                    Vinile vinile = new Vinile();
+                    vinile.setEan(rs.getString(4));
+                    vinile.setAnnoPubblicazione(rs.getInt(5));
+                    vinile.setPrezzo(rs.getFloat(6));
+                    vinile.setNumeroDisponibili(rs.getInt(7));
+                    vinile.setAutore(rs.getString(8));
+                    vinile.setTitolo(rs.getString(9));
+                    vinile.setCopertina(rs.getString(10));
+                    vinileInOrdine.setVinile(vinile);
+                    vinileInOrdineList.add(vinileInOrdine);
                 }
-                VinileInOrdine vio = new VinileInOrdine();
-                Vinile vinile = new Vinile();
-                vio.setVinile(vinile);
-                vio.setOrdine(ordine);
-                vio.setQuantita(rs.getInt("vinileordinequantita"));
-                vio.setPrezzo(rs.getInt("vinileordineprezzoacq"));
-                vinile.setCopertina(rs.getString("vinilecopertina"));
-                vinile.setPrezzo(rs.getInt("vinileprezzo"));
-                vinile.setTitolo(rs.getString("viniletitolo"));
-                vinile.setAnnoPubblicazione(rs.getInt("vinileanno"));
-                vinile.setNumeroDisponibili(rs.getInt("vinilenumero"));
-                vinile.setAutore(rs.getString("vinileautore"));
-                ordine.aggiungiVinile(vio);
+                ordine.setViniliInOrdineList(vinileInOrdineList);
             }
             return ordine;
         } catch (SQLException e) {
