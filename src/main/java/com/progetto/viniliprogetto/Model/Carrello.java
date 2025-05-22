@@ -3,7 +3,7 @@ package com.progetto.viniliprogetto.Model;
 import java.util.ArrayList;
 
 public class Carrello {
-    private final ArrayList<VinileInCarrello> vinili = new ArrayList<>();
+    private ArrayList<VinileInCarrello> viniliInCarrello = new ArrayList<>();
 
     public void aggiungiVinile(Vinile vinile) {
         VinileInCarrello vic = cercaPerEan(vinile.getEan());
@@ -11,8 +11,7 @@ public class Carrello {
             VinileInCarrello vinInCarrello = new VinileInCarrello();
             vinInCarrello.setVinile(vinile);
             vinInCarrello.setQuantita(1);
-            vinInCarrello.setCarrello(this);
-            vinili.add(vinInCarrello);
+            viniliInCarrello.add(vinInCarrello);
         } else {
             vic.setQuantita(vic.getQuantita() + 1);
         }
@@ -20,20 +19,24 @@ public class Carrello {
 
     public int getQuantita() {
         int i = 0;
-        for (VinileInCarrello vic : vinili) i++;
+        for (VinileInCarrello vic : viniliInCarrello) i++;
         return i;
     }
 
     public void rimuoviVinile(Vinile vinile) {
         VinileInCarrello vic = cercaPerEan(vinile.getEan());
-        if (vic != null) vinili.remove(vic);
+        if (vic != null) viniliInCarrello.remove(vic);
     }
 
     private VinileInCarrello cercaPerEan(String ean) {
-        for (VinileInCarrello vic : vinili) {
+        for (VinileInCarrello vic : viniliInCarrello) {
             if (vic.getVinile().getEan().equals(ean)) return vic;
         }
         return null;
+    }
+
+    public ArrayList<VinileInCarrello> getViniliInCarrello() {
+        return viniliInCarrello;
     }
 
     public void modificaQuantita(Vinile vinile, int quant) {
@@ -41,13 +44,13 @@ public class Carrello {
         if (vic != null) vic.setQuantita(quant);
     }
 
-    public ArrayList<VinileInCarrello> getVinili() {
-        return vinili;
+    public void setViniliInCarrello(ArrayList<VinileInCarrello> viniliInCarrello) {
+        this.viniliInCarrello = viniliInCarrello;
     }
 
     public float getTotale() {
         int sum = 0;
-        for (VinileInCarrello v : vinili) {
+        for (VinileInCarrello v : viniliInCarrello) {
             sum += (v.getVinile().getPrezzo() * v.getQuantita());
         }
         return sum;

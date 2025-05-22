@@ -1,17 +1,8 @@
 package com.progetto.viniliprogetto.Model;
 
 public class VinileInCarrello {
-    private Carrello carrello;
     private Vinile vinile;
     private int quantita;
-
-    public Carrello getCarrello() {
-        return carrello;
-    }
-
-    public void setCarrello(Carrello carrello) {
-        this.carrello = carrello;
-    }
 
     public Vinile getVinile() {
         return vinile;

@@ -1,18 +1,9 @@
 package com.progetto.viniliprogetto.Model;
 
 public class VinileInOrdine {
-    private Ordine ordine;
     private Vinile vinile;
     private int quantita;
     private float prezzo;
-
-    public Ordine getOrdine() {
-        return ordine;
-    }
-
-    public void setOrdine(Ordine ordine) {
-        this.ordine = ordine;
-    }
 
     public Vinile getVinile() {
         return vinile;

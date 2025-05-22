@@ -17,8 +17,6 @@
 <body>
 <%@ include file = "../header.jsp" %>
 
-<!--
-
 <div class="container my-4">
     <div class="row">
         <div class="col-md-6">
@@ -56,33 +54,6 @@
     </table>
 </div>
 
--->
-
-	  		<form action="#" method="GET" class="search-bar">	  			
-			    <input type="text" id="search-input" placeholder="Cerca per ordine, cliente...">
-			    <button id="search-button">Cerca</button>
-			</form>
-
-			<table id="order-table">
-			    <thead>
-			    	<tr>
-				        <th onclick="sortTable(0)">Numero ordine</th>
-				        <th onclick="sortTable(1)">Destinatario</th>
-				        <th onclick="sortTable(2)">Data acquisto</th>
-				        <th onclick="sortTable(3)">Totale</th>
-				        <th>Stato</th>
-			        </tr>
-			    </thead>
-			    <tbody>
-			     	<tr>
-						<td><a href="record-road-pagina-lista ordini-cliente-dettaglio.html"># XX XXX XXXX</a></td>
-			     		<td>Luca Verdi</td>
-			     		<td>XXXX XX XX</td>
-			     		<td>60.50&euro;</td>
-			     		<td>Ordinato</td>
-			     	</tr>
-			    </tbody>
-		    </table>
 
 
 <%@ include file = "../footer.jsp" %>

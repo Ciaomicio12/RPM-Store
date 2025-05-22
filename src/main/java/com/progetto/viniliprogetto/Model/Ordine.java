@@ -4,15 +4,21 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class Ordine {
     private String oraordine;
     private int id;
-    private int totale;
+    private float totale;
     private Utente utente;
     private String stato;
     private Indirizzo indirizzo;
+    private List<VinileInOrdine> viniliInOrdineList = new ArrayList<>();
+
+    public List<VinileInOrdine> getViniliInOrdineList() {
+        return viniliInOrdineList;
+    }
 
     public int getId() {
         return id;
@@ -37,8 +43,6 @@ public class Ordine {
     public void setStato(String stato) {
         this.stato = stato;
     }
-
-    private ArrayList<VinileInOrdine> vinili = new ArrayList<>();
 
     public Utente getUtente() {
         return utente;
@@ -74,21 +78,29 @@ public class Ordine {
         this.oraordine = oraordine;
     }
 
-    public ArrayList<VinileInOrdine> getVinili() {
-        return vinili;
+    public void setViniliInOrdineList(List<VinileInOrdine> viniliInOrdineList) {
+        this.viniliInOrdineList = viniliInOrdineList;
     }
 
-    public int getTotale() {
+    public float getTotale() {
         return totale;
     }
 
-    public void setTotale(int totale) {
+    public void setTotale(float totale) {
         this.totale = totale;
     }
 
     public String getTotaleEuro() {
         NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.FRANCE);
         return nf.format(((float) totale / 100));
+    }
+
+    public int getTotaleVinili() {
+        int totale = 0;
+        for (VinileInOrdine vinileInOrdine : viniliInOrdineList) {
+            totale += vinileInOrdine.getQuantita();
+        }
+        return totale;
     }
 
     public String convertiEuro(int prezzo) {
@@ -105,11 +117,10 @@ public class Ordine {
         vinileInOrdine.setVinile(vinile);
         vinileInOrdine.setPrezzo(vinile.getPrezzo());
         vinileInOrdine.setQuantita(quantita);
-        vinileInOrdine.setOrdine(this);
-        vinili.add(vinileInOrdine);
+        viniliInOrdineList.add(vinileInOrdine);
     }
 
     public void aggiungiVinile(VinileInOrdine vio) {
-        vinili.add(vio);
+        viniliInOrdineList.add(vio);
     }
 }

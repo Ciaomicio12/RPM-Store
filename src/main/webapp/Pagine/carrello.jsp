@@ -26,7 +26,7 @@
 <section class="container">
     <div class="random-albums my-3" class="row">
 
-        <c:forEach items="${carrello.vinili}" var="vinileincarrello">
+        <c:forEach items="${carrello.viniliInCarrello}" var="vinileincarrello">
             <div class="cart-item col-12" id="${vinileincarrello.vinile.ean}">
                 <div class="album col-12 row my-5 my-sm-4 mx-auto">
                     <div class="col-9 col-sm-3 mx-auto">
@@ -132,7 +132,8 @@
         <div class="prezzo col-4 col-sm-3 mt-4 mt-sm-0">
             <h3>Totale provvisorio (<%= carrello.getQuantita() %>articoli): </h3>
             <h2 class="display-3"><strong><%= carrello.getTotale() %>&euro;</strong></h2>
-            <button class="add-to-cart btn btn btn-warning">Procedi all'ordine</button>
+            <a href="<%= request.getContextPath() %>/effettuaordine" class="add-to-cart btn btn btn-warning">Procedi
+                all'ordine</a>
         </div>
     </div>
 </section>

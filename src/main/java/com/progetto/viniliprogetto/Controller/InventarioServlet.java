@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 @WebServlet("/admin/inventario")
-public class inventarioServlet extends HttpServlet {
+public class InventarioServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
