@@ -185,4 +185,7 @@ VALUES ('602557382594', 1),
 ALTER TABLE Vinile
     ADD FULLTEXT (titolo);
 
+ALTER TABLE Vinile
+    ADD FULLTEXT (autore);
+
 
