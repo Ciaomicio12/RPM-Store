@@ -35,7 +35,7 @@
                 <div class="mb-3">
                     <% if (utente != null && utente.isAdmin()) { %>
                     <h5>
-                        <strong>Acquirente: </strong><%= ordine.getUtente().getNome() %> <%= ordine.getUtente().getCognome() %>
+                        <strong>Destinatario: </strong><%= ordine.getUtente().getNome() %> <%= ordine.getUtente().getCognome() %>
                     </h5>
                     <% } %>
                     <h5><%= ordine.getIndirizzo().getStrada() %>,
@@ -50,7 +50,7 @@
         </div>
         <div class="col-md-6">
             <form class="border border-dark px-4 py-3 mt-5" method="GET" action="DettagliOrdineServlet">
-                <h2 class="title"><strong>Ordine:</strong>
+                <h2 class="title"><strong>Ordine </strong><i>#<%=ordine.getId()%></i><br><strong>Stato: </strong>
                     <% switch (ordine.getStato()) {
                         case "S":
                             response.getWriter().println("Spedito");
@@ -71,8 +71,10 @@
                         <h5><%= vio.getVinile().getAutore()%></h5>
                     <% } %>
                 </div>
-                <button type="submit" class="btn btn-primary" name="azione" value="annulla-ordine">Annulla ordine
-                </button>
+                <% if ((utente != null && !(utente.isAdmin()) && ordine.getStato() != "S") || (utente != null && (utente.isAdmin()))) { %>
+                    <button type="submit" class="btn btn-primary" name="azione" value="annulla-ordine">Annulla ordine
+                    </button>
+                <% } %>
                 <% if (utente != null && utente.isAdmin()) { %>
                     <button type="submit" class="btn btn-primary" name="azione" value="spedisci-ordine">Segna come spedito</button>
                 <% } %>
