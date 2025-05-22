@@ -18,7 +18,7 @@
 <%@ include file="header.jsp" %>
 <section class="container-fluid">
   <div class="row">
-    <form class="border border-dark px-4 py-3 mx-4 mx-sm-auto mt-5 col-sm-6" method="POST" action="registrazione">
+    <form class="border border-dark px-4 py-3 mx-auto mt-5 col-sm-6 col-md-8" method="POST" action="registrazione">
       <h2 class="title">Creare account</h2>
       <div class="border border-dark px-4 py-3 mx-3 mx-sm-auto mt-1 col-sm-6">
         <p> ${formerror}</p>

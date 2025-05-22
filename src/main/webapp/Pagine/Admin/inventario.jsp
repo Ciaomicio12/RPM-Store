@@ -26,40 +26,42 @@
                 <button id="search-button" class="btn btn-primary" type="button">Cerca</button>
             </div>
         </div>
-        <div class="col-md-6 text-end">
+        <div class="col-md-6 text-md-end">
             <a href="<%= request.getContextPath() %>/admin/aggiunta" class="btn btn-success">Aggiungi Nuovo Album</a>
         </div>
     </div>
 </div>
 
 <div class="container">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Copertina</th>
-            <th onclick="sortTable(0)">Titolo</th>
-            <th onclick="sortTable(1)">Artista</th>
-            <th onclick="sortTable(2)">Genere</th>
-            <th onclick="sortTable(3)">Prezzo</th>
-            <th onclick="sortTable(4)">EAN</th>
-            <th onclick="sortTable(5)">Quantità</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${vinili}" var="vinile">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <td><img src="${pageContext.request.contextPath}/img/Cover/${vinile.copertina}" width="120px"
-                         class="img-fluid"></td>
-                <td><a href="impostazioni-prodotto">${vinile.titolo}</a></td>
-                <td>${vinile.autore}</td>
-                <td>${vinile.getGenereString()}</td>
-                <td>${vinile.prezzo}&euro;</td>
-                <td>${vinile.ean}</td>
-                <td>${vinile.numeroDisponibili}</td>
+                <th>Copertina</th>
+                <th onclick="sortTable(0)">Titolo</th>
+                <th onclick="sortTable(1)">Artista</th>
+                <th onclick="sortTable(2)">Genere</th>
+                <th onclick="sortTable(3)">Prezzo</th>
+                <th onclick="sortTable(4)">EAN</th>
+                <th onclick="sortTable(5)">Quantità</th>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <c:forEach items="${vinili}" var="vinile">
+                <tr>
+                    <td><img src="${pageContext.request.contextPath}/img/Cover/${vinile.copertina}" width="120px"
+                             class="img-fluid"></td>
+                    <td><a href="impostazioni-prodotto">${vinile.titolo}</a></td>
+                    <td>${vinile.autore}</td>
+                    <td>${vinile.getGenereString()}</td>
+                    <td>${vinile.prezzo}&euro;</td>
+                    <td>${vinile.ean}</td>
+                    <td>${vinile.numeroDisponibili}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <%@ include file="../footer.jsp" %>

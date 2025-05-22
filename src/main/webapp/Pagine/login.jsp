@@ -21,7 +21,7 @@
 
 <section class="container-fluid">
     <div class="row">
-        <form class="border border-dark px-4 py-3 mx-4 mx-sm-auto mt-5 col-sm-6" method="POST" action="login">
+        <form class="border border-dark px-4 py-3 mx-auto mt-5 col-sm-6 col-md-8" method="POST" action="login">
             <h2 class="title">Accedi</h2>
             <div class="border border-dark px-4 py-3 mx-1 mx-sm-auto mt-1 col-sm-6">
                 <h3> ${errorserverlogin}</h3>
@@ -41,7 +41,7 @@
             </div>
         </form>
     </div>
-    <div class="mx-auto" style="width: 300px;">
+    <div class="text-center">
         <h6>Sei nuovo su Record Road? <a href="registrazione">Registrati</a></h6>
     </div>
 </section>

@@ -109,7 +109,7 @@ public class Ordine {
         vinili.add(vinileInOrdine);
     }
 
-    public ArrayList<VinileInOrdine> getVinile() {
-        return vinili;
+    public void aggiungiVinile(VinileInOrdine vio) {
+        vinili.add(vio);
     }
 }

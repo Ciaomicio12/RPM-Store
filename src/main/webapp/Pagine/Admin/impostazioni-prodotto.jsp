@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.progetto.viniliprogetto.Model.Genere" %>
 <%@ page import="com.progetto.viniliprogetto.Model.Vinile" %>
+<%@ page import="java.util.ArrayList" %>
 <%
     Vinile vinile = (Vinile) request.getAttribute("vinile");
     List<Genere> generi = (List<Genere>) request.getAttribute("generi");
@@ -24,82 +25,78 @@
 </head>
 <body>
 <%@ include file="../header.jsp" %>
-<h2>Impostazioni prodotto</h2>
-<form class="container" enctype="multipart/form-data" method="POST"
-      action="<%= request.getContextPath() %>/admin/caricavinile">
+<section class="container my-4">
+    <h2>Impostazioni prodotto</h2>
+    <form class="container" enctype="multipart/form-data" method="POST"
+          action="<%= request.getContextPath() %>/admin/caricavinile">
 
-    <div class="input-group mb-3">
-        <div class="d-flex align-items-start">
-            <img width="50px"
-                 src="<%= request.getContextPath() %>/img/Cover/<%= vinile==null?"senzacover.jpg" : vinile.getCopertina() %>"
-                 alt="Copertina album" class="mr-3 d-block">
-            <div class="mb-0 form-control border-0">
-                <input type="file" class="form-control" id="cover" name="cover" required>
-                <div class="mt-0">
-                    <p>Seleziona una copertina da inserire</p>
+        <div class="row">
+                <div class="col-12 col-md-4">
+                    <div class="input-group mb-3">
+                            <img class="img-fluid"
+                                 src="<%= request.getContextPath() %>/img/Cover/<%= vinile==null?"senzacover.jpg" : vinile.getCopertina() %>"
+                                 alt="Copertina album" class="mr-3 d-block">
+                            <div class="mb-0 form-control border-0">
+                                <input type="file" class="form-control" id="cover" name="cover" required>
+                                <div class="mt-0">
+                                    <p>Seleziona una copertina da inserire</p>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+            <div class="col-12 col-md-8">
+                <div class="mb-3">
+                    <label class="form-label" for="titolo">Titolo</label>
+                    <input class="form-control" type="text" id="titolo" value="<%= vinile != null ? vinile.getTitolo() : "" %>" name="titolo" required/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="autore">Autore</label>
+                    <input class="form-control" type="text" id="autore" value="<%= vinile != null ? vinile.getAutore() : "" %>" name="autore" required/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Generi</label>
+                    <div class="col-75">
+                        <% for(Genere genere: generi) { %>
+                            <div class="form-check form-check-inline">
+                                <label class="form-label">
+                                    <input class="form-check-input" type="checkbox"
+                                           name="<%= genere.getId() %>" value="<%= genere.getId() %>">
+                                    <%= genere.getNome() %></label>
+                            </div>
+                        <% }%>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="anno">Anno</label>
+                    <input class="form-control" type="number" id="anno" value="<%= vinile != null ? vinile.getAnnoPubblicazione() : "" %>" name="anno"
+                           required/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="ean">EAN</label>
+                    <input class="form-control" type="text" onkeyup="verificaean(this)" id="ean" value="<%= vinile != null ? vinile.getEan() : "" %>"
+                           name="ean" required/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="prezzo">Prezzo</label>
+                    <input class="form-control" type="text" id="prezzo" value="<%= vinile != null ? vinile.getPrezzo() : "" %>" name="prezzo" required/>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="numerodisponibile">Numero di copie disponibili</label>
+                    <input class="form-control" type="number" id="numerodisponibile" min="1" value="1" max="100" name="numerodisponibile"
+                           class="quantity-input"/>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="mb-3">
-        <label for="titolo">Titolo</label>
-        <input type="text" id="titolo" value="<%= vinile != null ? vinile.getTitolo() : "" %>" name="titolo" required/>
-    </div>
-
-    <div class="mb-3">
-        <label for="autore">Autore</label>
-        <input type="text" id="autore" value="<%= vinile != null ? vinile.getAutore() : "" %>" name="autore" required/>
-    </div>
-
-    <div class="mb-3">
-        <!-- iNSERIRE UNA checkbox -->
-        <div class="col-75">
-            <c:forEach items="${generi}" var="genere">
-                <input type="checkbox" id="${genere.id}" name="${genere.id}" value="${genere.id}">
-                <label for="${genere.id}">${genere.nome}</label><br>
-            </c:forEach>
-        </div>
-
-        <!--
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-          <label class="form-check-label" for="flexCheckChecked">
-            Checked checkbox
-          </label>
-        </div>
-        -->
-
-        <div id="genre-inputs">
-            <!-- Generi aggiunti dall'utente -->
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <label for="anno">Anno</label>
-        <input type="number" id="anno" value="<%= vinile != null ? vinile.getAnnoPubblicazione() : "" %>" name="anno"
-               required/>
-    </div>
-
-    <div class="mb-3">
-        <label for="ean">EAN</label>
-        <input type="text" onkeyup="verificaean(this)" id="ean" value="<%= vinile != null ? vinile.getEan() : "" %>"
-               name="ean" required/>
-    </div>
-
-    <div class="mb-3">
-        <label for="prezzo">Prezzo</label>
-        <input type="text" id="prezzo" value="<%= vinile != null ? vinile.getPrezzo() : "" %>" name="prezzo" required/>
-    </div>
-
-    <div class="mb-3">
-        <label for="numerodisponibile">Numero di cope disponibili</label>
-        <input type="number" id="numerodisponibile" min="1" value="1" max="100" name="numerodisponibile"
-               class="quantity-input"/>
-    </div>
-
-    <button type="submit" value="pubblica" name="azione">Pubblica Vinile</button>
-</form>
+        <button type="submit" value="pubblica" name="azione">Pubblica Vinile</button>
+    </form>
+</section>
 <%@ include file="../footer.jsp" %>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
