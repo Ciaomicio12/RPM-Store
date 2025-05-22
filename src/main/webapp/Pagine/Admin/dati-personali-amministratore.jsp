@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Bootstrap Demo</title>
-	<!-- Bootstrap CSS -->
+    <title>Bootstrap Demo</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -13,41 +13,51 @@
             text-decoration: underline;
         }
     </style>
+    <link rel="stylesheet" href="<%= request.getContextPath()%>/styleLogin.css"/>
 </head>
 <body>
 <%@ include file="../header.jsp" %>
-<section class="container">
+<section>
     <div class="row">
         <div class="col-md-6">
             <h3>Informazioni personali</h3>
             <form>
                 <div class="mb-3">
-                    <label for="name" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <label for="name" class="textForm">Nome</label>
+                    <div></div>
+                    <input type="text" class="textForm" id="name" name="name" required>
                 </div>
                 <div class="mb-3">
-                    <label for="surname" class="form-label">Cognome</label>
-                    <input type="text" class="form-control" id="surname" name="surname" required>
+                    <label for="surname" class="textForm">Cognome</label>
+                    <div></div>
+                    <input type="text" class="textForm" id="surname" name="surname" required>
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <label for="email" class="textForm">Email</label>
+                    <div></div>
+                    <input type="email" class="textForm" id="email" name="email" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Aggiorna</button>
+                <button type="submit" class="btn-outline-danger rounded-pill">Aggiorna</button>
             </form>
         </div>
         <div class="col-md-6">
             <h3>Cambio password</h3>
-            <form>
+            <form style="margin-bottom: 100px;">
                 <div class="mb-3">
-                    <label for="new-password" class="form-label">Nuova password</label>
-                    <input type="password" class="form-control" id="new-password" name="new-password" required>
+                    <label for="password-attuale" class="textForm">Password Attuale:</label>
+                    <input type="password" class="textForm" id="password-attuale" name="password-attuale" required>
                 </div>
                 <div class="mb-3">
-                    <label for="confirm-password" class="form-label">Conferma nuova password</label>
-                    <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
+                    <label for="new-password" class="textForm">Nuova password</label>
+                    <div></div>
+                    <input type="password" class="textForm" id="new-password" name="new-password" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Aggiorna</button>
+                <div class="mb-3">
+                    <label for="confirm-password" class="textForm">Conferma nuova password</label>
+                    <div></div>
+                    <input type="password" class="textForm" id="confirm-password" name="confirm-password" required>
+                </div>
+                <button type="submit" class="btn-outline-danger rounded-pill">Aggiorna</button>
             </form>
         </div>
     </div>

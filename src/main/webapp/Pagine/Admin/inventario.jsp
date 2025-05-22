@@ -27,7 +27,8 @@
             </div>
         </div>
         <div class="col-md-6 text-md-end">
-            <a href="<%= request.getContextPath() %>/admin/aggiunta" class="btn btn-success">Aggiungi Nuovo Album</a>
+            <a href="<%= request.getContextPath() %>/admin/aggiunta-mofica" class="btn btn-success">Aggiungi Nuovo
+                Album</a>
         </div>
     </div>
 </div>
