@@ -21,9 +21,13 @@
     <div class="row">
         <div class="col-md-6">
             <div class="input-group mb-3">
-                <input type="text" id="search-input" class="form-control"
-                       placeholder="Cerca per titolo, artista, genere...">
-                <button id="search-button" class="btn btn-primary" type="button">Cerca</button>
+                <form class="col d-flex my-0 my-md-3" method="get" action="cerca">
+                    <input class="form-control me-2" list="ricerca-datalist" name="ricerca" type="search"
+                           onkeyup="ricercaajax(this.value)" placeholder="Cerca per titolo o artista..."
+                           aria-label="Search" required>
+                    <datalist id="ricerca-datalist"></datalist>
+                    <button class="btn btn-outline-success" type="submit">Cerca</button>
+                </form>
             </div>
         </div>
         <div class="col-md-6 text-md-end">
@@ -52,7 +56,9 @@
                 <tr>
                     <td><img src="${pageContext.request.contextPath}/img/Cover/${vinile.copertina}" width="120px"
                              class="img-fluid"></td>
-                    <td><a href="impostazioni-prodotto">${vinile.titolo}</a></td>
+                    --> Non funziona href all titolo <--
+                    <td><a href="<%= request.getContextPath() %>/vinile?ean=${vinile.ean}/vinile">${vinile.titolo}</a>
+                    </td>
                     <td>${vinile.autore}</td>
                     <td>${vinile.getGenereString()}</td>
                     <td>${vinile.prezzo}&euro;</td>
@@ -64,6 +70,34 @@
         </table>
     </div>
 </div>
+
+<script>function ricercaajax(str) {
+    var dataList = document.getElementById('ricerca-datalist');
+    if (str.length == 0) {
+        dataList.innerHTML = '';
+        return;
+    }
+
+    var xmlHttpReq = new XMLHttpRequest();
+    xmlHttpReq.responseType = 'json';
+    xmlHttpReq.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+
+            dataList.innerHTML = '';
+
+            for (var i in this.response) {
+
+                var option = document.createElement('option');
+
+                option.value = this.response[i];
+
+                dataList.appendChild(option);
+            }
+        }
+    }
+    xmlHttpReq.open("GET", "ricercaajax?q=" + encodeURIComponent(str), true);
+    xmlHttpReq.send();
+}</script>
 
 <%@ include file="../footer.jsp" %>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
