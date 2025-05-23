@@ -1,3 +1,13 @@
+<%@ page import="com.progetto.viniliprogetto.Model.Ordine" %>
+<%@ page import="com.progetto.viniliprogetto.Model.Utente" %>
+<%@ page import="java.util.List" %>
+<%
+	Ordine ordine = (Ordine) request.getAttribute("ordine");
+	Utente utente = (Utente) request.getAttribute("utente");
+	List<Ordine> ordini = (List<Ordine>) request.getAttribute("ordini");
+
+%>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
@@ -16,8 +26,6 @@
 </head>
 <body>
 <%@ include file = "../header.jsp" %>
-
-<!--
 
 <div class="container my-4">
     <div class="row">
@@ -43,46 +51,32 @@
 			</tr>
         </thead>
         <tbody>
-			<c:forEach items="${ordini}" var="ordine">
+			<c:forEach items="${ordine}" var="ordine">
 				<tr>
-					<td><a href="ordine-in-dettaglio.jsp">${ordine.numero-ordine}</a></td>
-					<td>${ordine.destinatario}</td>
-					<td>${ordine.data-acquisto}</td>
-					<td>${ordine.totale-acquisto}&euro;</td>
-					<td>${ordine.stato}</td>
+					<td><a href="ordine-in-dettaglio.jsp"><%= ordine.getId() %></a></td>
+					<td><%= ordine.getUtente().getCognome() %> <%= ordine.getUtente().getNome() %></td>
+					<td><%= ordine.getData() %></td>
+					<td><%= ordine.getTotale() %>&euro;</td>
+					<td>
+						<c:choose>
+							<c:when test="${ordine.stato == 'S'}">
+								Spedito
+							</c:when>
+							<c:when test="${ordine.stato == 'P'}">
+								Pagato
+							</c:when>
+							<c:when test="${ordine.stato == 'A'}">
+								Annullato
+							</c:when>
+						</c:choose>
+					</td>
 				</tr>
 			</c:forEach>
         </tbody>
     </table>
 </div>
 
--->
-
-	  		<form action="#" method="GET" class="search-bar">	  			
-			    <input type="text" id="search-input" placeholder="Cerca per ordine, cliente...">
-			    <button id="search-button">Cerca</button>
-			</form>
-
-			<table id="order-table">
-			    <thead>
-			    	<tr>
-				        <th onclick="sortTable(0)">Numero ordine</th>
-				        <th onclick="sortTable(1)">Destinatario</th>
-				        <th onclick="sortTable(2)">Data acquisto</th>
-				        <th onclick="sortTable(3)">Totale</th>
-				        <th>Stato</th>
-			        </tr>
-			    </thead>
-			    <tbody>
-			     	<tr>
-						<td><a href="record-road-pagina-lista ordini-cliente-dettaglio.html"># XX XXX XXXX</a></td>
-			     		<td>Luca Verdi</td>
-			     		<td>XXXX XX XX</td>
-			     		<td>60.50&euro;</td>
-			     		<td>Ordinato</td>
-			     	</tr>
-			    </tbody>
-		    </table>
+<script src="script.js"></script>
 
 
 <%@ include file = "../footer.jsp" %>
