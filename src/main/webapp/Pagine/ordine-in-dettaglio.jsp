@@ -64,7 +64,7 @@
                     } %>
                 </h2>
                 <div class="mb-3">
-                    <% for (VinileInOrdine vio : ordine.getVinili()) { %>
+                    <% for (VinileInOrdine vio : ordine.getViniliInOrdineList()) { %>
                         <img src="<%= request.getContextPath() %>/img/Cover/<%= vio.getVinile().getCopertina() %>" alt="Copertina Album" class="img-fluid">
                         <h5><%= vio.getQuantita() %>x <%= vio.getPrezzo()%>&euro;</h5>
                         <h5><%= vio.getVinile().getTitolo()%></h5>

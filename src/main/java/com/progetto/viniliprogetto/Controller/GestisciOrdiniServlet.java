@@ -24,7 +24,7 @@ public class GestisciOrdiniServlet extends HttpServlet {
         Utente utente = (Utente) session.getAttribute("utente");
         if (utente != null && utente.isAdmin() == true) {
             OrdineDAO odao = new OrdineDAO();
-            ArrayList<Ordine> li = odao.doRetrieveAll(0, 5);
+            ArrayList<Ordine> li = odao.doRetrieveAll();
             request.setAttribute("ordini", li);
             request.getRequestDispatcher("/WEB-INF/jsp/gestisciordini.jsp").forward(request, response);
         } else {

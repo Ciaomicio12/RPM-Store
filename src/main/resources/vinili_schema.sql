@@ -54,8 +54,8 @@ create table ordine
     id          int primary key auto_increment,
     id_utente   int(11),
     oradiordine varchar(100) not null,
-    totale      int,
-    stato       varchar(1),
+    totale      float,
+    stato       varchar(1) DEFAULT 'P',
     FOREIGN KEY (id_utente) REFERENCES utente (id) on update cascade on delete cascade,
     FOREIGN KEY (indirizzo) REFERENCES indirizzo (id) on delete restrict on update cascade
 );

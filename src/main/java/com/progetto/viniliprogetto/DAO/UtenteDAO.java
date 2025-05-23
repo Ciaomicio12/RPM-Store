@@ -1,5 +1,6 @@
 package com.progetto.viniliprogetto.DAO;
 
+import com.progetto.viniliprogetto.Model.Indirizzo;
 import com.progetto.viniliprogetto.Model.Utente;
 
 import java.sql.*;
@@ -49,15 +50,33 @@ public class UtenteDAO extends Utente {
         try {
             Connection conn = ConPool.getConnection();
             PreparedStatement ps = conn.prepareStatement(
-                    "SELECT id, username, password, nome, cognome, sesso, email, admin,disabled " +
-                            "FROM utente " +
-                            "WHERE email=? AND password=SHA1(?)");
+                    "SELECT u.id,\n" +
+                            "       username,\n" +
+                            "       password,\n" +
+                            "       nome,\n" +
+                            "       cognome,\n" +
+                            "       sesso,\n" +
+                            "       email,\n" +
+                            "       admin,\n" +
+                            "       disabled,\n" +
+                            "       i.id,\n" +
+                            "       strada,\n" +
+                            "       citta,\n" +
+                            "       cap,\n" +
+                            "       numero_civico,\n" +
+                            "       telefono\n" +
+                            "FROM utente u\n" +
+                            "INNER join indirizzo i on u.indirizzo = i.id\n" +
+                            "WHERE email = ?\n" +
+                            "  AND password = SHA1(?)");
             ps.setString(1, email);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 conn.close();
-                return creatUtente(rs);
+                Utente utente = creatUtente(rs);
+                utente.setIndirizzo(creaIndirizzo(rs));
+                return utente;
             }
             conn.close();
         } catch (SQLException e) {
@@ -239,6 +258,17 @@ public class UtenteDAO extends Utente {
         p.setAdmin(rs.getBoolean(8));
         p.setDisabled(rs.getBoolean(9));
         return p;
+    }
+
+    private Indirizzo creaIndirizzo(ResultSet rs) throws SQLException {
+        Indirizzo indirizzo = new Indirizzo();
+        indirizzo.setId(rs.getInt(10));
+        indirizzo.setStrada(rs.getString(11));
+        indirizzo.setCitta(rs.getString(12));
+        indirizzo.setCap(rs.getString(13));
+        indirizzo.setNumeroCivico(rs.getString(14));
+        indirizzo.setTelefono(rs.getString(15));
+        return indirizzo;
     }
 
     private int lastInsertId(Connection conn) throws SQLException {
