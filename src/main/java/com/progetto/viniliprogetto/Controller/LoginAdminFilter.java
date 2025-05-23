@@ -27,7 +27,8 @@ public class LoginAdminFilter implements Filter {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
-        filterChain.doFilter(request, response);
+        if (utente.isAdmin())
+            filterChain.doFilter(request, response);
+        else throw new MyServletException("Non hai i permessi per accedere a questa pagina", 403);
     }
-
 }

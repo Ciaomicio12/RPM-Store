@@ -120,6 +120,14 @@ public class Ordine {
         viniliInOrdineList.add(vinileInOrdine);
     }
 
+    public String getStatoStringa() {
+        if (this.stato.equals("P"))
+            return "Pagato";
+        else if (this.stato.equals("S"))
+            return "Spedito";
+        return "Annullato";
+    }
+
     public void aggiungiVinile(VinileInOrdine vio) {
         viniliInOrdineList.add(vio);
     }

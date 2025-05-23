@@ -78,7 +78,7 @@
                     </c:if>
                     <c:if test="${utente.admin}">
                         <li class="nav-item justify-content-center">
-                            <a class="nav-link" href="<%= request.getContextPath() %>/lista-ordini-amministratore">Elenco
+                            <a class="nav-link" href="<%= request.getContextPath() %>/admin/gestisciordini">Elenco
                                 ordinazioni</a>
                         </li>
                     </c:if>

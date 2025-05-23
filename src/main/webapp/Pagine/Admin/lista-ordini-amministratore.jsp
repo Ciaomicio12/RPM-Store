@@ -1,8 +1,9 @@
 <%@ page import="com.progetto.viniliprogetto.Model.Ordine" %>
+<%@ page import="java.util.List" %>
 <%
-	Ordine ordine = (Ordine) request.getAttribute("ordine");
+	List<Ordine> ordini = (List<Ordine>) request.getAttribute("ordini");
 %>
-
+ss
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
@@ -45,36 +46,28 @@
 				<th onclick="sortTable(3)">Totale</th>
 				<th onclick="sortTable(4)">Stato</th>
 			</tr>
-        </thead>
-        <tbody>
-			<c:forEach items="${ordine}" var="ordine">
-				<tr>
-					<td><a href="ordine-in-dettaglio.jsp"><%= ordine.getId() %></a></td>
-					<td><%= ordine.getUtente().getCognome() %> <%= ordine.getUtente().getNome() %></td>
-					<td><%= ordine.getData() %></td>
-					<td><%= ordine.getTotale() %>&euro;</td>
-					<td>
-						<c:choose>
-							<c:when test="${ordine.stato == 'S'}">
-								Spedito
-							</c:when>
-							<c:when test="${ordine.stato == 'P'}">
-								Pagato
-							</c:when>
-							<c:when test="${ordine.stato == 'A'}">
-								Annullato
-							</c:when>
-						</c:choose>
-					</td>
-				</tr>
-			</c:forEach>
-        </tbody>
-    </table>
+		</thead>
+		<tbody>
+		<% for (Ordine ordine : ordini) {%>
+		<tr>
+			<td><a href="<%= request.getContextPath()%>/dettagliordine?id=<%= ordine.getId()%>"><%= ordine.getId() %>
+			</a></td>
+			<td><%= ordine.getUtente().getCognome() %> <%= ordine.getUtente().getNome() %>
+			</td>
+			<td><%= ordine.getData() %>
+			</td>
+			<td><%= ordine.getTotale() %>&euro;</td>
+			<td><%= ordine.getStatoStringa() %>
+			</td>
+		</tr>
+		<% } %>
+		</tbody>
+	</table>
 </div>
 
-		    <script src="script.js"></script>
+<script src="script.js"></script>
 
-		<%@ include file = "../footer.jsp" %>
+<%@ include file="../footer.jsp" %>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 				integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 				crossorigin="anonymous"></script>

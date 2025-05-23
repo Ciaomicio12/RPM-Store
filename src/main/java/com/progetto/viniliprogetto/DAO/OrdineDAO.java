@@ -47,34 +47,41 @@ public class OrdineDAO {
 
     private Ordine creaOrdine(ResultSet rs) throws SQLException {
         Ordine o = new Ordine();
-        o.setId(rs.getInt(1));
-        o.setOraordine(rs.getString(2));
-        o.setTotale(rs.getInt(4));
-        o.setStato(rs.getString(5));
+        o.setId(rs.getInt("ordineid"));
+        o.setOraordine(rs.getString("ora"));
+        o.setTotale(rs.getInt("ordinetotale"));
+        o.setStato(rs.getString("stato"));
+        return o;
+    }
+
+    private Utente creaUtenteOrdine(ResultSet rs) throws SQLException {
         Utente utente = new Utente();
         utente.setId(rs.getInt("idutente"));
         utente.setUsername(rs.getString("Username"));
-        o.setUtente(utente);
-        return o;
+        utente.setNome(rs.getString("utenteNome"));
+        utente.setCognome(rs.getString("utenteCognome"));
+        return utente;
     }
 
     public ArrayList<Ordine> doRetrieveAll() {
         try {
             ArrayList<Ordine> ordini = new ArrayList<Ordine>();
             Connection con = ConPool.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT O.oradiordine AS ora,O.totale,U.username AS Username, O.id, U.id AS idutente " +
+            PreparedStatement ps = con.prepareStatement("SELECT O.id AS ordineid, O.oradiordine AS ora,O.totale AS ordinetotale, o.stato AS stato, " +
+                    "U.username AS Username, U.id AS idutente, U.nome AS utenteNome, U.cognome AS utenteCognome " +
                     "FROM ordine O " +
-                    "  INNER JOIN utente U on o.id_utente = u-id " +
+                    "  INNER JOIN utente U on O.id_utente = U.id " +
                     "where O.id_utente=U.id order by O.oradiordine DESC ");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                ordini.add(creaOrdine(rs));
+                Ordine ordine = creaOrdine(rs);
+                ordine.setUtente(creaUtenteOrdine(rs));
+                ordini.add(ordine);
             }
             return ordini;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
 
@@ -83,7 +90,7 @@ public class OrdineDAO {
         try {
             ArrayList<Ordine> ordini = new ArrayList<>();
             Connection con = ConPool.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT id,oradiordine,totale,stato " +
+            PreparedStatement ps = con.prepareStatement("SELECT O.id AS ordineid, O.oradiordine AS ora,O.totale AS ordinetotale, o.stato AS stato " +
                     "FROM ordine " +
                     "WHERE id_utente=?  " +
                     "order by oradiordine desc");
@@ -97,30 +104,6 @@ public class OrdineDAO {
             e.printStackTrace();
         }
         ;
-        return null;
-    }
-
-    //da controllare
-    public Ordine doRetrievebyUserIdAndOra(String ora, int idutente) {
-        try {
-            Connection con = ConPool.getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT id,oradiordine,totale,stato " +
-                    "FROM ordine " +
-                    "WHERE id_utente=? and oradiordine=?  order by oradiordine");
-            ps.setInt(1, idutente);
-            ps.setString(2, ora);
-            Ordine ordine = new Ordine();
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                ordine.setOraordine(rs.getString(1));
-                ordine.setTotale(rs.getInt(2));
-                if (ordine.getViniliInOrdineList().size() > 0) {
-                    return ordine;
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         return null;
     }
 
@@ -188,8 +171,8 @@ public class OrdineDAO {
                 ordine.setIndirizzo(indirizzo);
 
                 ps = con.prepareStatement("SELECT *\n" +
-                        "from vinile_in_ordine\n" +
-                        "inner join vinile v on vinile_in_ordine.vinile_ean = v.EAN\n" +
+                        "from vinile_in_ordine vio " +
+                        "inner join vinile v on vio.vinile_ean = v.EAN\n" +
                         "where ordine_id = ?");
                 ps.setInt(1, idOrdine);
                 rs = ps.executeQuery();
@@ -197,15 +180,15 @@ public class OrdineDAO {
                 while (rs.next()) {
                     VinileInOrdine vinileInOrdine = new VinileInOrdine();
                     vinileInOrdine.setQuantita(rs.getInt(2));
-                    vinileInOrdine.setPrezzo(rs.getFloat(3));
+                    vinileInOrdine.setPrezzo(rs.getFloat(4));
                     Vinile vinile = new Vinile();
-                    vinile.setEan(rs.getString(4));
-                    vinile.setAnnoPubblicazione(rs.getInt(5));
-                    vinile.setPrezzo(rs.getFloat(6));
-                    vinile.setNumeroDisponibili(rs.getInt(7));
-                    vinile.setAutore(rs.getString(8));
-                    vinile.setTitolo(rs.getString(9));
-                    vinile.setCopertina(rs.getString(10));
+                    vinile.setEan(rs.getString(3));
+                    vinile.setAnnoPubblicazione(rs.getInt(6));
+                    vinile.setPrezzo(rs.getFloat(7));
+                    vinile.setNumeroDisponibili(rs.getInt(8));
+                    vinile.setAutore(rs.getString(9));
+                    vinile.setTitolo(rs.getString(10));
+                    vinile.setCopertina(rs.getString(11));
                     vinileInOrdine.setVinile(vinile);
                     vinileInOrdineList.add(vinileInOrdine);
                 }
