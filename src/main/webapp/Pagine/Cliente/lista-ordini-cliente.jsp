@@ -1,3 +1,13 @@
+<%@ page import="com.progetto.viniliprogetto.Model.Ordine" %>
+<%@ page import="com.progetto.viniliprogetto.Model.Utente" %>
+<%@ page import="java.util.List" %>
+<%
+	Ordine ordine = (Ordine) request.getAttribute("ordine");
+	Utente utente = (Utente) request.getAttribute("utente");
+	List<Ordine> ordini = (List<Ordine>) request.getAttribute("ordini");
+
+%>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
@@ -16,6 +26,7 @@
 </head>
 <body>
 <%@ include file = "../header.jsp" %>
+
 
 <div class="container my-4">
     <div class="row">
@@ -41,19 +52,32 @@
 			</tr>
         </thead>
         <tbody>
-			<c:forEach items="${ordini}" var="ordine">
+			<c:forEach items="${ordine}" var="ordine">
 				<tr>
-					<td><a href="ordine-in-dettaglio.jsp">${ordine.numero-ordine}</a></td>
-					<td>${ordine.destinatario}</td>
-					<td>${ordine.data-acquisto}</td>
-					<td>${ordine.totale-acquisto}&euro;</td>
-					<td>${ordine.stato}</td>
+					<td><a href="ordine-in-dettaglio.jsp"><%= ordine.getId() %></a></td>
+					<td><%= ordine.getUtente().getCognome() %> <%= ordine.getUtente().getNome() %></td>
+					<td><%= ordine.getData() %></td>
+					<td><%= ordine.getTotale() %>&euro;</td>
+					<td>
+						<c:choose>
+							<c:when test="${ordine.stato == 'S'}">
+								Spedito
+							</c:when>
+							<c:when test="${ordine.stato == 'P'}">
+								Pagato
+							</c:when>
+							<c:when test="${ordine.stato == 'A'}">
+								Annullato
+							</c:when>
+						</c:choose>
+					</td>
 				</tr>
 			</c:forEach>
         </tbody>
     </table>
 </div>
 
+<script src="script.js"></script>
 
 
 <%@ include file = "../footer.jsp" %>
