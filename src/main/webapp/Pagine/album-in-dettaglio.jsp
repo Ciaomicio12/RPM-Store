@@ -61,12 +61,16 @@
             <p>Prodotto NON disponibile all'acquisto.<br>Copie esaurite.</p>
           </c:if>
           <c:if test="${utente.admin}">
-            <button href="<%= request.getContextPath() %>/admin/aggiunta-modifica"
-                    class="btn-outline-danger rounded-pill" id="go-to-modify-album-button">
+            <a href="<%= request.getContextPath() %>/admin/aggiunta-modifica"
+               class="btn-outline-danger rounded-pill" id="go-to-modify-album-button">
               Modifica prodotto
-            </button>
+            </a>
             <p>${vinile.numeroDisponibili} copie disponibili</p>
-            <button id="remove-album" class="btn-outline-danger rounded-pill">Elimina prodotto</button>
+            <form method="POST" action="<%=request.getContextPath()%>/admin/cancellavinile">
+              <button id="remove-album" class="btn-outline-danger rounded-pill" name="ean" value="<%=vinile.getEan()%>">
+                Elimina prodotto
+              </button>
+            </form>
           </c:if>
         </c:if>
         <c:if test="${utente == null}">

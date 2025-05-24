@@ -49,29 +49,29 @@
             </form>
         </div>
         <div class="col-md-6">
+            <h2 class="title"><strong>Ordine </strong><i>#<%=ordine.getId()%>
+            </i><br><strong>Stato: </strong>
+                <%= ordine.getStatoStringa() %>
+            </h2>
+            <div class="mb-3">
+                <% for (VinileInOrdine vio : ordine.getViniliInOrdineList()) { %>
+                <img src="<%= request.getContextPath() %>/img/Cover/<%= vio.getVinile().getCopertina() %>"
+                     alt="Copertina Album" class="img-fluid">
+                <h5><%= vio.getQuantita() %>x <%= vio.getPrezzo()%>&euro;</h5>
+                <h5><%= vio.getVinile().getTitolo()%>
+                </h5>
+                <h5><%= vio.getVinile().getAutore()%>
+                </h5>
+                <% } %>
+            </div>
+            <% if (utente != null && utente.isAdmin() && ordine.getStato().equals("P")) { %>
             <form class="border border-dark px-4 py-3 mt-5" method="POST"
                   action="<%= request.getContextPath()%>/dettagliordine">
-                <h2 class="title"><strong>Ordine </strong><i>#<%=ordine.getId()%>
-                </i><br><strong>Stato: </strong>
-                    <%= ordine.getStatoStringa() %>
-                </h2>
-                <div class="mb-3">
-                    <% for (VinileInOrdine vio : ordine.getViniliInOrdineList()) { %>
-                    <img src="<%= request.getContextPath() %>/img/Cover/<%= vio.getVinile().getCopertina() %>"
-                         alt="Copertina Album" class="img-fluid">
-                    <h5><%= vio.getQuantita() %>x <%= vio.getPrezzo()%>&euro;</h5>
-                    <h5><%= vio.getVinile().getTitolo()%>
-                    </h5>
-                    <h5><%= vio.getVinile().getAutore()%>
-                    </h5>
-                    <% } %>
-                </div>
-                <% if ((utente != null && !(utente.isAdmin()) && ordine.getStato() != "S") || (utente != null && (utente.isAdmin()))) { %>
-                    <button type="submit" class="btn btn-primary" name="azione" value="annulla-ordine">Annulla ordine
-                    </button>
-                <% } %>
-                <% if (utente != null && utente.isAdmin()) { %>
-                    <button type="submit" class="btn btn-primary" name="azione" value="spedisci-ordine">Segna come spedito</button>
+                <button type="submit" class="btn btn-primary" name="azione" value="annulla-ordine">Annulla ordine
+                </button>
+                <button type="submit" class="btn btn-primary" name="azione" value="spedisci-ordine">Segna come spedito
+                </button>
+                <input type="hidden" name="ordine" value="<%= ordine.getId() %>">
                 <% } %>
             </form>
         </div>

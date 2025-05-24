@@ -11,9 +11,9 @@ public class VinileDAO {
 
     private ArrayList<Genere> getGeneri(String ean) throws SQLException {
         Connection conn = ConPool.getConnection();
-        String sql = "SELECT genere.id, nome, descrizione " +
+        String sql = "SELECT genere.id, nome " +
                 "FROM genere,vinile_genere " +
-                "where vinile_genere.id=categoria.id " +
+                "where vinile_genere.id=genere.id " +
                 "and ean=?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, ean);
@@ -181,7 +181,7 @@ public class VinileDAO {
 
     }
 
-    private void doRemoveGenereVinile(Vinile vinile) {
+    private void doRemoveGeneriVinile(Vinile vinile) {
         try {
             Connection conn = ConPool.getConnection();
             PreparedStatement psCa = conn.prepareStatement("DELETE from  Vinile_genere " +
@@ -224,7 +224,7 @@ public class VinileDAO {
             ps.setString(5, vinile.getTitolo());
             ps.setString(6, vinile.getCopertina());
             ps.setString(7, vinile.getEan());
-            this.doRemoveGenereVinile(vinile);
+            this.doRemoveGeneriVinile(vinile);
             this.doAggiungiGeneriVinile(vinile);
         } catch (SQLException e) {
             e.printStackTrace();
