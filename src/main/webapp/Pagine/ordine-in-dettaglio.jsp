@@ -49,26 +49,21 @@
             </form>
         </div>
         <div class="col-md-6">
-            <form class="border border-dark px-4 py-3 mt-5" method="GET" action="DettagliOrdineServlet">
-                <h2 class="title"><strong>Ordine </strong><i>#<%=ordine.getId()%></i><br><strong>Stato: </strong>
-                    <% switch (ordine.getStato()) {
-                        case "S":
-                            response.getWriter().println("Spedito");
-                            break;
-                        case "P":
-                            response.getWriter().println("Pagato");
-                            break;
-                        case "A":
-                            response.getWriter().println("Annullato");
-                            break;
-                    } %>
+            <form class="border border-dark px-4 py-3 mt-5" method="POST"
+                  action="<%= request.getContextPath()%>/dettagliordine">
+                <h2 class="title"><strong>Ordine </strong><i>#<%=ordine.getId()%>
+                </i><br><strong>Stato: </strong>
+                    <%= ordine.getStatoStringa() %>
                 </h2>
                 <div class="mb-3">
                     <% for (VinileInOrdine vio : ordine.getViniliInOrdineList()) { %>
-                        <img src="<%= request.getContextPath() %>/img/Cover/<%= vio.getVinile().getCopertina() %>" alt="Copertina Album" class="img-fluid">
-                        <h5><%= vio.getQuantita() %>x <%= vio.getPrezzo()%>&euro;</h5>
-                        <h5><%= vio.getVinile().getTitolo()%></h5>
-                        <h5><%= vio.getVinile().getAutore()%></h5>
+                    <img src="<%= request.getContextPath() %>/img/Cover/<%= vio.getVinile().getCopertina() %>"
+                         alt="Copertina Album" class="img-fluid">
+                    <h5><%= vio.getQuantita() %>x <%= vio.getPrezzo()%>&euro;</h5>
+                    <h5><%= vio.getVinile().getTitolo()%>
+                    </h5>
+                    <h5><%= vio.getVinile().getAutore()%>
+                    </h5>
                     <% } %>
                 </div>
                 <% if ((utente != null && !(utente.isAdmin()) && ordine.getStato() != "S") || (utente != null && (utente.isAdmin()))) { %>

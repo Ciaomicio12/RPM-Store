@@ -27,6 +27,7 @@ public class LoginFilter implements Filter {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
+        request.setAttribute("utente", utente);
         filterChain.doFilter(request, response);
     }
 
