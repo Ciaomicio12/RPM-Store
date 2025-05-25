@@ -55,15 +55,20 @@
                 </i><br><strong>Stato: </strong>
                     <%= ordine.getStatoStringa() %>
                 </h2>
+                <h4> Totale ordine: <%= ordine.getTotale()%>&euro;</h4>
                 <div class="mb-3">
                     <% for (VinileInOrdine vio : ordine.getViniliInOrdineList()) { %>
-                    <img src="<%= request.getContextPath() %>/img/Cover/<%= vio.getVinile().getCopertina() %>"
-                         alt="Copertina Album" class="img-fluid">
-                    <h5><%= vio.getQuantita() %>x <%= vio.getPrezzo()%>&euro;</h5>
-                    <h5><%= vio.getVinile().getTitolo()%>
-                    </h5>
-                    <h5><%= vio.getVinile().getAutore()%>
-                    </h5>
+                    <div class="col-9 col-sm-3 mx-auto">
+                        <img src="<%= request.getContextPath() %>/img/Cover/<%= vio.getVinile().getCopertina() %>"
+                             alt="Copertina Album" class="img-fluid">
+                    </div>
+                    <div class="col-12 col-sm-9">
+                        <h5><%= vio.getQuantita() %>x <%= vio.getPrezzo()%>&euro;</h5>
+                        <h5><%= vio.getVinile().getTitolo()%>
+                        </h5>
+                        <h5><%= vio.getVinile().getAutore()%>
+                        </h5>
+                    </div>
                     <% } %>
                 </div>
                 <% if ((utente != null && !(utente.isAdmin()) && ordine.getStato() != "S") || (utente != null && (utente.isAdmin()))) { %>
