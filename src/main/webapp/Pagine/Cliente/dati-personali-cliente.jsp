@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap Demo</title>
+    <title>Record Road - Dati personali dell'utente</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<%= request.getContextPath()%>/styleLogin.css"/>
@@ -19,18 +19,15 @@
                 <h5 class="title">Informazioni personali</h5>
                 <div class="mb-3">
                     <label for="name" class="textForm">Nome:</label>
-                    <div></div>
                     <input type="text" class="textForm" id="name" value="${utente.nome}" name="name" required>
                 </div>
                 <div class="mb-3">
                     <label for="surname" class="textForm">Cognome:</label>
-                    <div></div>
                     <input type="text" class="textForm" id="surname" value="${utente.cognome}" name="surname"
                            required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="textForm">Indirizzo email:</label>
-                    <div></div>
                     <input type="email" class="textForm" id="email" value="${utente.email}" name="email" required>
                 </div>
                 <button type="submit" class="btn-outline-danger rounded-pill" name="azione">Aggiorna</button>
@@ -41,17 +38,14 @@
                 <h5 class="title">Cambio password</h5>
                 <div class="mb-3">
                     <label for="password-attuale" class="textForm">Password Attuale:</label>
-                    <div></div>
                     <input type="password" class="textForm" id="password-attuale" name="password-attuale" required>
                 </div>
                 <div class="mb-3">
                     <label for="new-password" class="textForm">Nuova Password:</label>
-                    <div></div>
                     <input type="password" class="textForm" id="new-password" name="new-password" required>
                 </div>
                 <div class="mb-3">
                     <label for="confirm-password" class="textForm">Conferma nuova password:</label>
-                    <div></div>
                     <input type="password" class="textForm" id="confirm-password" required>
                 </div>
                 <button type="submit" class="btn-outline-danger rounded-pill" name="azione" value="aggiorna_password">
@@ -67,27 +61,22 @@
                 <h5 class="title">Indirizzo di spedizione</h5>
                 <div class="mb-3">
                     <label for="via" class="textForm">Via:</label>
-                    <div></div>
                     <input type="text" class="textForm" id="via" name="via" required>
                 </div>
                 <div class="mb-3">
                     <label for="numero-civico" class="textForm">Numero civico:</label>
-                    <div></div>
                     <input type="text" class="textForm" id="numero-civico" name="numero-civico" required>
                 </div>
                 <div class="mb-3">
                     <label for="citta" class="textForm">Città:</label>
-                    <div></div>
                     <input type="text" class="textForm" id="citta" name="citta" required>
                 </div>
                 <div class="mb-3">
                     <label for="provincia" class="textForm">Provincia:</label>
-                    <div></div>
                     <input type="text" class="textForm" id="provincia" name="provincia" required>
                 </div>
                 <div class="mb-3">
                     <label for="codice-postale" class="textForm">Codice Postale:</label>
-                    <div></div>
                     <input type="text" class="textForm" id="codice-postale" name="codice-postale" required>
                 </div>
                 <button type="submit" class="btn-outline-danger rounded-pill" name="azione" value="aggiorna_indirizzo">

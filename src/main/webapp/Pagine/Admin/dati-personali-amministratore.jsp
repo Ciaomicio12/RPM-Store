@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap Demo</title>
+    <title>Record Road - Dati personali dell'amministratore</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
@@ -24,18 +24,15 @@
             <form>
                 <div class="mb-3">
                     <label for="name" class="textForm">Nome</label>
-                    <div></div>
-                    <input type="text" class="textForm" id="name" name="name" required>
+                    <input type="text" class="textForm" id="name" value="${utente.nome}" name="name" required>
                 </div>
                 <div class="mb-3">
                     <label for="surname" class="textForm">Cognome</label>
-                    <div></div>
-                    <input type="text" class="textForm" id="surname" name="surname" required>
+                    <input type="text" class="textForm" id="surname" value="${utente.cognome}" name="surname" required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="textForm">Email</label>
-                    <div></div>
-                    <input type="email" class="textForm" id="email" name="email" required>
+                    <input type="email" class="textForm" id="email" value="${utente.email}" name="email" required>
                 </div>
                 <button type="submit" class="btn-outline-danger rounded-pill">Aggiorna</button>
             </form>
@@ -49,12 +46,10 @@
                 </div>
                 <div class="mb-3">
                     <label for="new-password" class="textForm">Nuova password</label>
-                    <div></div>
                     <input type="password" class="textForm" id="new-password" name="new-password" required>
                 </div>
                 <div class="mb-3">
                     <label for="confirm-password" class="textForm">Conferma nuova password</label>
-                    <div></div>
                     <input type="password" class="textForm" id="confirm-password" name="confirm-password" required>
                 </div>
                 <button type="submit" class="btn-outline-danger rounded-pill">Aggiorna</button>
