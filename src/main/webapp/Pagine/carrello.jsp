@@ -36,7 +36,7 @@
                                  alt="Copertina Album 1" class="img-fluid">
                         </a>
                     </div>
-                    <div class="information col-12 col-sm-9">
+                    <div class="col-12 col-sm-9">
                         <h4>${vinileincarrello.vinile.autore}</h4>
                         <h4>${vinileincarrello.vinile.titolo}</h4>
                         <h4>${vinileincarrello.vinile.prezzo}&euro;</h4>
