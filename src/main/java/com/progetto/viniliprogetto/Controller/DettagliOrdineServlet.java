@@ -1,7 +1,6 @@
 package com.progetto.viniliprogetto.Controller;
 
 import com.progetto.viniliprogetto.DAO.OrdineDAO;
-import com.progetto.viniliprogetto.DAO.UtenteDAO;
 import com.progetto.viniliprogetto.Model.Ordine;
 import com.progetto.viniliprogetto.Model.Utente;
 
@@ -16,7 +15,10 @@ import java.io.IOException;
 @WebServlet("/dettagliordine")
 public class DettagliOrdineServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+        // Recuperare ordine id e stato dai parametri di richiesta
+        // Recuperare l'ordine attraverso l'id dal dao
+        // impostare lo stato (controllare che il valore passato sia giusto)
+        // Chiamare doCambiaStato passando solo l'ordine aggiornato
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

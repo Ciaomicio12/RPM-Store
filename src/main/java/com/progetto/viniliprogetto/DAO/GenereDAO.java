@@ -97,7 +97,7 @@ public class GenereDAO {
 
     public void doDelete(int id) throws SQLException {
         Connection conn = ConPool.getConnection();
-        PreparedStatement ps = conn.prepareStatement("DELETE FROM categoria" +
+        PreparedStatement ps = conn.prepareStatement("DELETE FROM genere" +
                 " WHERE id=?");
         ps.setInt(1, id);
         if (ps.executeUpdate() != 1) {

@@ -107,6 +107,20 @@ public class OrdineDAO {
         return null;
     }
 
+    public void doCambiaStatoOrdine(Ordine ordine) {
+        try {
+            Connection conn = ConPool.getConnection();
+            PreparedStatement ps = conn.prepareStatement("UPDATE ordine SET stato=? where id=?");
+            ps.setString(1, ordine.getStato());
+            ps.setInt(2, ordine.getId());
+            ps.executeUpdate();
+            ps.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Boolean checkIfExistbyEanAndUserID(String ean, int idutente) {
         try {
             Connection con = ConPool.getConnection();
@@ -199,4 +213,5 @@ public class OrdineDAO {
             throw new RuntimeException(e);
         }
     }
+
 }

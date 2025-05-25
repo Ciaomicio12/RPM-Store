@@ -56,7 +56,7 @@
                 <tr>
                     <td><img src="${pageContext.request.contextPath}/img/Cover/${vinile.copertina}" width="120px"
                              class="img-fluid"></td>
-                    <td><a href="<%= request.getContextPath() %>/vinile?ean=${vinile.ean}/vinile">${vinile.titolo}</a>
+                    <td><a href="<%= request.getContextPath() %>/vinile?ean=${vinile.ean}">${vinile.titolo}</a>
                     </td>
                     <td>${vinile.autore}</td>
                     <td>${vinile.getGenereString()}</td>
