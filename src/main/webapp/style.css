@@ -1,0 +1,78 @@
+.img-fluid {
+    border-radius: 20px;
+}
+
+.information {
+    text-align: center;
+}
+
+.album {
+    padding-top: 4vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    width: 70%;
+    background: #ececec;
+    border-radius: 20px;
+}
+
+.container-fluid {
+    border-color: #FF0000;
+    background-color: #FF0000;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.row {
+    padding-bottom: 2vw;
+}
+
+.btn-outline-success {
+    background-color: white;
+}
+
+.form-control {
+    margin-left: 2vw;
+}
+
+.logo {
+    float: left;
+    margin-left: 2vw;
+}
+
+.display-2 {
+    text-decoration: none;
+}
+
+.titleVinile {
+    color: #FF0000;
+    text-decoration: none;
+}
+
+.display-6 {
+    float: left;
+    color: #FF0000;
+}
+
+.barBottom {
+    background-color: #FF0000;
+    padding-top: 2vw;
+    padding-bottom: 0px;
+}
+
+.btn {
+    margin-right: 6vw;
+}
+
+.textLI {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.fut {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #000000;
+    text-decoration: none;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+}
