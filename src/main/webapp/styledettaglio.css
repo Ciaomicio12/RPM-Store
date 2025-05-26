@@ -3,13 +3,13 @@
         border-radius: 20px;
     }
 }
-
 @media screen and (min-width: 575px) {
     .img-fluid {
         border-radius: 20px;
         height: 80%;
     }
 }
+
 
 
 .information {
