@@ -28,10 +28,10 @@
 
 
 <section class="container-fluid">
-    <h2>Dettaglio ordine</h2>
     <div class="row">
-        <div class="col-md-6">
-            <form class="border border-dark px-4 py-3 mt-5" method="GET" action="DettagliOrdineServlet">
+        <h1>Dettaglio ordine</h1>
+        <div class="col-md-4 mb-4 mb-md-0">
+            <form class="px-4" method="GET" action="DettagliOrdineServlet">
                 <h2 class="title"><strong>Indirizzo di spedizione</strong></h2>
                 <div class="mb-3">
                     <% if (utente != null && utente.isAdmin()) { %>
@@ -49,22 +49,32 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4 mb-4 mb-md-0">
             <h2 class="title"><strong>Ordine </strong><i>#<%=ordine.getId()%>
             </i><br><strong>Stato: </strong>
                 <%= ordine.getStatoStringa() %>
             </h2>
-            <div class="mb-3">
+            <div class="mb-1">
                 <% for (VinileInOrdine vio : ordine.getViniliInOrdineList()) { %>
-                <img src="<%= request.getContextPath() %>/img/Cover/<%= vio.getVinile().getCopertina() %>"
-                     alt="Copertina Album" class="img-fluid">
-                <h5><%= vio.getQuantita() %>x <%= vio.getPrezzo()%>&euro;</h5>
-                <h5><%= vio.getVinile().getTitolo()%>
-                </h5>
-                <h5><%= vio.getVinile().getAutore()%>
-                </h5>
+                <div class="d-flex mb-3">
+                    <img src="<%= request.getContextPath() %>/img/Cover/<%= vio.getVinile().getCopertina() %>"
+                         alt="Copertina Album" width="120px" class="img-fluid">
+                    <div class="ms-3">
+                        <h5><%= vio.getQuantita() %>x <%= vio.getPrezzo()%>&euro;</h5>
+                        <h5><%= vio.getVinile().getTitolo()%>
+                        </h5>
+                        <h5><%= vio.getVinile().getAutore()%>
+                        </h5>
+                    </div>
+                </div>
                 <% } %>
             </div>
+        </div>
+        <div class="col-md-4">
+            <h2 class="title">
+                <strong>Totale: </strong>
+                <i><%=ordine.getTotale()%>&euro;</i>
+            </h2>
             <% if (utente != null && utente.isAdmin() && ordine.getStato().equals("P")) { %>
             <form class="border border-dark px-4 py-3 mt-5" method="POST"
                   action="<%= request.getContextPath()%>/dettagliordine">
