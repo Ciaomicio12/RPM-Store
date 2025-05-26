@@ -137,17 +137,17 @@ VALUES (1, 'Thrash Metal'),
 -- Inserimento dati nella tabella "ordine"
 
 INSERT INTO ordine (indirizzo, id_utente, oradiordine, totale, stato)
-VALUES (1, 1, '2023-07-08 10:30:00', 50, 'P'),
-       (1, 2, '2023-07-07 15:45:00', 35, 'C'),
-       (2, 3, '2023-07-06 09:15:00', 40, 'P');
+VALUES (1, 1, '1688805000', 50, 'P'),
+       (1, 2, '	1688737500', 35, 'S'),
+       (2, 3, '1688627700', 40, 'P');
 
 
 -- Inserimento dati nella tabella "vinile_in_ordine"
 
 INSERT INTO vinile_in_ordine (ordine_id, quantita, vinile_ean, prezzoacq)
-VALUES (1, 2, '602557382594', 69.98),
+VALUES (1, 2, '602557382594', 34.99),
        (1, 1, '194397971514', 18),
-       (2, 3, '720642442517', 59.80),
+       (2, 3, '720642442517', 29.90),
        (3, 1, '93624915959', 18);
 
 -- Inserimento dati nella tabella "vinile_genere"

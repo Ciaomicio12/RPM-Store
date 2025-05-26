@@ -2,8 +2,6 @@
 <%@ page import="com.progetto.viniliprogetto.Model.Utente" %>
 <%@ page import="java.util.List" %>
 <%
-	Ordine ordine = (Ordine) request.getAttribute("ordine");
-	Utente utente = (Utente) request.getAttribute("utente");
 	List<Ordine> ordini = (List<Ordine>) request.getAttribute("ordini");
 
 %>
@@ -52,27 +50,16 @@
 			</tr>
         </thead>
         <tbody>
-			<c:forEach items="${ordine}" var="ordine">
-				<tr>
-					<td><a href="ordine-in-dettaglio.jsp"><%= ordine.getId() %></a></td>
-					<td><%= ordine.getUtente().getCognome() %> <%= ordine.getUtente().getNome() %></td>
-					<td><%= ordine.getData() %></td>
-					<td><%= ordine.getTotale() %>&euro;</td>
-					<td>
-						<c:choose>
-							<c:when test="${ordine.stato == 'S'}">
-								Spedito
-							</c:when>
-							<c:when test="${ordine.stato == 'P'}">
-								Pagato
-							</c:when>
-							<c:when test="${ordine.stato == 'A'}">
-								Annullato
-							</c:when>
-						</c:choose>
-					</td>
-				</tr>
-			</c:forEach>
+			<% for (Ordine ordine : ordini) {%>
+					<tr>
+						<td><a href="<%= request.getContextPath()%>/dettagliordine?id=<%= ordine.getId()%>"><%= ordine.getId() %>
+						</a></td>
+						<td><%= ordine.getUtente().getCognome() %> <%= ordine.getUtente().getNome() %></td>
+						<td><%= ordine.getData() %></td>
+						<td><%= ordine.getTotale() %>&euro;</td>
+						<td><%= ordine.getStatoStringa() %>
+					</tr>
+			<% } %>
         </tbody>
     </table>
 </div>
