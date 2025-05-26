@@ -58,6 +58,7 @@ public class AggiornaVinileServlet extends HttpServlet {
                 throw new MyServletException("il campo prezzo non può essere vuoto", 400);
             }
             try {
+                prezzo = prezzo.replace(",", ".");
                 prezzoint = Float.parseFloat(prezzo);
             } catch (NumberFormatException er) {
                 throw new MyServletException("Il campo prezzo deve contenere solo numeri", 400);
