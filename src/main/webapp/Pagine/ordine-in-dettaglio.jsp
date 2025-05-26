@@ -1,6 +1,7 @@
 <%@ page import="com.progetto.viniliprogetto.Model.Ordine" %>
 <%@ page import="com.progetto.viniliprogetto.Model.Utente" %>
 <%@ page import="com.progetto.viniliprogetto.Model.VinileInOrdine" %>
+<%@ page import="com.progetto.viniliprogetto.Controller.DettagliOrdineServlet" %>
 <%
     Ordine ordine = (Ordine) request.getAttribute("ordine");
     Utente utente = (Utente) request.getAttribute("utente");
@@ -67,13 +68,15 @@
             <% if (utente != null && utente.isAdmin() && ordine.getStato().equals("P")) { %>
             <form class="border border-dark px-4 py-3 mt-5" method="POST"
                   action="<%= request.getContextPath()%>/dettagliordine">
-                <button type="submit" class="btn btn-primary" name="azione" value="annulla-ordine">Annulla ordine
+                <button type="submit" class="btn btn-primary" name="azione"
+                        value="<%= DettagliOrdineServlet.AZIONE_ANNULLA%>">Annulla ordine
                 </button>
-                <button type="submit" class="btn btn-primary" name="azione" value="spedisci-ordine">Segna come spedito
+                <button type="submit" class="btn btn-primary" name="azione"
+                        value="<%= DettagliOrdineServlet.AZIONE_SPEDISCI%>">Segna come spedito
                 </button>
                 <input type="hidden" name="ordine" value="<%= ordine.getId() %>">
-                <% } %>
             </form>
+            <% } %>
         </div>
     </div>
 </section>

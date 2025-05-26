@@ -138,7 +138,7 @@ VALUES (1, 'Thrash Metal'),
 
 INSERT INTO ordine (indirizzo, id_utente, oradiordine, totale, stato)
 VALUES (1, 1, '1688805000', 87.98, 'P'),
-       (1, 2, '	1688737500', 89.70, 'S'),
+       (1, 2, '1688737500', 89.70, 'S'),
        (2, 3, '1688627700', 18, 'P');
 
 

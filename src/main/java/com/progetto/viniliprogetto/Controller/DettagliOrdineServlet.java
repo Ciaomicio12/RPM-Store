@@ -14,11 +14,36 @@ import java.io.IOException;
 
 @WebServlet("/dettagliordine")
 public class DettagliOrdineServlet extends HttpServlet {
+
+    public static final String AZIONE_ANNULLA = "annulla";
+    public static final String AZIONE_SPEDISCI = "spedisci";
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Recuperare ordine id e stato dai parametri di richiesta
-        // Recuperare l'ordine attraverso l'id dal dao
+        String idordineStr = request.getParameter("ordine");
+        String azione = request.getParameter("azione");
+        if ((azione == null || idordineStr == null))
+            throw new MyServletException("Errore nei parametri", 400);
+        String nuovoStato;
+        if (azione.equals(AZIONE_ANNULLA))
+            nuovoStato = "A";
+        else if (azione.equals(AZIONE_SPEDISCI))
+            nuovoStato = "S";
+        else
+            throw new MyServletException("Azione non valida", 400);
+        int idordine;
+        try {
+            idordine = Integer.parseInt(idordineStr);
+        } catch (NumberFormatException e) {
+            throw new MyServletException("id ordine non valido", 400);
+        }
+        OrdineDAO dao = new OrdineDAO();
+        Ordine ordine = dao.doRetriveById(idordine);
         // impostare lo stato (controllare che il valore passato sia giusto)
+        if (ordine == null) throw new MyServletException("Errore parametro ordine non trovato", 404);
         // Chiamare doCambiaStato passando solo l'ordine aggiornato
+        ordine.setStato(nuovoStato);
+        dao.doCambiaStatoOrdine(ordine);
+        response.sendRedirect(request.getContextPath() + "/dettagliordine?id=" + idordine);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

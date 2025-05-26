@@ -50,13 +50,24 @@ public class VinileDAO {
         return v;
     }
 
+    public List<Vinile> doRetrieveAllRandomly(int limit) {
+        return doRetrieveAll(0, limit, true);
+    }
+
+    public List<Vinile> doRetrieveAll(int offset, int limit) {
+        return doRetrieveAll(offset, limit, false);
+    }
+
     //Recupero tutti i vinili
-    public List<Vinile> doRetrieveAll() {
+    public List<Vinile> doRetrieveAll(int offset, int limit, boolean ordineCasuale) {
         try {
             Connection conn = ConPool.getConnection();
             String query = " SELECT ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina\n"
-                    + " FROM Vinile ORDER BY RAND()";
+                    + " FROM Vinile limit ?,? ";
             PreparedStatement st = conn.prepareStatement(query);
+            if (ordineCasuale) query += "ORDER BY RAND()";
+            st.setInt(1, offset);
+            st.setInt(2, limit);
             ResultSet rs = st.executeQuery();
             List<Vinile> vinili = new ArrayList<>();
             while (rs.next()) {
