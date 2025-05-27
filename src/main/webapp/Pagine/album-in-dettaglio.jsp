@@ -8,7 +8,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bootstrap Demo</title>
+  <title>Record Road - Dettagli del prodotto</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -60,11 +60,15 @@
           <c:if test="${!utente.admin && vinile.numeroDisponibili == 0}">
             <p>Prodotto NON disponibile all'acquisto.<br>Copie esaurite.</p>
           </c:if>
+
           <c:if test="${utente.admin}">
-            <a href="<%= request.getContextPath() %>/admin/aggiunta-modifica"
-               class="btn-outline-danger rounded-pill" id="go-to-modify-album-button">
-              Modifica prodotto
-            </a>
+            <form method="GET" action="<%= request.getContextPath() %>/admin/aggiunta-mofica?ean=<%= vinile.getEan()%>">
+              <button id="go-to-modify-album-button" class="btn-outline-danger rounded-pill">
+                Modifica prodotto
+              </button>
+            </form>
+
+
             <p>${vinile.numeroDisponibili} copie disponibili</p>
             <form method="POST" action="<%=request.getContextPath()%>/admin/cancellavinile">
               <button id="remove-album" class="btn-outline-danger rounded-pill" name="ean" value="<%=vinile.getEan()%>">

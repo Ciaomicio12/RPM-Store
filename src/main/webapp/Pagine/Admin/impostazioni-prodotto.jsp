@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap Demo</title>
+    <title>Record Road - Impostazioni del prodotto</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
@@ -34,7 +34,7 @@
                 <div class="col-12 col-md-4">
                     <div class="input-group mb-3">
                             <img class="img-fluid"
-                                 src="<%= request.getContextPath() %>/img/Cover/<%= vinile==null?"senzacover.jpg" : vinile.getCopertina() %>"
+                                 src="<%= request.getContextPath() %>/img/Cover/<%= (vinile == null) ? "senzacover.jpg" : vinile.getCopertina() %>"
                                  alt="Copertina album" class="mr-3 d-block">
                             <div class="mb-0 form-control border-0">
                                 <input type="file" class="form-control" id="cover" name="cover" required>
