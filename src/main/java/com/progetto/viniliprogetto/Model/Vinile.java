@@ -3,7 +3,6 @@ package com.progetto.viniliprogetto.Model;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class Vinile {
     private String ean;
@@ -71,7 +70,9 @@ public class Vinile {
     }
 
     public String getPrezzoString() {
-        return DecimalFormat.getCurrencyInstance(Locale.GERMANY).format(prezzo).replace("€", "");
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+        String prezzoFormattato = decimalFormat.format(prezzo);
+        return prezzoFormattato;
     }
 
     public int getNumeroDisponibili() {

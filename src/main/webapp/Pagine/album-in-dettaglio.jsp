@@ -60,15 +60,11 @@
           <c:if test="${!utente.admin && vinile.numeroDisponibili == 0}">
             <p>Prodotto NON disponibile all'acquisto.<br>Copie esaurite.</p>
           </c:if>
-
           <c:if test="${utente.admin}">
-            <form method="GET" action="<%= request.getContextPath() %>/admin/aggiunta-mofica?ean=<%= vinile.getEan()%>">
-              <button id="go-to-modify-album-button" class="btn-outline-danger rounded-pill">
-                Modifica prodotto
-              </button>
-            </form>
-
-
+            <a href="<%= request.getContextPath() %>/admin/modifica?ean=${vinile.ean}"
+               class="btn-outline-danger rounded-pill" id="go-to-modify-album-button">
+              Modifica prodotto
+            </a>
             <p>${vinile.numeroDisponibili} copie disponibili</p>
             <form method="POST" action="<%=request.getContextPath()%>/admin/cancellavinile">
               <button id="remove-album" class="btn-outline-danger rounded-pill" name="ean" value="<%=vinile.getEan()%>">

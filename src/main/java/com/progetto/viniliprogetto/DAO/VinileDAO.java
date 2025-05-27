@@ -181,7 +181,7 @@ public class VinileDAO {
 
     }
 
-    private void doRemoveGeneriVinile(Vinile vinile) {
+    public void doRemoveGeneriVinile(Vinile vinile) {
         try {
             Connection conn = ConPool.getConnection();
             PreparedStatement psCa = conn.prepareStatement("DELETE from  Vinile_genere " +
@@ -194,7 +194,7 @@ public class VinileDAO {
         }
     }
 
-    private void doAggiungiGeneriVinile(Vinile vinile) {
+    public void doAggiungiGeneriVinile(Vinile vinile) {
         try {
             Connection conn = ConPool.getConnection();
             PreparedStatement psCa = conn.prepareStatement("INSERT INTO vinile_genere (ean, id) VALUES (?, ?)");
@@ -226,6 +226,9 @@ public class VinileDAO {
             ps.setString(7, vinile.getEan());
             this.doRemoveGeneriVinile(vinile);
             this.doAggiungiGeneriVinile(vinile);
+            ps.executeUpdate();
+            ps.close();
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
