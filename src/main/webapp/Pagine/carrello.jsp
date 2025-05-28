@@ -1,5 +1,13 @@
+<%@ page import="java.util.List" %>
 <%@ page import="com.progetto.viniliprogetto.Controller.CarrelloServlet" %>
 <%@ page import="com.progetto.viniliprogetto.Model.Carrello" %>
+<%@ page import="com.progetto.viniliprogetto.Model.Ordine" %>
+<%@ page import="com.progetto.viniliprogetto.Model.Utente" %>
+<%
+    Ordine ordine = (Ordine) request.getAttribute("ordine");
+    Utente utente = (Utente) request.getAttribute("utente");
+
+%>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
@@ -77,68 +85,12 @@
             }
         </script>
 
-        <!--
-
-          <div class="album col-12 row my-5 my-sm-4 mx-auto">
-          <div class="col-9 col-sm-3 mx-auto" >
-            <a href="dettaglio-album.html">
-              <img src="C:\Users\User\Desktop\Esercizi C - C++\Tecnologie Software per il Web\Progetto\Album\Appetite for Destruction.jpg" alt="Copertina Album 1" class="img-fluid" >
-            </a>
-          </div>
-          <div class="information col-12 col-sm-9">
-            <h4>Appetite for Destruction</h4>
-            <h4>37.68&euro;</h4>
-          </div>
-        </div>
-
-          <div class="cart-item">
-        <div class="col-12">
-          <div class="album col-12 row my-5 my-sm-4 mx-auto">
-            <div class="col-9 col-sm-3 mx-auto" >
-              <a href="dettaglio-album.html">
-                <img src="C:\Users\User\Desktop\Esercizi C - C++\Tecnologie Software per il Web\Progetto\Album\The Final Countdown.jpg" alt="Copertina Album 1" class="img-fluid" >
-              </a>
-            </div>
-            <div class="information col-12 col-sm-9">
-              <h4>The Final Countdown</h4>
-              <h4>35.14&euro;</h4>
-            </div>
-          </div>
-          <div class="item-quantity">
-            <select class="quantity-select">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
-          </div>
-          <div class="item-actions">
-            <button class="delete-button">Rimuovi dal carrello</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="album col-12 row my-5 my-sm-4 mx-auto">
-            <div class="col-9 col-sm-3 mx-auto" >
-              <a href="dettaglio-album.html">
-                <img src="C:\Users\User\Desktop\Esercizi C - C++\Tecnologie Software per il Web\Progetto\Album\The Final Countdown.jpg" alt="Copertina Album 1" class="img-fluid" >
-              </a>
-            </div>
-            <div class="information col-12 col-sm-9">
-              <h4>The Final Countdown</h2>
-              <h4>35.14&euro;</h3>
-            </div>
-        </div>
-      </div>
-
-        -->
-
-
-        <div class="prezzo col-4 col-sm-3 mt-4 mt-sm-0">
+      <div class="prezzo col-4 col-sm-3 mt-4 mt-sm-0">
             <h3>Totale provvisorio (<%= carrello.getQuantita() %>articoli): </h3>
             <h2 class="display-3"><strong><%= carrello.getTotale() %>&euro;</strong></h2>
-            <a class="btn-outline-danger rounded-pill" href="<%= request.getContextPath() %>/effettuaordine">Procedi
+            <a class="btn-outline-danger rounded-pill" href="<%= request.getContextPath() %>/cliente/riepilogopagamento?id=<%=ordine.getUtente() %>>Procedi
                 all'ordine</a>
-        </div>
+      </div>
     </div>
 </section>
 

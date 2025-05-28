@@ -52,7 +52,7 @@
         <div class="col-md-4 mb-4 mb-md-0">
             <h2 class="title"><strong>Ordine </strong><i>#<%=ordine.getId()%>
             </i><br><strong>Stato: </strong>
-                <%= ordine.getStatoStringa() %>
+                <%= ordine.getStato() %>
             </h2>
             <div class="mb-1">
                 <% for (VinileInOrdine vio : ordine.getViniliInOrdineList()) { %>
