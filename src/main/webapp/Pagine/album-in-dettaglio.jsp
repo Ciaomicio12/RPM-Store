@@ -27,10 +27,10 @@
 <section class="container">
   <div class="random-albums my-3" class="row">
     <div class="col-12 row my-5 my-md-4 mx-auto">
-        <div class="col-12 col-md-3">
-          <img src="img/Cover/${vinile.copertina}" alt="Copertina Album" class="img-fluid">
+      <div class="col-12 col-sm-5 col-xl-4">
+        <img src="img/Cover/${vinile.copertina}" alt="Copertina Album" class="img-fluid">
       </div>
-      <div class="information col-8 col-md-6 mt-4 mt-md-0">
+      <div class="information col-8 col-xl-4 col-md-6 mt-4 mt-md-0">
         <h3 class="display-6"><strong>${vinile.titolo}</strong></h3>
         <p>Titolo</p>
         <h3>${vinile.autore}</h3>
