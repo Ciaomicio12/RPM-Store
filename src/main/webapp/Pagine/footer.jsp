@@ -7,8 +7,10 @@
                     <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/profilo'">Dati
                         personali</p></li>
                 </c:if>
-                <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/assistenza'">Assistenza</p>
-                </li>
+                <c:if test="${(utente != null && !utente.admin) || utente == null}">
+                    <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/assistenza'">Assistenza</p>
+                    </li>
+                </c:if>
                 <c:if test="${utente != null}">
                     <c:if test="${!utente.admin}">
                         <p class="fut" onclick="location.href = '<%= request.getContextPath() %>/lista-ordini-cliente'">

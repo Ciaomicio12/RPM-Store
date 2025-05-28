@@ -26,11 +26,11 @@
 <%@ include file="header.jsp" %>
 <section class="container">
   <div class="random-albums my-3" class="row">
-    <div class="col-12 row my-5 my-sm-4 mx-auto">
-        <div class="col-12 col-sm-3">
+    <div class="col-12 row my-5 my-md-4 mx-auto">
+        <div class="col-12 col-md-3">
           <img src="img/Cover/${vinile.copertina}" alt="Copertina Album" class="img-fluid">
       </div>
-      <div class="information col-8 col-sm-6 mt-4 mt-sm-0">
+      <div class="information col-8 col-md-6 mt-4 mt-md-0">
         <h3 class="display-6"><strong>${vinile.titolo}</strong></h3>
         <p>Titolo</p>
         <h3>${vinile.autore}</h3>
@@ -42,7 +42,7 @@
         <h5>${vinile.ean}</h5>
         <p>EAN</p>
       </div>
-      <div class="prezzo col-4 col-sm-3 mt-4 mt-sm-0">
+      <div class="prezzo col-4 col-md-3 mt-4 mt-md-0">
         <h3 class="display-3"><strong>${vinile.getPrezzoString()}&euro;</strong></h3>
         <p>Prezzo</p>
         <!-- <button class="add-to-cart btn btn btn-warning">Aggiungi al carrello</button> -->
