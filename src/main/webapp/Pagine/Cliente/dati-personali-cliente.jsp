@@ -65,19 +65,23 @@
                 </div>
                 <div class="mb-3">
                     <label for="numero-civico" class="textForm">Numero civico:</label>
-                    <input type="text" class="textForm" id="numero-civico" name="numero-civico" required>
+                    <input type="text" class="textForm" id="numero-civico" name="numero-civico"
+                           value="${utente.indirizzo.numeroCivico}" required>
                 </div>
                 <div class="mb-3">
                     <label for="citta" class="textForm">Città:</label>
-                    <input type="text" class="textForm" id="citta" name="citta" required>
+                    <input type="text" class="textForm" id="citta" name="citta" value="${utente.indirizzo.citta}"
+                           required>
                 </div>
                 <div class="mb-3">
                     <label for="provincia" class="textForm">Provincia:</label>
-                    <input type="text" class="textForm" id="provincia" name="provincia" required>
+                    <input type="text" class="textForm" id="provincia" name="provincia"
+                           value="${utente.indirizzo.strada}" required>
                 </div>
                 <div class="mb-3">
                     <label for="codice-postale" class="textForm">Codice Postale:</label>
-                    <input type="text" class="textForm" id="codice-postale" name="codice-postale" required>
+                    <input type="text" class="textForm" id="codice-postale" name="codice-postale"
+                           value="${utente.indirizzo.cap}" required>
                 </div>
                 <button type="submit" class="btn-outline-danger rounded-pill" name="azione" value="aggiorna_indirizzo">
                     Aggiorna
