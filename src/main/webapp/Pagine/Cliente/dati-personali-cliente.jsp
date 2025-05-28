@@ -61,7 +61,7 @@
                 <h5 class="title">Indirizzo di spedizione</h5>
                 <div class="mb-3">
                     <label for="via" class="textForm">Via:</label>
-                    <input type="text" class="textForm" id="via" name="via" required>
+                    <input type="text" class="textForm" id="via" name="via" value="${utente.indirizzo.strada}" required>
                 </div>
                 <div class="mb-3">
                     <label for="numero-civico" class="textForm">Numero civico:</label>
@@ -72,11 +72,6 @@
                     <label for="citta" class="textForm">Città:</label>
                     <input type="text" class="textForm" id="citta" name="citta" value="${utente.indirizzo.citta}"
                            required>
-                </div>
-                <div class="mb-3">
-                    <label for="provincia" class="textForm">Provincia:</label>
-                    <input type="text" class="textForm" id="provincia" name="provincia"
-                           value="${utente.indirizzo.strada}" required>
                 </div>
                 <div class="mb-3">
                     <label for="codice-postale" class="textForm">Codice Postale:</label>
