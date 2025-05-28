@@ -47,12 +47,6 @@
           <input type="text" id="citta" name="citta" value="<%=utente.getIndirizzo().getCitta()%>" required>
         </div>
         <div class="mx-auto" style="width: 110px;">
-          <label for="provincia">Provincia:</label>
-        </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="text" id="provincia" name="provincia" required>
-        </div>
-        <div class="mx-auto" style="width: 110px;">
           <label for="codice-postale">Codice Postale:</label>
         </div>
         <div class="mx-auto" style="width: 200px;">
