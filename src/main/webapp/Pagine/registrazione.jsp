@@ -27,7 +27,7 @@
         <br>
         <div class="form-group">
           <label for="nome">Nome</label>
-          textForm
+          <div></div>
           <input type="text" class="textForm" id="nome" name="nome" placeholder="Inserisci nome" required>
         </div>
         <div class="form-group">
