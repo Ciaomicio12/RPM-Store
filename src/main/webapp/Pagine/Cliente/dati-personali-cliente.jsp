@@ -74,6 +74,11 @@
                            required>
                 </div>
                 <div class="mb-3">
+                    <label for="telefono" class="textForm">Telefono:</label>
+                    <input type="text" class="textForm" id="telefono" name="telefono"
+                           value="${utente.indirizzo.telefono}" required>
+                </div>
+                <div class="mb-3">
                     <label for="codice-postale" class="textForm">Codice Postale:</label>
                     <input type="text" class="textForm" id="codice-postale" name="codice-postale"
                            value="${utente.indirizzo.cap}" required>
