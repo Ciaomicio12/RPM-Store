@@ -75,7 +75,9 @@ public class UtenteDAO extends Utente {
             if (rs.next()) {
                 conn.close();
                 Utente utente = creatUtente(rs);
+                //if(rs.getInt(11) != null){
                 utente.setIndirizzo(creaIndirizzo(rs));
+                //}
                 return utente;
             }
             conn.close();
