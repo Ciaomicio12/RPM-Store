@@ -89,8 +89,8 @@
             <h3>Totale provvisorio (<%= carrello.getQuantita() %>articoli): </h3>
             <h2 class="display-3"><strong><%= carrello.getTotale() %>&euro;</strong></h2>
             <a class="btn-outline-danger rounded-pill"
-               href="<%= request.getContextPath() %>/cliente/riepilogopagamento?id=<%=ordine.getUtente() %>Procedi
-                all'ordine"></a>
+               href="<%= request.getContextPath() %>/cliente/riepilogopagamento?id=<%=ordine.getUtente() %>">Procedi
+                all'ordine</a>
         </div>
     </div>
 </section>
