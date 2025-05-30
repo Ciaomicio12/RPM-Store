@@ -29,11 +29,6 @@ public class RegistrazioneServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UtenteDAO utentedao = new UtenteDAO();
         String error = "";
-        String strada = request.getParameter("strada");
-        String citta = request.getParameter("citta");
-        String cap = request.getParameter("cap");
-        String numero_civico = request.getParameter("numero_civico");
-        String telefono = request.getParameter("telefono");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String passwordconfirm = request.getParameter("confirm-password");
@@ -67,7 +62,7 @@ public class RegistrazioneServlet extends HttpServlet {
         if (email.length() == 0) {
             error = error + "L'email non può essere vuota<br>";
             check = false;
-        } else if (utentedao.doRetrieveByEmail(email) == true) {
+        } else if (utentedao.mailEsistente(email)) {
             error = error + "L'email é già stata usata da un altro account<br>";
             check = false;
         } else if (!email.matches("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w+)+$")) {
@@ -92,31 +87,8 @@ public class RegistrazioneServlet extends HttpServlet {
             error = error + "Sesso non valido<br>";
             check = false;
         }
-        if (strada == null || strada.trim().isEmpty()) {
-            error = error + "Campo strada non valido<br>";
-            check = false;
-        }
 
-        if (citta == null || citta.trim().isEmpty()) {
-            error = error + "Citta non valida<br>";
-            check = false;
-        }
-        if (cap == null || cap.trim().isEmpty() || cap.length() > 6 || !cap.matches("\\d+")) {
-            throw new MyServletException("Il cap non deve essere vuoto", 400);
-        }
-        if (numero_civico == null || numero_civico.trim().isEmpty()) {
-            error = error + "Numero civico non valido<br>";
-            check = false;
-        }
-        if (telefono == null || telefono.trim().isEmpty()) {
-            throw new MyServletException("Il campo telefono non deve essere vuoto", 400);
-        } else {
-            if (!telefono.matches("\\d+")) {
-                throw new MyServletException("Il campo telefono non deve avere lettere", 400);
-            }
-        }
-
-        if (check == true) {
+        if (check) {
             Utente utente = new Utente();
             utente.setAdmin(false);
             utente.setNome(nome);
@@ -125,21 +97,11 @@ public class RegistrazioneServlet extends HttpServlet {
             utente.setPassword(password);
             utente.setSesso(sesso);
             utente.setEmail(email);
-            utente.getIndirizzo().setStrada(strada);
-            utente.getIndirizzo().setTelefono(telefono);
-            utente.getIndirizzo().setNumeroCivico(numero_civico);
-            utente.getIndirizzo().setCap(cap);
             utentedao.doSave(utente);
-            utente = utentedao.doRetrieveByEmailPassword(email, password);
             HttpSession session = request.getSession();
             session.setAttribute("utente", utente);
-            if (utente != null) {
-                response.sendRedirect("profilo");
-            } else {
-                throw new MyServletException("errore");
-            }
+            response.sendRedirect(request.getContextPath() + "/Cliente/dati-personali-cliente.jsp");
         } else {
-            error = "Sono stati trovati i seguenti errori: <br><br>" + error;
             request.setAttribute("formerror", error);
             RequestDispatcher dispatcher = request.getRequestDispatcher("Pagine/registrazione.jsp");
             dispatcher.forward(request, response);

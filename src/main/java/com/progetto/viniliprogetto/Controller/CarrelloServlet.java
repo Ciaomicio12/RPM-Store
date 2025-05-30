@@ -33,7 +33,7 @@ public class CarrelloServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Carrello carrello = getCarrello(request);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Pagine/carrello.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/Pagine/carrello.jsp");
         dispatcher.forward(request, response);
     }
 

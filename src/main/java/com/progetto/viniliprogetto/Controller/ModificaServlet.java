@@ -29,7 +29,7 @@ public class ModificaServlet extends HttpServlet {
                 throw new MyServletException("Errore vinile non trovato", 404);
             request.setAttribute("vinile", vinile);
         }
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Pagine/Admin/modifica-prodotto.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/Pagine/Admin/modifica-prodotto.jsp");
         requestDispatcher.forward(request, response);
     }
 

@@ -22,6 +22,6 @@ public class HomeServlet extends HttpServlet {
         List<Vinile> vinili = vinileDAO.doRetrieveAllRandomly(10);
         Collections.shuffle(vinili);
         request.setAttribute("vinili", vinili);
-        request.getRequestDispatcher("/Pagine/home.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/Pagine/home.jsp").forward(request, response);
     }
 }

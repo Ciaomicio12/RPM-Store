@@ -21,7 +21,7 @@ public class GestisciOrdiniServlet extends HttpServlet {
         OrdineDAO odao = new OrdineDAO();
         ArrayList<Ordine> li = odao.doRetrieveAll();
         request.setAttribute("ordini", li);
-        request.getRequestDispatcher("/Pagine/Admin/lista-ordini-amministratore.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/Pagine/Admin/lista-ordini-amministratore.jsp").forward(request, response);
     }
 }
 

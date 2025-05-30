@@ -66,7 +66,7 @@ public class UtenteDAO extends Utente {
                             "       numero_civico,\n" +
                             "       telefono\n" +
                             "FROM utente u\n" +
-                            "INNER join indirizzo i on u.indirizzo = i.id\n" +
+                            "LEFT join indirizzo i on u.indirizzo = i.id\n" +
                             "WHERE email = ?\n" +
                             "  AND password = SHA1(?)");
             ps.setString(1, email);
@@ -75,14 +75,15 @@ public class UtenteDAO extends Utente {
             if (rs.next()) {
                 conn.close();
                 Utente utente = creatUtente(rs);
-                //if(rs.getInt(11) != null){
-                utente.setIndirizzo(creaIndirizzo(rs));
-                //}
+                // controllo se l'id dell'indirizzo è NUll: se non lo è lo creo
+                rs.getInt(10);
+                if (!rs.wasNull())
+                    utente.setIndirizzo(creaIndirizzo(rs));
                 return utente;
             }
             conn.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return null;
     }
@@ -103,7 +104,7 @@ public class UtenteDAO extends Utente {
             }
             conn.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return null;
     }
@@ -123,12 +124,12 @@ public class UtenteDAO extends Utente {
             }
             conn.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return null;
     }
 
-    public boolean doRetrieveByEmail(String email) {
+    public boolean mailEsistente(String email) {
         try {
             Connection conn = ConPool.getConnection();
             PreparedStatement ps = conn.prepareStatement(
@@ -143,7 +144,7 @@ public class UtenteDAO extends Utente {
             }
             conn.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return false;
     }
