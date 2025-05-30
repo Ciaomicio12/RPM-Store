@@ -75,8 +75,8 @@ public class CaricaVinileServlet extends HttpServlet {
         if (edit != null && edit.equals(ean) == false) {
             throw new MyServletException("il campo ean non può essere modificato", 400);
         }
-        if (Pattern.matches("[a-zA-Z]+", ean) == false && ean.length() == 13) {
-            throw new MyServletException("il campo ean può contenre solo numeri e deve essere da 13 carratteri", 400);
+        if (Pattern.matches("[a-zA-Z]+", ean) == false && (ean.length() < 11 || ean.length() > 13)) {
+            throw new MyServletException("il campo ean può contenre solo numeri e deve essere dagli 11 ai 13 carratteri", 400);
         }
 
         if (vdao.doRetrieveByEan(ean) != null && edit == null) {
