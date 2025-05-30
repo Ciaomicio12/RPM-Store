@@ -27,6 +27,47 @@ public class UtenteDAO extends Utente {
         return null;
     }
 
+    public void doUpdateUtente(Utente utente) {
+        try {
+            Connection conn = ConPool.getConnection();
+            if (utente.getIndirizzo().getId() == -1) {
+                // Nuovo indirizzo
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO indirizzo (strada,citta,cap,numero_civico,telefono) " +
+                        "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                ps.setString(1, utente.getIndirizzo().getStrada());
+                ps.setString(2, utente.getIndirizzo().getCitta());
+                ps.setString(3, utente.getIndirizzo().getCap());
+                ps.setString(4, utente.getIndirizzo().getNumeroCivico());
+                ps.setString(5, utente.getIndirizzo().getTelefono());
+                ps.executeUpdate();
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next())
+                    utente.getIndirizzo().setId(rs.getInt(1));
+                rs.close();
+                ps.close();
+            } else {
+                PreparedStatement ps = conn.prepareStatement("UPDATE indirizzo set strada=?, citta=?, cap=?, numero_civico=?, telefono=? where id=?");
+                ps.setString(1, utente.getIndirizzo().getStrada());
+                ps.setString(2, utente.getIndirizzo().getCitta());
+                ps.setString(3, utente.getIndirizzo().getCap());
+                ps.setString(4, utente.getIndirizzo().getNumeroCivico());
+                ps.setString(5, utente.getIndirizzo().getTelefono());
+                ps.setInt(6, utente.getIndirizzo().getId());
+                ps.close();
+            }
+            PreparedStatement ps = conn.prepareStatement("UPDATE utente set nome=?, cognome=?, email=? where id=?");
+            ps.setString(1, utente.getNome());
+            ps.setString(2, utente.getCognome());
+            ps.setString(3, utente.getEmail());
+            ps.setInt(4, utente.getId());
+            ps.executeUpdate();
+            ps.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean checkPassword(String email, String password) {
         try {
             Connection conn = ConPool.getConnection();
@@ -206,24 +247,6 @@ public class UtenteDAO extends Utente {
             e.printStackTrace();
         }
     }
-
-    public void doSetAdmin(Utente utente, Boolean admin) {
-        try {
-            Connection conn = ConPool.getConnection();
-            PreparedStatement ps = conn.prepareStatement(
-                    "UPDATE utente set admin=? " +
-                            "where id=?");
-            ps.setBoolean(1, admin);
-            ps.setInt(2, utente.getId());
-            if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("INSERT error.");
-            }
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     public void doSave(Utente utente) {
         try {

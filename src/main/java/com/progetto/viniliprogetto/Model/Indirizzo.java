@@ -1,7 +1,7 @@
 package com.progetto.viniliprogetto.Model;
 
 public class Indirizzo {
-    private int id;
+    private int id = -1;
     private String strada;
     private String citta;
     private String cap;

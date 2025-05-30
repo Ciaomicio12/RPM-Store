@@ -55,6 +55,10 @@ public class Carrello {
         }
         return sum;
     }
+
+    public void svuota() {
+        this.viniliInCarrello = new ArrayList<>();
+    }
     /*
     public int getTotprodotti() {
         aggiornaTotProdotti();

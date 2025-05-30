@@ -22,7 +22,7 @@ public class ListaOrdiniServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Utente utente = (Utente) session.getAttribute("utente");
-        if (utente != null && utente.isAdmin() == false) {
+        if (utente != null && !utente.isAdmin()) {
             OrdineDAO o = new OrdineDAO();
             ArrayList<Ordine> ordini = o.doRetrieveByUserId(utente.getId());
             request.setAttribute("ordini", ordini);
