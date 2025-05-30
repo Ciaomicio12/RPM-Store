@@ -20,7 +20,7 @@ public class RegistrazioneServlet extends HttpServlet {
         if (login.getAttribute("utente") != null) {
             response.sendRedirect(request.getContextPath());
         } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Pagine/registrazione.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/Pagine/registrazione.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -103,7 +103,7 @@ public class RegistrazioneServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/Cliente/dati-personali-cliente.jsp");
         } else {
             request.setAttribute("formerror", error);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Pagine/registrazione.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/Pagine/registrazione.jsp");
             dispatcher.forward(request, response);
         }
     }

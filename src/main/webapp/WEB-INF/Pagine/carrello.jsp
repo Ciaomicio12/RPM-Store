@@ -1,10 +1,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.progetto.viniliprogetto.Controller.CarrelloServlet" %>
 <%@ page import="com.progetto.viniliprogetto.Model.Carrello" %>
-<%@ page import="com.progetto.viniliprogetto.Model.Ordine" %>
 <%@ page import="com.progetto.viniliprogetto.Model.Utente" %>
 <%
-    Ordine ordine = (Ordine) request.getAttribute("ordine");
+    Carrello carrello = (Carrello) session.getAttribute("carrello");
     Utente utente = (Utente) request.getAttribute("utente");
 
 %>
@@ -30,10 +29,10 @@
 <body>
 <%@ include file="header.jsp" %>
 <%
-    Carrello carrello = (Carrello) session.getAttribute("carrello");
 %>
 <section class="container">
-    <div class="random-albums my-3" class="row">
+    <% if(!carrello.getViniliInCarrello().isEmpty()) { %>
+      <div class="random-albums my-3" class="row">
 
         <c:forEach items="${carrello.viniliInCarrello}" var="vinileincarrello">
             <div class="cart-item col-12" id="${vinileincarrello.vinile.ean}">
@@ -85,14 +84,19 @@
             }
         </script>
 
-        <div class="prezzo col-4 col-sm-3 mt-4 mt-sm-0">
-            <h3>Totale provvisorio (<%= carrello.getQuantita() %>articoli): </h3>
-            <h2 class="display-3"><strong><%= carrello.getTotale() %>&euro;</strong></h2>
-            <a class="btn-outline-danger rounded-pill"
-               href="<%= request.getContextPath() %>/cliente/riepilogopagamento?id=<%=ordine.getUtente() %>">Procedi
-                all'ordine</a>
+            <div class="prezzo col-4 col-sm-3 mt-4 mt-sm-0">
+                <h3>Totale provvisorio (<%= carrello.getQuantita() %> articoli): </h3>
+                <h2 class="display-3"><strong><%= carrello.getTotale() %>&euro;</strong></h2>
+                <a class="btn-outline-danger rounded-pill"
+                   href="<%= request.getContextPath() %>/cliente/riepilogopagamento">Procedi
+                    all'ordine</a>
+            </div>
         </div>
+    <% } else { %>
+    <div style="min-height: 50vh">
+        <h3>Il carrello è vuoto</h3>
     </div>
+    <% } %>
 </section>
 
 
