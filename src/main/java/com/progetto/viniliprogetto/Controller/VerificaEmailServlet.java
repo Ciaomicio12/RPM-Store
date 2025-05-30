@@ -20,7 +20,7 @@ public class VerificaEmailServlet extends HttpServlet {
         if (id != null) {
             UtenteDAO dao = new UtenteDAO();
             response.setContentType("application/text");
-            if (dao.doRetrieveByEmail(id) == true) {
+            if (dao.mailEsistente(id) == true) {
                 response.getWriter().append("true");
             } else {
                 response.getWriter().append("no");

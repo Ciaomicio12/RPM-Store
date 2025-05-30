@@ -29,7 +29,7 @@ public class AggiuntaModificaServlet extends HttpServlet {
                 throw new MyServletException("Errore vinile non trovato", 404);
             request.setAttribute("Vinile", vinile);
         }
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Pagine/Admin/impostazioni-prodotto.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/Pagine/Admin/impostazioni-prodotto.jsp");
         requestDispatcher.forward(request, response);
     }
 

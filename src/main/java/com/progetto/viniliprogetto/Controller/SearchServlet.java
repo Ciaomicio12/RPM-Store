@@ -20,7 +20,7 @@ public class SearchServlet extends HttpServlet {
         List<Vinile> vinili = viniledao.doRetrieveByNome(request.getParameter("ricerca"), 0, 20);
         request.setAttribute("vinili", vinili);
         request.setAttribute("ricerca", request.getParameter("ricerca"));
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Pagine/search.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/Pagine/search.jsp");
         requestDispatcher.forward(request, response);
     }
 

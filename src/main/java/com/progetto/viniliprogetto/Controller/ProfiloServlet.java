@@ -20,9 +20,9 @@ public class ProfiloServlet extends HttpServlet {
         if (utente != null) {
             RequestDispatcher dispatcher = null;
             if (utente.isAdmin()) {
-                dispatcher = request.getRequestDispatcher("/Pagine/Admin/dati-personali-amministratore.jsp");
+                dispatcher = request.getRequestDispatcher("/WEB-INF/Pagine/Admin/dati-personali-amministratore.jsp");
             } else {
-                dispatcher = request.getRequestDispatcher("/Pagine/Cliente/dati-personali-cliente.jsp");
+                dispatcher = request.getRequestDispatcher("/WEB-INF/Pagine/Cliente/dati-personali-cliente.jsp");
             }
             dispatcher.forward(request, response);
         } else {

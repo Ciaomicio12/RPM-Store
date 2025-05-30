@@ -21,7 +21,7 @@ public class AssistenzaServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Utente utente = (Utente) session.getAttribute("utente");
         if ((utente != null && !utente.isAdmin()) || utente == null) {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Pagine/assistenza.jsp");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/Pagine/assistenza.jsp");
             requestDispatcher.forward(request, response);
         } else {
             throw new MyServletException("Sezione dedicata agli utenti");

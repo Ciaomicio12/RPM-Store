@@ -55,7 +55,7 @@ public class AggiungiVinileServlet extends HttpServlet {
             }
             request.setAttribute("genere", list);
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/Pagine/Admin/inventario.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/Pagine/Admin/inventario.jsp");
             dispatcher.forward(request, response);
         } else {
             throw new MyServletException("Sezione dedicata ai soli amministratori, perfavore prima fai il login");

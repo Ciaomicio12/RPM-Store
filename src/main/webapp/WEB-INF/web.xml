@@ -5,7 +5,7 @@
          version="4.0">
     <error-page>
         <exception-type>com.progetto.viniliprogetto.Controller.MyServletException</exception-type>
-        <location>/Pagine/erroralert.jsp</location>
+        <location>/WEB-INF/Pagine/erroralert.jsp</location>
     </error-page>
 
     <jsp-config>

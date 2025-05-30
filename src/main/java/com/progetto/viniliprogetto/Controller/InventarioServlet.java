@@ -31,6 +31,6 @@ public class InventarioServlet extends HttpServlet {
         request.setAttribute("pagina", pagina);
         request.setAttribute("ultima", vinili.size() < VINILI_PER_PAGINA + 1);
         request.setAttribute("vinili", vinili.subList(0, Math.min(vinili.size(), VINILI_PER_PAGINA)));
-        request.getRequestDispatcher("/Pagine/Admin/inventario.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/Pagine/Admin/inventario.jsp").forward(request, response);
     }
 }
