@@ -56,7 +56,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <form class="border border-dark px-4 py-3 mt-5 margini" method="POST" action="dati_personali_servlet"
+            <form class="border border-dark px-4 py-3 mt-5 margini" method="POST" action="/cliente/aggiornaindirizzo"
                   style="margin-bottom: 100px;">
                 <h5 class="title">Indirizzo di spedizione</h5>
                 <div class="mb-3">

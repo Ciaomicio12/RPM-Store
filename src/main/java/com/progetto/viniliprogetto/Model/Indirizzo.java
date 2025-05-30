@@ -28,6 +28,16 @@ public class Indirizzo {
         return citta;
     }
 
+    public boolean equals(Indirizzo obj) {
+        if (!obj.getStrada().equals(strada)) return false;
+        if (!obj.getCitta().equals(citta)) return false;
+        if (!obj.getCap().equals(cap)) return false;
+        if (!obj.getTelefono().equals(telefono)) return false;
+        if (!obj.getNumeroCivico().equals(numeroCivico)) return false;
+        return true;
+
+    }
+
     public void setCitta(String citta) {
         this.citta = citta;
     }

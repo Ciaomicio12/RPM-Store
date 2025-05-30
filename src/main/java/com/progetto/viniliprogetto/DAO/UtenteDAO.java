@@ -53,7 +53,9 @@ public class UtenteDAO extends Utente {
                 ps.setString(4, utente.getIndirizzo().getNumeroCivico());
                 ps.setString(5, utente.getIndirizzo().getTelefono());
                 ps.setInt(6, utente.getIndirizzo().getId());
+                ps.executeUpdate();
                 ps.close();
+                conn.close();
             }
             PreparedStatement ps = conn.prepareStatement("UPDATE utente set nome=?, cognome=?, email=? where id=?");
             ps.setString(1, utente.getNome());

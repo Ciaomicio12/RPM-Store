@@ -36,21 +36,38 @@ public class OrdineDAO {
                 ps.setFloat(4, vinile.getPrezzo());
                 ps.executeUpdate();
             }
-            ps = conn.prepareStatement("INSERT INTO indirizzo (strada,citta,cap,numero_civico,telefono) " +
-                    "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, ordine.getIndirizzo().getStrada());
-            ps.setString(2, ordine.getIndirizzo().getCitta());
-            ps.setString(3, ordine.getIndirizzo().getCap());
-            ps.setString(4, ordine.getIndirizzo().getNumeroCivico());
-            ps.setString(5, ordine.getIndirizzo().getTelefono());
-            ps.executeUpdate();
-            rs = ps.getGeneratedKeys();
-            if (rs.next())
-                ordine.getIndirizzo().setId(rs.getInt(1));
-            conn.close();
-            ps.close();
+            Indirizzo indirizzoUtente = ordine.getUtente().getIndirizzo();
+            Indirizzo indirizzoOrdine = ordine.getIndirizzo();
+            if (indirizzoUtente != null) {
+                if (!indirizzoUtente.equals(indirizzoOrdine)) {
+                    ps = conn.prepareStatement("UPDATE indirizzo set strada=?, citta=?, cap=?, numero_civico=?, telefono=? where id=?");
+                    ps.setString(1, indirizzoOrdine.getStrada());
+                    ps.setString(2, indirizzoOrdine.getCitta());
+                    ps.setString(3, indirizzoOrdine.getCap());
+                    ps.setString(4, indirizzoOrdine.getNumeroCivico());
+                    ps.setString(5, indirizzoOrdine.getTelefono());
+                    ps.setInt(6, indirizzoOrdine.getId());
+                    ps.executeUpdate();
+                    ps.close();
+                    conn.close();
+                }
+            } else {
+                ps = conn.prepareStatement("INSERT INTO indirizzo (strada,citta,cap,numero_civico,telefono) " +
+                        "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                ps.setString(1, ordine.getIndirizzo().getStrada());
+                ps.setString(2, ordine.getIndirizzo().getCitta());
+                ps.setString(3, ordine.getIndirizzo().getCap());
+                ps.setString(4, ordine.getIndirizzo().getNumeroCivico());
+                ps.setString(5, ordine.getIndirizzo().getTelefono());
+                ps.executeUpdate();
+                rs = ps.getGeneratedKeys();
+                if (rs.next())
+                    ordine.getIndirizzo().setId(rs.getInt(1));
+                ps.close();
+                conn.close();
+            }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
     }
@@ -90,8 +107,9 @@ public class OrdineDAO {
             }
             return ordini;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+        return null;
     }
 
 
@@ -127,7 +145,7 @@ public class OrdineDAO {
             ps.close();
             conn.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -144,8 +162,9 @@ public class OrdineDAO {
             }
             return false;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+        return false;
     }
 
     public Ordine doRetriveById(int idOrdine) {
@@ -220,8 +239,9 @@ public class OrdineDAO {
             }
             return ordine;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+        return null;
     }
 
 }
