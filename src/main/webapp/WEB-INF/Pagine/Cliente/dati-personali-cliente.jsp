@@ -56,7 +56,8 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <form class="border border-dark px-4 py-3 mt-5 margini" method="POST" action="/cliente/aggiornaindirizzo"
+            <form class="border border-dark px-4 py-3 mt-5 margini" method="POST"
+                  action="/<%= request.getContextPath() %>/cliente/aggiornaindirizzo"
                   style="margin-bottom: 100px;">
                 <h5 class="title">Indirizzo di spedizione</h5>
                 <div class="mb-3">
@@ -83,7 +84,7 @@
                     <input type="text" class="textForm" id="codice-postale" name="codice-postale"
                            value="${utente.indirizzo.cap}" required>
                 </div>
-                <button type="submit" class="btn-outline-danger rounded-pill" name="azione" value="aggiorna_indirizzo">
+                <button type="submit" class="btn-outline-danger rounded-pill">
                     Aggiorna
                 </button>
             </form>

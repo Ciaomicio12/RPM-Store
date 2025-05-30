@@ -1,5 +1,4 @@
 <%@ page import="com.progetto.viniliprogetto.Model.Ordine" %>
-<%@ page import="com.progetto.viniliprogetto.Model.Utente" %>
 <%@ page import="java.util.List" %>
 <%
     List<Ordine> ordini = (List<Ordine>) request.getAttribute("ordini");
@@ -24,9 +23,14 @@
 </head>
 <body>
 <%@ include file="../header.jsp" %>
-
-<c:if test="${ordini != null && ordini.size() > 0}">
-
+<c:if test="${ordini.isEmpty()}">
+    <div class="Container" style="min-height: 50vh">
+        <div class="card">
+            <h3>Non ci sono ordini</h3>
+        </div>
+    </div>
+</c:if>
+<c:if test="${!ordini.isEmpty()}">
     <div class="container my-4">
         <div class="row">
             <div class="col-md-6">
@@ -38,27 +42,18 @@
             </div>
         </div>
     </div>
-</c:if>
-<div class="container">
-    <c:if test="${ordini != null && ordini.size() > 0}">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th onclick="sortTable(0)">Numero ordine</th>
-            <th onclick="sortTable(1)">Destinatario</th>
-            <th onclick="sortTable(3)">Data Acquisto</th>
-            <th onclick="sortTable(4)">Totale</th>
-            <th onclick="sortTable(5)">Stato</th>
-        </tr>
-        </thead>
-        <tbody>
-        </c:if>
-        <c:if test="${ordini == null || ordini.size() == 0}">
-            <div class="card">
-                <h3>Non ci sono ordini</h3>
-            </div>
-        </c:if>
-        <c:if test="${ordini != null && ordini.size() > 0}">
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th onclick="sortTable(0)">Numero ordine</th>
+                <th onclick="sortTable(1)">Destinatario</th>
+                <th onclick="sortTable(3)">Data Acquisto</th>
+                <th onclick="sortTable(4)">Totale</th>
+                <th onclick="sortTable(5)">Stato</th>
+            </tr>
+            </thead>
+            <tbody>
             <% for (Ordine ordine : ordini) {%>
             <tr>
                 <td>
@@ -72,13 +67,10 @@
                 <td><%= ordine.getStatoStringa() %>
             </tr>
             <% } %>
-        </c:if>
-        </tbody>
-    </table>
-</div>
-
-<script src="script.js"></script>
-
+            </tbody>
+        </table>
+    </div>
+</c:if>
 
 <%@ include file="../footer.jsp" %>
 

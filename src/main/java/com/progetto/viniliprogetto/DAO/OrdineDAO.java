@@ -129,10 +129,8 @@ public class OrdineDAO {
             }
             return ordini;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        ;
-        return null;
     }
 
     public void doCambiaStatoOrdine(Ordine ordine) {
