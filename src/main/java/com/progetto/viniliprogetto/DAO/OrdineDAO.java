@@ -1,6 +1,5 @@
 package com.progetto.viniliprogetto.DAO;
 
-import com.progetto.viniliprogetto.Controller.MyServletException;
 import com.progetto.viniliprogetto.Model.*;
 
 import java.sql.*;
@@ -9,14 +8,14 @@ import java.util.List;
 
 public class OrdineDAO {
 
-    public void doSave(Ordine ordine, Utente utente) {
+    public void doSave(Ordine ordine) {
         int ordine_id = -1;
         try (Connection conn = ConPool.getConnection()) {
             String sql = "Insert into ordine (indirizzo,oradiordine,id_utente,totale,stato) values(?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, utente.getIndirizzo().getId());
+            ps.setInt(1, ordine.getIndirizzo().getId());
             ps.setString(2, ordine.getOraordine());
-            ps.setInt(3, utente.getId());
+            ps.setInt(3, ordine.getUtente().getId());
             ps.setFloat(4, ordine.getTotale());
             ps.setString(5, ordine.getStato());
             ps.executeUpdate();
@@ -25,7 +24,7 @@ public class OrdineDAO {
                 ordine_id = rs.getInt(1);
                 ordine.setId(ordine_id);
             } else {
-                throw new MyServletException("Errore doSave in ordineDao");
+                throw new RuntimeException("Errore doSave in ordineDao");
             }
             rs.close();
             String sql2 = "Insert into vinile_in_ordine (ordine_id,quantita,vinile_ean,prezzoacq) values(?,?,?,?)";
@@ -37,9 +36,20 @@ public class OrdineDAO {
                 ps.setFloat(4, vinile.getPrezzo());
                 ps.executeUpdate();
             }
+            ps = conn.prepareStatement("INSERT INTO indirizzo (strada,citta,cap,numero_civico,telefono) " +
+                    "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, ordine.getIndirizzo().getStrada());
+            ps.setString(2, ordine.getIndirizzo().getCitta());
+            ps.setString(3, ordine.getIndirizzo().getCap());
+            ps.setString(4, ordine.getIndirizzo().getNumeroCivico());
+            ps.setString(5, ordine.getIndirizzo().getTelefono());
+            ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            if (rs.next())
+                ordine.getIndirizzo().setId(rs.getInt(1));
             conn.close();
             ps.close();
-        } catch (SQLException | MyServletException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
