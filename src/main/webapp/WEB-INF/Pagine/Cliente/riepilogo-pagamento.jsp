@@ -22,71 +22,54 @@
 <%@ include file = "../header.jsp" %>
 <h2>Riepilogo ordine</h2>
 <section class="container-fluid">
-  <div class="row">
-    <form class="border border-dark px-4 py-3 mx-4 mx-sm-auto mt-5 col-sm-6" method="POST"
+    <div class="row border border-dark px-4 py-3 mx-4 mx-sm-auto mt-5" method="POST"
           action="dati_personali_servlet">
-      <h5 class="title">Indirizzo di spedizione</h5>
-      <div class="border border-dark px-4 py-3 mx-1 mx-sm-auto mt-1 col-sm-6">
+      <form class="px-4 py-3 mx-1 mx-auto mx-md-0 mt-1 col-md-6"
+            method="POST"
+            action="<%= request.getContextPath()%>/cliente/riepilogopagamento">
+        <h5 class="title">Indirizzo di spedizione</h5>
         <div class="mx-auto" style="width: 110px;">
-          <label for="via">Via:</label>
-        </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="text" id="via" name="via" value="<%=utente.getIndirizzo().getStrada()%>" required>
+          <label for="via" class="form-label">Via:</label>
+          <input type="text" class="form-control" id="via" name="via" value="<%=utente.getIndirizzo().getStrada()%>" required>
         </div>
         <div class="mx-auto" style="width: 110px;">
-          <label for="numero-civico">Numero civico:</label>
-        </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="text" id="numero-civico" name="numero-civico"
+          <label for="numero-civico" class="form-label">Numero civico:</label>
+          <input type="text" class="form-control" id="numero-civico" name="numero-civico"
                  value="<%=utente.getIndirizzo().getNumeroCivico()%>" required>
         </div>
         <div class="mx-auto" style="width: 110px;">
-          <label for="citta">Città:</label>
-        </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="text" id="citta" name="citta" value="<%=utente.getIndirizzo().getCitta()%>" required>
+          <label for="citta" class="form-label">Città:</label>
+          <input type="text" class="form-control" id="citta" name="citta" value="<%=utente.getIndirizzo().getCitta()%>" required>
         </div>
         <div class="mx-auto" style="width: 110px;">
-          <label for="codice-postale">Codice Postale:</label>
-        </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="text" id="codice-postale" name="codice-postale" value="<%=utente.getIndirizzo().getCap()%>"
+          <label for="codice-postale" class="form-label">Codice Postale:</label>
+          <input type="text" class="form-control" id="codice-postale" name="codice-postale" value="<%=utente.getIndirizzo().getCap()%>"
                  required>
         </div>
         <div class="mx-auto" style="width: 110px;">
-          <label for="telefono">Telefono:</label>
+          <label for="telefono" class="form-label">Telefono:</label>
+          <input type="text" class="form-control" id="telefono" name="telefono" value="<%=utente.getIndirizzo().getTelefono()%>" required>
         </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="text" id="telefono" name="telefono" value="<%=utente.getIndirizzo().getTelefono()%>" required>
-        </div>
-      </div>
-    </form>
-    <form class="border border-dark px-4 py-3 mx-4 mx-sm-auto mt-5 col-sm-6" method="POST"
-          action="dati_personali_servlet">
+        <button type="submit" class="btn btn-outline-danger btn-secondary btn-lg active" value="conferma-acquisto" name="azione">Conferma il pagamento</button>
+      </form>
+    <div class="px-4 py-3 mx-4 mx-auto mx-md-0 mt-1 col-md-6">
       <h5 class="title">Dati di pagamento</h5>
-      <div class="border border-dark px-4 py-3 mx-1 mx-sm-auto mt-1 col-sm-6">
+      <div class="px-4 py-3 mx-1 mx-sm-auto mt-1">
         <div class="mx-auto" style="width: 110px;">
-          <label for="numero-carta">Numero carta:</label>
-        </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="numero-carta" id="numero-carta" name="numero-carta" required>
+          <label class="form-label" for="numero-carta">Numero carta:</label>
+          <input class="form-control" type="text" id="numero-carta" name="numero-carta" required>
         </div>
         <div class="mx-auto" style="width: 110px;">
-          <label for="scadenza">Scadenza:</label>
-        </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="scadenza" id="scadenza" name="scadenza" required>
+          <label class="form-label" for="scadenza">Scadenza:</label>
+          <input class="form-control" type="text" id="scadenza" name="scadenza" required>
         </div>
         <div class="mx-auto" style="width: 110px;">
-          <label for="cvv">CVV:</label>
-        </div>
-        <div class="mx-auto" style="width: 200px;">
-          <input type="cvv" id="cvv" name="cvv" required>
+          <label class="form-label" for="cvv">CVV:</label>
+          <input class="form-control" type="text" id="cvv" name="cvv" required>
         </div>
       </div>
-    </form>
-    <button type="submit" value="conferma-acquisto" name="azione">Conferma il pagamento</button>
-  </div>      
+      </div>
+  </div>
 </section>
 
 

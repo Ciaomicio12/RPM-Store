@@ -21,7 +21,7 @@ public class LoginServlet extends HttpServlet {
         if (login.getAttribute("utente") != null) {
             response.sendRedirect("profilo");
         } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Pagine/login.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/Pagine/login.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
             } else {
                 request.setAttribute("errorserverlogin", "Username o password errati!");
             }
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Pagine/login.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/Pagine/login.jsp");
             dispatcher.forward(request, response);
         }
     }

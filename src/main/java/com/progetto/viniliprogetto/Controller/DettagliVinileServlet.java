@@ -22,7 +22,7 @@ public class DettagliVinileServlet extends HttpServlet {
             request.setAttribute("vinile", vinile);
         } else throw new MyServletException("Vinile non trovato");
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Pagine/album-in-dettaglio.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/Pagine/album-in-dettaglio.jsp");
         requestDispatcher.forward(request, response);
     }
 

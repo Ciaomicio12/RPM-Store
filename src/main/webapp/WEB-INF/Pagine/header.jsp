@@ -3,7 +3,7 @@
 <%@taglib prefix="c"
           uri="http://java.sun.com/jsp/jstl/core" %>
 
-<header class="container-fluid bg-light">
+<header class="container-fluid bg-red">
     <div class="container-fluid">
         <div class="row align-items-center">
             <a class="display-2 col d-flex align-items-center" href="<%= request.getContextPath() %>/">
@@ -49,7 +49,7 @@
         </div>
     </div>
 
-    <nav class="container-fluid navbar navbar-expand-sm navbar-light bg-light">
+    <nav class="container-fluid navbar navbar-expand-sm navbar-light bg-red">
         <button class="navbar-toggler mt-2 mx-auto mt-sm-0" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarContent"
                 aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
