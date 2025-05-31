@@ -19,7 +19,7 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession login = request.getSession();
         if (login.getAttribute("utente") != null) {
-            response.sendRedirect("profilo");
+            response.sendRedirect(request.getContextPath() + "/user/profilo");
         } else {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/Pagine/login.jsp");
             dispatcher.forward(request, response);
@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
         if (utente != null && utente.isDisabled() == false) {
             HttpSession session = request.getSession();
             session.setAttribute("utente", utente);
-            response.sendRedirect("profilo");
+            response.sendRedirect(request.getContextPath() + "/user/profilo");
         } else {
             if (utente != null && utente.isDisabled() == true) {
                 request.setAttribute("errorserverlogin", "Il tuo account é stato eliminato");

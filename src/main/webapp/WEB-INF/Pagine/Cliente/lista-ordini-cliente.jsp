@@ -47,18 +47,18 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th onclick="sortTable(0)">Numero ordine</th>
-                <th onclick="sortTable(1)">Destinatario</th>
-                <th onclick="sortTable(3)">Data Acquisto</th>
-                <th onclick="sortTable(4)">Totale</th>
-                <th onclick="sortTable(5)">Stato</th>
+                <th>Numero ordine</th>
+                <th>Destinatario</th>
+                <th>Data Acquisto</th>
+                <th>Totale</th>
+                <th>Stato</th>
             </tr>
             </thead>
             <tbody>
             <% for (Ordine ordine : ordini) {%>
             <tr>
                 <td>
-                    <a href="<%= request.getContextPath()%>/dettagliordine?id=<%= ordine.getId()%>"><%= ordine.getId() %>
+                    <a href="<%= request.getContextPath()%>/user/dettagliordine?id=<%= ordine.getId()%>"><%= ordine.getId() %>
                     </a></td>
                 <td><%= ordine.getUtente().getCognome() %> <%= ordine.getUtente().getNome() %>
                 </td>

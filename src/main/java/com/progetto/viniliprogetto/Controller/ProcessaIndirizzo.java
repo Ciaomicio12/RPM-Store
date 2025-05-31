@@ -12,7 +12,7 @@ public class ProcessaIndirizzo {
     public static Indirizzo getIndirizzoFromRequest(HttpServletRequest request) throws Exception {
         String strada = request.getParameter("via");
         String citta = request.getParameter("citta");
-        String cap = request.getParameter("cap");
+        String cap = request.getParameter("codice-postale");
         String numeroCivico = request.getParameter("numero-civico");
         String telefono = request.getParameter("telefono");
         String error = "";
@@ -30,6 +30,7 @@ public class ProcessaIndirizzo {
             throw new Exception(error);
         Indirizzo indirizzo = new Indirizzo();
         indirizzo.setStrada(strada);
+        indirizzo.setCitta(citta);
         indirizzo.setTelefono(telefono);
         indirizzo.setNumeroCivico(numeroCivico);
         indirizzo.setCap(cap);

@@ -52,7 +52,7 @@ public class CarrelloServlet extends HttpServlet {
                 rimuoviVinile(request, response, carrello);
                 break;
             case MODIFICA_QUANTITA:
-                modificaQuantita(request, carrello);
+                modificaQuantita(request, response, carrello);
                 break;
             default:
                 throw new MyServletException("campo action non valido: " + action, 400);
@@ -61,14 +61,18 @@ public class CarrelloServlet extends HttpServlet {
 
     public void rimuoviVinile(HttpServletRequest request, HttpServletResponse response, Carrello carrello) throws MyServletException, IOException {
         String ean = request.getParameter("ean");
-        if (ean == null)
-            throw new MyServletException("campo ean non trovato: " + ean, 400);
+        if (ean == null) {
+            response.getWriter().println("{\"status\": \"ERROR\", \"messaggio\": \"campo ean non trovato: " + ean + "\"}");
+            return;
+        }
         VinileDAO dao = new VinileDAO();
         Vinile vinile = dao.doRetrieveByEan(ean);
-        if (vinile == null)
-            throw new MyServletException("ean non valido: " + ean, 404);
+        if (vinile == null) {
+            response.getWriter().println("{\"status\": \"ERROR\", \"messaggio\": \"ean non valido: " + ean + "\"}");
+            return;
+        }
         carrello.rimuoviVinile(vinile);
-        response.getWriter().println("{\"status\": \"OK\"}");
+        response.getWriter().println("{\"status\": \"OK\", \"totale\": " + carrello.getTotale() + ", \"quantita\": " + carrello.getQuantita() + "}");
     }
 
     private void aggiungiVinile(HttpServletRequest request, HttpServletResponse response, Carrello carrello) throws MyServletException, IOException {
@@ -85,7 +89,7 @@ public class CarrelloServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/cliente/carrello");
     }
 
-    private void modificaQuantita(HttpServletRequest request, Carrello carrello) throws MyServletException {
+    private void modificaQuantita(HttpServletRequest request, HttpServletResponse response, Carrello carrello) throws MyServletException, IOException {
         String ean = request.getParameter("ean");
         if (ean == null)
             throw new MyServletException("campo ean non trovato: " + ean, 400);
@@ -102,5 +106,6 @@ public class CarrelloServlet extends HttpServlet {
         if (vinile.getNumeroDisponibili() < quantita)
             throw new MyServletException("quantita maggiore del numero dei vinili disponibili: ", 400);
         carrello.modificaQuantita(vinile, quantita);
+        response.getWriter().println("{\"status\": \"OK\", \"totale\": " + carrello.getTotale() + ", \"quantita\": " + carrello.getQuantita() + "}");
     }
 }

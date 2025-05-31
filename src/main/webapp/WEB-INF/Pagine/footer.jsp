@@ -4,7 +4,7 @@
         <div class="col">
             <ul class="d-flex nav justify-content-evenly">
                 <c:if test="${utente != null}">
-                    <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/profilo'">Dati
+                    <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/user/profilo'">Dati
                         personali</p></li>
                 </c:if>
                 <c:if test="${(utente != null && !utente.admin) || utente == null}">
