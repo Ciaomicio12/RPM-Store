@@ -14,34 +14,29 @@
             text-decoration: underline;
         }
     </style>
-    <link rel="stylesheet" href="<%= request.getContextPath()%>/styleLogin.css"/>
+    <link rel="stylesheet" href="<%= request.getContextPath()%>/style.css"/>
 </head>
 <body>
 
 <%@ include file="header.jsp" %>
 
-<section>
+<section class="container">
     <div class="row">
-        <form class="px-4 py-3 mx-auto mt-5 col-sm-6 col-md-8" method="POST" action="login"
-              style="margin-bottom: 100px;">
+        <form class="px-4 py-3 mx-auto my-5 col-sm-8 col-md-6 mx-auto" method="POST" action="login">
             <h2 class="title">Accedi</h2>
-            <div class="px-4 py-3 mx-1 mx-sm-auto mt-1 col-sm-6">
                 <h3> ${errorserverlogin}</h3>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <div></div>
-                    <input type="email" class="textForm" id="email" name="email" placeholder="Inserisci email"
+                <div class="form-group mt-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Inserisci email"
                            required>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <div></div>
-                    <input type="password" class="textForm" id="password" name="password"
+                <div class="form-group mt-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password"
                            placeholder="Inserisci password" required>
                 </div>
-            </div>
-            <div class="mx-auto" style="width: 100px;">
-                <button type="submit" class="btn-outline-danger rounded-pill">Accedi</button>
+            <div class="mt-3 mb-4 text-center">
+                <button type="submit" class="btn-outline-danger rounded-pill px-4">Accedi</button>
             </div>
         </form>
     </div>

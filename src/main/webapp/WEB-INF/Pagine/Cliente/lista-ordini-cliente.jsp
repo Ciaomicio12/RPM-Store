@@ -15,6 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="<%= request.getContextPath()%>/style.css"/>
     <style>
         .nav-link:hover {
             text-decoration: underline;
@@ -24,8 +25,8 @@
 <body>
 <%@ include file="../header.jsp" %>
 <c:if test="${ordini.isEmpty()}">
-    <div class="Container" style="min-height: 50vh">
-        <div class="card">
+    <div class="container" style="min-height: 50vh">
+        <div class="mt-4">
             <h3>Non ci sono ordini</h3>
         </div>
     </div>

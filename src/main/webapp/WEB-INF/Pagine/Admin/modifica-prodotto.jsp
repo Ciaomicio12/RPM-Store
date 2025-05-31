@@ -22,6 +22,7 @@
             text-decoration: underline;
         }
     </style>
+    <link rel="stylesheet" href="<%= request.getContextPath()%>/style.css"/>
 </head>
 <body>
 <%@ include file="../header.jsp" %>

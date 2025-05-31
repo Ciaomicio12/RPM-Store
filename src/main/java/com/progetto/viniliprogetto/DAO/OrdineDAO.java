@@ -119,7 +119,7 @@ public class OrdineDAO {
             ArrayList<Ordine> ordini = new ArrayList<>();
             Connection con = ConPool.getConnection();
             PreparedStatement ps = con.prepareStatement("SELECT O.id AS ordineid, O.oradiordine AS ora,O.totale AS ordinetotale, o.stato AS stato " +
-                    "FROM ordine " +
+                    "FROM ordine O " +
                     "WHERE id_utente=?  " +
                     "order by oradiordine desc");
             ps.setInt(1, idutente);

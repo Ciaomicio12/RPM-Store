@@ -4,7 +4,7 @@
           uri="http://java.sun.com/jsp/jstl/core" %>
 
 <header class="container-fluid bg-red">
-    <div class="container-fluid">
+    <div class="container-fluid pt-3">
         <div class="row align-items-center">
             <a class="display-2 col d-flex align-items-center" href="<%= request.getContextPath() %>/">
                 <img class="logo"
@@ -43,7 +43,7 @@
                         }
                     }
                 }
-                xmlHttpReq.open("GET", "ricercaajax?q=" + encodeURIComponent(str), true);
+                xmlHttpReq.open("GET", "<%= request.getServletContext().getContextPath() %>/ricercaajax?q=" + encodeURIComponent(str), true);
                 xmlHttpReq.send();
             }</script>
         </div>

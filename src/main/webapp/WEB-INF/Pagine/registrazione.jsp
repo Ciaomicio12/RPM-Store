@@ -13,7 +13,7 @@
       text-decoration: underline;
     }
   </style>
-  <link rel="stylesheet" href="<%= request.getContextPath()%>/styleLogin.css"/>
+  <link rel="stylesheet" href="<%= request.getContextPath()%>/style.css"/>
 </head>
 <body>
 <%@ include file="header.jsp" %>
@@ -25,47 +25,47 @@
       <div class="px-4 py-3 mx-3 mx-sm-auto mt-1 col-sm-6">
         <p> ${formerror}</p>
         <br>
-        <div class="form-group">
-          <label for="nome">Nome</label>
+        <div class="form-group mb-3">
+          <label class="form-label mb-0" for="nome">Nome</label>
           <div></div>
-          <input type="text" class="textForm" id="nome" name="nome" placeholder="Inserisci nome" required>
+          <input type="text" class="form-control" id="nome" name="nome" placeholder="Inserisci nome" required>
         </div>
-        <div class="form-group">
-          <label for="cognome">Cognome</label>
+        <div class="form-group mb-3">
+          <label class="form-label mb-0" for="cognome">Cognome</label>
           <div></div>
-          <input type="text" class="textForm" id="cognome" name="cognome" placeholder="Inserisci cognome" required>
+          <input type="text" class="form-control" id="cognome" name="cognome" placeholder="Inserisci cognome" required>
         </div>
-        <div class="form-group">
-          <label for="username">Username</label>
+        <div class="form-group mb-3">
+          <label class="form-label mb-0" for="username">Username</label>
           <div></div>
-          <input type="text" class="textForm" id="username" name="username" placeholder="Inserisci username"
+          <input type="text" class="form-control" id="username" name="username" placeholder="Inserisci username"
                  required>
         </div>
-        <div class="form-group">
-          <label for="sesso">Sesso</label>
+        <div class="form-group mb-3">
+          <label class="form-label mb-0" for="sesso">Sesso</label>
           <div></div>
-          <select name="sesso" id="sesso" class="textForm">
+          <select name="sesso" id="sesso" class="form-control">
             <option value="Maschio">Maschio</option>
             <option value="Femmina">Femmina</option>
           </select>
         </div>
-        <div class="form-group">
-          <label for="email">Email</label>
+        <div class="form-group mb-3">
+          <label class="form-label mb-0" for="email">Email</label>
           <div></div>
-          <input type="email" class="textForm" id="email" name="email" placeholder="Inserisci email" required>
+          <input type="email" class="form-control" id="email" name="email" placeholder="Inserisci email" required>
         </div>
-        <div class="form-group">
-          <label for="password">Password</label>
+        <div class="form-group mb-3">
+          <label class="form-label mb-0" for="password">Password</label>
           <div></div>
-          <input type="password" class="textForm" id="password" name="password" placeholder="Inserisci password"
+          <input type="password" class="form-control" id="password" name="password" placeholder="Inserisci password"
                  required pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$"
                  title="La password é mal formata! La password deve essere lunga 8 caratteri e al massimo 32. Deve contenere una lettere maiuscola e una minuscola. Deve contenere un numero"
           >
         </div>
-        <div class="form-group">
-          <label for="confirm-password">Conferma Password</label>
+        <div class="form-group mb-3">
+          <label class="form-label mb-0" for="confirm-password">Conferma Password</label>
           <div></div>
-          <input type="password" class="textForm" id="confirm-password" name="confirm-password"
+          <input type="password" class="form-control" id="confirm-password" name="confirm-password"
                  placeholder="Inserisci nuovamente la password" required>
         </div>
       </div>

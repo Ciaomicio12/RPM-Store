@@ -14,7 +14,7 @@
         rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-  <link rel="stylesheet" href="<%= request.getContextPath() %>/styledettaglio.css"/>
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/style.css"/>
 
   <style>
     .nav-link:hover {
