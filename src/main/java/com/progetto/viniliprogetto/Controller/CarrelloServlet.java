@@ -92,19 +92,19 @@ public class CarrelloServlet extends HttpServlet {
     private void modificaQuantita(HttpServletRequest request, HttpServletResponse response, Carrello carrello) throws MyServletException, IOException {
         String ean = request.getParameter("ean");
         if (ean == null)
-            throw new MyServletException("campo ean non trovato: " + ean, 400);
+            response.getWriter().println("{\"status\": \"ERROR\", \"messaggio\": \" campo ean non trovato: " + ean + "\"}");
         VinileDAO dao = new VinileDAO();
         Vinile vinile = dao.doRetrieveByEan(ean);
         if (vinile == null)
-            throw new MyServletException("ean non valido: " + ean, 404);
+            response.getWriter().println("{\"status\": \"ERROR\", \"messaggio\": \" ean non valido: " + ean + "\"}");
         String tmp = request.getParameter("quantita");
         if (tmp == null)
-            throw new MyServletException("quantita non valida: " + tmp, 400);
+            response.getWriter().println("{\"status\": \"ERROR\", \"messaggio\": \" quantita non valida: " + tmp + "\"}");
         int quantita = Integer.parseInt(tmp);
         if (quantita <= 0)
-            throw new MyServletException("quantita non valida: " + quantita, 400);
+            response.getWriter().println("{\"status\": \"ERROR\", \"messaggio\": \" quantita non valida: " + quantita + "\"}");
         if (vinile.getNumeroDisponibili() < quantita)
-            throw new MyServletException("quantita maggiore del numero dei vinili disponibili: ", 400);
+            response.getWriter().println("{\"status\": \"ERROR\", \"messaggio\": \" quantita maggiore del numero dei vinili disponibili: }");
         carrello.modificaQuantita(vinile, quantita);
         response.getWriter().println("{\"status\": \"OK\", \"totale\": " + carrello.getTotale() + ", \"quantita\": " + carrello.getQuantita() + "}");
     }
