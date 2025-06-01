@@ -51,8 +51,9 @@ ss
 		<tbody>
 		<% for (Ordine ordine : ordini) {%>
 		<tr>
-			<td><a href="<%= request.getContextPath()%>/dettagliordine?id=<%= ordine.getId()%>"><%= ordine.getId() %>
-			</a></td>
+			<td>
+				<a href="<%= request.getContextPath()%>/user/dettagliordine?id=<%= ordine.getId()%>"><%= ordine.getId() %>
+				</a></td>
 			<td><%= ordine.getUtente().getCognome() %> <%= ordine.getUtente().getNome() %>
 			</td>
 			<td><%= ordine.getData() %>
