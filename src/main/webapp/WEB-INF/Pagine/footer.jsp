@@ -13,17 +13,17 @@
                 </c:if>
                 <c:if test="${utente != null}">
                     <c:if test="${!utente.admin}">
-                        <p class="fut" onclick="location.href = '<%= request.getContextPath() %>/lista-ordini-cliente'">
+                        <p class="fut" onclick="location.href = '<%= request.getContextPath() %>/cliente/ordini'">
                             I miei
                             ordini</p>
                     </c:if>
                 </c:if><c:if test="${utente != null}">
                 <c:if test="${utente.admin}">
                     <li><p class="fut"
-                           onclick="location.href = '<%= request.getContextPath() %>/lista-ordini-amministratore'">
+                           onclick="location.href = '<%= request.getContextPath() %>/admin/gestisciordini'">
                         Elenco
                         ordinazioni</p></li>
-                    <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/inventario'">
+                    <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/admin/inventario'">
                         Inventario</p></li>
                 </c:if>
             </c:if>
@@ -33,10 +33,10 @@
                 </c:if>
                 <c:if test="${utente != null}">
                     <c:if test="${!utente.admin}">
-                        <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/carrello'">
+                        <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/cliente/carrello'">
                             Carrello</p></li>
                     </c:if>
-                    <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/user/logout'">
+                    <li><p class="fut" onclick="location.href = '<%= request.getContextPath() %>/logout'">
                         LogOut</p></li>
                 </c:if>
             </ul>
