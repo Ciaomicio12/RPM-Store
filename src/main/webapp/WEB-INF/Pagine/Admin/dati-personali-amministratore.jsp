@@ -13,44 +13,44 @@
             text-decoration: underline;
         }
     </style>
-    <link rel="stylesheet" href="<%= request.getContextPath()%>/styleLogin.css"/>
+    <link rel="stylesheet" href="<%= request.getContextPath()%>/style.css"/>
 </head>
 <body>
 <%@ include file="../header.jsp" %>
 <section>
     <div class="row">
         <div class="col-md-6">
-            <h3>Informazioni personali</h3>
-            <form>
+            <form class="border border-dark px-4 py-3 mt-5 margini" method="POST" action="dati_personali_servlet">
+                <h5 class="title">Informazioni personali</h5>
                 <div class="mb-3">
-                    <label for="name" class="textForm">Nome</label>
-                    <input type="text" class="textForm" id="name" value="${utente.nome}" name="name" required>
+                    <label for="name" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="name" value="${utente.nome}" name="name" required>
                 </div>
                 <div class="mb-3">
-                    <label for="surname" class="textForm">Cognome</label>
-                    <input type="text" class="textForm" id="surname" value="${utente.cognome}" name="surname" required>
+                    <label for="surname" class="form-label">Cognome</label>
+                    <input type="text" class="form-control" id="surname" value="${utente.cognome}" name="surname" required>
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="textForm">Email</label>
-                    <input type="email" class="textForm" id="email" value="${utente.email}" name="email" required>
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" value="${utente.email}" name="email" required>
                 </div>
                 <button type="submit" class="btn-outline-danger rounded-pill">Aggiorna</button>
             </form>
         </div>
         <div class="col-md-6">
-            <h3>Cambio password</h3>
-            <form style="margin-bottom: 100px;">
+            <form class="border border-dark px-4 py-3 mt-5 margini" method="POST" action="dati_personali_servlet">
+                <h5 class="title">Cambio password</h5>
                 <div class="mb-3">
-                    <label for="password-attuale" class="textForm">Password Attuale:</label>
-                    <input type="password" class="textForm" id="password-attuale" name="password-attuale" required>
+                    <label for="password-attuale" class="form-label">Password Attuale:</label>
+                    <input type="password" class="form-control" id="password-attuale" name="password-attuale" required>
                 </div>
                 <div class="mb-3">
-                    <label for="new-password" class="textForm">Nuova password</label>
-                    <input type="password" class="textForm" id="new-password" name="new-password" required>
+                    <label for="new-password" class="form-label">Nuova password</label>
+                    <input type="password" class="form-control" id="new-password" name="new-password" required>
                 </div>
                 <div class="mb-3">
-                    <label for="confirm-password" class="textForm">Conferma nuova password</label>
-                    <input type="password" class="textForm" id="confirm-password" name="confirm-password" required>
+                    <label for="confirm-password" class="form-label">Conferma nuova password</label>
+                    <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
                 </div>
                 <button type="submit" class="btn-outline-danger rounded-pill">Aggiorna</button>
             </form>
