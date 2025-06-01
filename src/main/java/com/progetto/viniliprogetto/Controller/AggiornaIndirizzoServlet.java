@@ -22,6 +22,7 @@ public class AggiornaIndirizzoServlet extends HttpServlet {
             utente.setIndirizzo(indirizzo);
             UtenteDAO dao = new UtenteDAO();
             dao.doUpdateUtente(utente);
+            response.sendRedirect(request.getContextPath() + "/user/profilo");
         } catch (Exception e) {
             throw new MyServletException(e.getMessage(), 404);
         }

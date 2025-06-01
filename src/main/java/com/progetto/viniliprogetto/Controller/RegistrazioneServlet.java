@@ -99,7 +99,7 @@ public class RegistrazioneServlet extends HttpServlet {
             utentedao.doSave(utente);
             HttpSession session = request.getSession();
             session.setAttribute("utente", utente);
-            response.sendRedirect(request.getContextPath() + "/profilo");
+            response.sendRedirect(request.getContextPath() + "/user/profilo");
         } else {
             request.setAttribute("formerror", error);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/Pagine/registrazione.jsp");

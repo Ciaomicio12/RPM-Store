@@ -13,7 +13,7 @@
                 <h1 class="text-decoration-none text-dark fw-bold titleHeader">Record Road</h1>
             </a>
             <div class="w-100 d-md-none"></div>
-            <form class="col d-flex my-0 my-md-3" method="get" action="cerca">
+            <form class="col d-flex my-0 my-md-3" method="get" action="<%= request.getContextPath() %>/cerca">
                 <input class="form-control me-2" list="ricerca-datalist" name="ricerca" type="search"
                        onkeyup="ricercaajax(this.value)" placeholder="Search" aria-label="Search" required>
                 <datalist id="ricerca-datalist"></datalist>
@@ -59,7 +59,7 @@
             <ul class="navbar-nav mb-2 mb-sm-0 text-center d-flex flex-column flex-sm-row justify-content-evenly">
                 <c:if test="${utente != null}">
                     <li class="nav-item justify-content-center">
-                        <a class="nav-link" href="<%= request.getContextPath() %>/profilo">Dati personali</a>
+                        <a class="nav-link" href="<%= request.getContextPath() %>/user/profilo">Dati personali</a>
                     </li>
                 </c:if>
                 <c:if test="${(utente != null && !utente.admin) || utente == null}">
@@ -70,7 +70,7 @@
                 <c:if test="${utente != null}">
                     <c:if test="${!utente.admin}">
                         <li class="nav-item justify-content-center">
-                            <a class="nav-link" href="<%= request.getContextPath() %>/ordini">I miei
+                            <a class="nav-link" href="<%= request.getContextPath() %>/cliente/ordini">I miei
                                 ordini</a>
                         </li>
                         <li class="nav-item justify-content-center">

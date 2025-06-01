@@ -9,65 +9,50 @@ import java.util.List;
 public class OrdineDAO {
 
     public void doSave(Ordine ordine) {
-        int ordine_id = -1;
         try (Connection conn = ConPool.getConnection()) {
+            PreparedStatement ps;
+            ResultSet rs;
+            ps = conn.prepareStatement("INSERT INTO indirizzo (strada,citta,cap,numero_civico,telefono) " +
+                    "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, ordine.getIndirizzo().getStrada());
+            ps.setString(2, ordine.getIndirizzo().getCitta());
+            ps.setString(3, ordine.getIndirizzo().getCap());
+            ps.setString(4, ordine.getIndirizzo().getNumeroCivico());
+            ps.setString(5, ordine.getIndirizzo().getTelefono());
+            ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            if (rs.next())
+                ordine.getIndirizzo().setId(rs.getInt(1));
+            rs.close();
+            ps.close();
             String sql = "Insert into ordine (indirizzo,oradiordine,id_utente,totale,stato) values(?,?,?,?,?)";
-            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, ordine.getIndirizzo().getId());
             ps.setString(2, ordine.getOraordine());
             ps.setInt(3, ordine.getUtente().getId());
             ps.setFloat(4, ordine.getTotale());
             ps.setString(5, ordine.getStato());
             ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                ordine_id = rs.getInt(1);
-                ordine.setId(ordine_id);
-            } else {
+            rs = ps.getGeneratedKeys();
+            if (rs.next())
+                ordine.setId(rs.getInt(1));
+            else
                 throw new RuntimeException("Errore doSave in ordineDao");
-            }
             rs.close();
+            ps.close();
             String sql2 = "Insert into vinile_in_ordine (ordine_id,quantita,vinile_ean,prezzoacq) values(?,?,?,?)";
             for (VinileInOrdine vinile : ordine.getViniliInOrdineList()) {
                 ps = conn.prepareStatement(sql2);
-                ps.setInt(1, ordine_id);
+                ps.setInt(1, ordine.getId());
                 ps.setInt(2, vinile.getQuantita());
                 ps.setString(3, vinile.getVinile().getEan());
                 ps.setFloat(4, vinile.getPrezzo());
                 ps.executeUpdate();
-            }
-            Indirizzo indirizzoUtente = ordine.getUtente().getIndirizzo();
-            Indirizzo indirizzoOrdine = ordine.getIndirizzo();
-            if (indirizzoUtente != null) {
-                if (!indirizzoUtente.equals(indirizzoOrdine)) {
-                    ps = conn.prepareStatement("UPDATE indirizzo set strada=?, citta=?, cap=?, numero_civico=?, telefono=? where id=?");
-                    ps.setString(1, indirizzoOrdine.getStrada());
-                    ps.setString(2, indirizzoOrdine.getCitta());
-                    ps.setString(3, indirizzoOrdine.getCap());
-                    ps.setString(4, indirizzoOrdine.getNumeroCivico());
-                    ps.setString(5, indirizzoOrdine.getTelefono());
-                    ps.setInt(6, indirizzoOrdine.getId());
-                    ps.executeUpdate();
-                    ps.close();
-                    conn.close();
-                }
-            } else {
-                ps = conn.prepareStatement("INSERT INTO indirizzo (strada,citta,cap,numero_civico,telefono) " +
-                        "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1, ordine.getIndirizzo().getStrada());
-                ps.setString(2, ordine.getIndirizzo().getCitta());
-                ps.setString(3, ordine.getIndirizzo().getCap());
-                ps.setString(4, ordine.getIndirizzo().getNumeroCivico());
-                ps.setString(5, ordine.getIndirizzo().getTelefono());
-                ps.executeUpdate();
-                rs = ps.getGeneratedKeys();
-                if (rs.next())
-                    ordine.getIndirizzo().setId(rs.getInt(1));
                 ps.close();
-                conn.close();
             }
+            conn.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
     }

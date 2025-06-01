@@ -89,8 +89,8 @@ public class VinileDAO {
             Connection conn = ConPool.getConnection();
             String query = "SELECT v.ean, anno_pubblicazione,prezzo,numero_disponibili,autore,titolo,copertina,nome,g.id\n" +
                     "FROM vinile v\n" +
-                    "inner join vinile_genere vg on v.EAN = vg.EAN\n" +
-                    "inner join genere g on vg.id = g.id\n" +
+                    "LEFT JOIN vinile_genere vg on v.EAN = vg.EAN\n" +
+                    "LEFT join genere g on vg.id = g.id\n" +
                     "WHERE v.ean=?";
             PreparedStatement st = conn.prepareStatement(query);
             st.setString(1, ean);

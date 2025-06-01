@@ -66,7 +66,9 @@
                         <div class="form-check form-check-inline">
                             <label class="form-label">
                                 <input class="form-check-input" type="checkbox"
-                                       name="<%= genere.getId() %>" value="<%= genere.getId() %>">
+                                       name="<%= genere.getId() %>" value="<%= genere.getId() %>"
+                                        <%= //Se il genere è tra i generi del vinile ? "" : "checked" %>
+                                />
                                 <%= genere.getNome() %>
                             </label>
                         </div>

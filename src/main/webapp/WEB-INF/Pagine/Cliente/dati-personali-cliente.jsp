@@ -15,7 +15,8 @@
 <section>
     <div class="row">
         <div class="col-md-6">
-            <form class="border border-dark px-4 py-3 mt-5 margini" method="POST" action="dati_personali_servlet">
+            <form class="border border-dark px-4 py-3 mt-5 margini" method="POST"
+                  action="<%=request.getContextPath()%>/user/cambiadatipersonali">
                 <h5 class="title">Informazioni personali</h5>
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome:</label>
@@ -30,11 +31,13 @@
                     <label for="email" class="form-label">Indirizzo email:</label>
                     <input type="email" class="form-control" id="email" value="${utente.email}" name="email" required>
                 </div>
-                <button type="submit" class="btn-outline-danger rounded-pill" name="azione">Aggiorna</button>
+                <button type="submit" class="btn-outline-danger rounded-pill">Aggiorna</button>
             </form>
         </div>
         <div class="col-md-6">
-            <form class="border border-dark px-4 py-3 mt-5 margini" method="POST" action="dati_personali_servlet">
+            <form class="border border-dark px-4 py-3 mt-5 margini" method="POST"
+                  onsubmit="return validaCambiaPassword()"
+                  action="<%=request.getContextPath()%>/user/cambiapassword" id="form-cambio-password">
                 <h5 class="title">Cambio password</h5>
                 <div class="mb-3">
                     <label for="password-attuale" class="form-label">Password Attuale:</label>
@@ -48,7 +51,8 @@
                     <label for="confirm-password" class="form-label">Conferma nuova password:</label>
                     <input type="password" class="form-control" id="confirm-password" required>
                 </div>
-                <button type="submit" class="btn-outline-danger rounded-pill" name="azione" value="aggiorna_password">
+                <div class="error" style="color: red"></div>
+                <button type="submit" class="btn-outline-danger rounded-pill">
                     Aggiorna
                 </button>
             </form>
@@ -57,12 +61,13 @@
     <div class="row">
         <div class="col-md-6">
             <form class="border border-dark px-4 py-3 mt-5 margini" method="POST"
-                  action="/<%= request.getContextPath() %>/cliente/aggiornaindirizzo"
+                  action="<%= request.getContextPath() %>/cliente/aggiornaindirizzo"
                   style="margin-bottom: 100px;">
                 <h5 class="title">Indirizzo di spedizione</h5>
                 <div class="mb-3">
                     <label for="via" class="form-label">Via:</label>
-                    <input type="text" class="form-control" id="via" name="via" value="${utente.indirizzo.strada}" required>
+                    <input type="text" class="form-control" id="via" name="via" value="${utente.indirizzo.strada}"
+                           required>
                 </div>
                 <div class="mb-3">
                     <label for="numero-civico" class="form-label">Numero civico:</label>
@@ -96,5 +101,22 @@
 </footer>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function validaCambiaPassword() {
+        let nuovaPassword = $("#new-password").val();
+        let confermaPassword = $("#confirm-password").val();
+        const re = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$/
+        if (!nuovaPassword.match(re)) {
+            let er = $("#form-cambio-password .error");
+            er.html("password non valida");
+            return false;
+        } else if (nuovaPassword !== confermaPassword) {
+            let er = $("#form-cambio-password .error");
+            er.html("le password non coincidono");
+            return false;
+        }
+        return true;
+    }
+</script>
 </body>
 </html>

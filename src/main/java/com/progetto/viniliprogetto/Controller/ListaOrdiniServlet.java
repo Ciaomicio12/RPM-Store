@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet("/ordini")
+@WebServlet("/cliente/ordini")
 public class ListaOrdiniServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
@@ -25,8 +25,10 @@ public class ListaOrdiniServlet extends HttpServlet {
         if (utente != null && !utente.isAdmin()) {
             OrdineDAO o = new OrdineDAO();
             ArrayList<Ordine> ordini = o.doRetrieveByUserId(utente.getId());
+            for (Ordine ordine : ordini)
+                ordine.setUtente(utente);
             request.setAttribute("ordini", ordini);
-            request.getRequestDispatcher("WEB-INF/Pagine/Cliente/lista-ordini-cliente.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/Pagine/Cliente/lista-ordini-cliente.jsp").forward(request, response);
         } else {
             throw new MyServletException("Sezione dedicata agli utenti registrati");
         }

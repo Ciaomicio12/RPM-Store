@@ -24,15 +24,15 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
             integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="http://localhost:8080/ViniliProgetto_war_exploded/style.css"/>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/style.css"/>
 </head>
 <body>
 <%@ include file="header.jsp" %>
 <%
 %>
 <section class="container">
-    <% if(!carrello.getViniliInCarrello().isEmpty()) { %>
-      <div class="random-albums my-3" class="row">
+    <% if (!carrello.getViniliInCarrello().isEmpty()) { %>
+    <div class="random-albums my-3" class="row">
 
         <c:forEach items="${carrello.viniliInCarrello}" var="vinileincarrello">
             <div class="cart-item col-12" id="${vinileincarrello.vinile.ean}">
@@ -51,7 +51,8 @@
                     </div>
                 </div>
                 <div class="item-quantity">
-                    <input class="textForm" value="1" type="number" placeholder="quantita"/>
+                    <input class="textForm" value="1" type="number" placeholder="quantita"
+                           onchange="aggiornaQuantita(this)"/>
                 </div>
                 <div class="item-actions">
                     <button class="btn-outline-danger rounded-pill" onclick="rimuovi(this)">Rimuovi dal carrello
@@ -60,38 +61,14 @@
             </div>
         </c:forEach>
 
-
-        <script>
-            function rimuovi(button) {
-                let method = "Post";
-                let url = "<%= request.getContextPath()%>/cliente/carrello";
-                let action = "<%=CarrelloServlet.RIMUOVI_VINILE%>";
-                let cartItem = $(button).parent().parent();
-                let ean = cartItem.attr("id");
-                $.ajax({
-                    method: method,
-                    url: url,
-                    data: {
-                        action: action,
-                        ean: ean
-                    }
-                }).then(resp => {
-                    console.log(resp);
-                    cartItem.remove();
-                }).catch(resp => {
-                    console.error(resp);
-                });
-            }
-        </script>
-
-            <div class="prezzo col-4 col-sm-3 mt-4 mt-sm-0">
-                <h3>Totale provvisorio (<%= carrello.getQuantita() %> articoli): </h3>
-                <h2 class="display-3"><strong><%= carrello.getTotale() %>&euro;</strong></h2>
-                <a class="btn-outline-danger rounded-pill"
-                   href="<%= request.getContextPath() %>/cliente/riepilogopagamento">Procedi
-                    all'ordine</a>
-            </div>
+        <div class="prezzo col-4 col-sm-3 mt-4 mt-sm-0">
+            <h3>Totale provvisorio (<span id="quantita-carrello"><%= carrello.getQuantita() %></span> articoli): </h3>
+            <h2 class="display-3" id="totale-carrello"><strong><%= carrello.getTotale() %>&euro;</strong></h2>
+            <a class="btn-outline-danger rounded-pill"
+               href="<%= request.getContextPath() %>/cliente/riepilogopagamento">Procedi
+                all'ordine</a>
         </div>
+    </div>
     <% } else { %>
     <div style="min-height: 50vh">
         <h3>Il carrello è vuoto</h3>
@@ -101,6 +78,62 @@
 
 
 <%@ include file="footer.jsp" %>
+
+<script>
+    function rimuovi(button) {
+        let method = "Post";
+        let url = "<%= request.getContextPath()%>/cliente/carrello";
+        let action = "<%=CarrelloServlet.RIMUOVI_VINILE%>";
+        let cartItem = $(button).parent().parent();
+        let ean = cartItem.attr("id");
+        $.ajax({
+            method: method,
+            url: url,
+            data: {
+                action: action,
+                ean: ean
+            }
+        }).then(resp => {
+            let json = JSON.parse(resp);
+            if (json.status === "OK") {
+                cartItem.remove();
+                $("#quantita-carrello").html(json.quantita);
+                $("#totale-carrello").html(json.totale + "&euro;");
+            } else {
+                console.error("Qualcosa è andato storto");
+            }
+        }).catch(resp => {
+            console.error(resp);
+        });
+    }
+
+    function aggiornaQuantita(input) {
+        let method = "Post";
+        let url = "<%= request.getContextPath()%>/cliente/carrello";
+        let action = "<%=CarrelloServlet.MODIFICA_QUANTITA%>";
+        let cartItem = $(input).parent().parent();
+        let ean = cartItem.attr("id");
+        $.ajax({
+            url: url,
+            method: method,
+            data: {
+                action: action,
+                quantita: $(input).val(),
+                ean: ean
+            }
+        }).then(resp => {
+            json = JSON.parse(resp);
+            if (json.status === "OK") {
+                $("#quantita-carrello").html(json.quantita);
+                $("#totale-carrello").html(json.totale + "&euro;");
+            } else {
+                console.error("Qualcosa è andato storto");
+            }
+        }).catch(err => {
+            console.error(err);
+        })
+    }
+</script>
 
 </body>
 </html>

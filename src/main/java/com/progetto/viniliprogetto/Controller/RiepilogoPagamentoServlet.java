@@ -42,10 +42,9 @@ public class RiepilogoPagamentoServlet extends HttpServlet {
             dao.doSave(ordine);
             // svuota carrello
             carrello.svuota();
-            response.sendRedirect(request.getContextPath() + "/ordini");
+            response.sendRedirect(request.getContextPath() + "/cliente/ordini");
         } catch (Exception e) {
             throw new MyServletException(e.getMessage(), 400);
         }
-
     }
 }
