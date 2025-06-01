@@ -1,6 +1,7 @@
 package com.progetto.viniliprogetto.Controller;
 
 import com.progetto.viniliprogetto.DAO.OrdineDAO;
+import com.progetto.viniliprogetto.DAO.VinileDAO;
 import com.progetto.viniliprogetto.Model.*;
 
 import javax.servlet.ServletException;
@@ -33,7 +34,11 @@ public class RiepilogoPagamentoServlet extends HttpServlet {
             Indirizzo indirizzo = ProcessaIndirizzo.getIndirizzoFromRequest(request);
             ordine.setIndirizzo(indirizzo);
             float totale = 0;
+            VinileDAO dao2 = new VinileDAO();
             for (VinileInCarrello vic : carrello.getViniliInCarrello()) {
+                Vinile v = vic.getVinile();
+                v.setNumeroDisponibili(v.getNumeroDisponibili() - vic.getQuantita());
+                dao2.doUpdate(v);
                 ordine.aggiungiVinile(vic.getVinile(), vic.getQuantita());
                 totale += vic.getVinile().getPrezzo() * vic.getQuantita();
             }
