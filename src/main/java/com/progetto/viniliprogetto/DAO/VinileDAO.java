@@ -235,8 +235,14 @@ public class VinileDAO {
             ps.setString(5, vinile.getTitolo());
             ps.setString(6, vinile.getCopertina());
             ps.setString(7, vinile.getEan());
-            this.doRemoveGeneriVinile(vinile);
-            this.doAggiungiGeneriVinile(vinile);
+            // Verifica se la lista dei generi è vuota
+            if (vinile.getGeneri().isEmpty()) {
+                // Non fare niente, perché non hai inserito alcun genere
+            } else {
+                // Rimuovi i generi esistenti prima di aggiungere i nuovi generi
+                this.doRemoveGeneriVinile(vinile);
+                this.doAggiungiGeneriVinile(vinile);
+            }
             ps.executeUpdate();
             ps.close();
             conn.close();
