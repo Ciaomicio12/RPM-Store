@@ -22,12 +22,14 @@
     <div>
       <div mx-auto py-3>
         <h2 class="title">Assistenza</h2>
-        <p class="explanation fw-bold">Puoi contattare direttamente l'assistenza clienti inviando un messaggio tramite questo
+        <p class="explanation fw-bold">Puoi contattare direttamente l'assistenza clienti inviando un messaggio tramite
+          questo
           form. In questo modo, inserendo il tuo indirizzo email e l'argomento del tuo messaggio, ci aiuterai ad essere
           più veloci nel risponderti. Inoltre, tramite il form, eviti che il tuo messaggio possa essere considerato
           spam.</p>
       </div>
-      <form class="px-4 py-3 col-sm-8 col-md-6 mx-auto" method="POST" action="servlet_assistenza" style="margin-bottom: 100px;">
+      <form class="px-4 py-3 col-sm-8 col-md-6 mx-auto" onsubmit='alert("messaggio inviato")'
+            style="margin-bottom: 100px;">
 
         <div class="mb-3">
           <label for="nome" class="form-label">Nome</label>

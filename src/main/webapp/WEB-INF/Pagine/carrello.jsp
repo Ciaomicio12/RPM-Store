@@ -31,7 +31,7 @@
 <%
 %>
 <section class="container">
-    <% if (!carrello.getViniliInCarrello().isEmpty()) { %>
+    <% if (!carrello.getViniliInCarrello().isEmpty() && carrello.getViniliInCarrello().size() > 0) { %>
     <div class="random-albums my-3" class="row">
 
         <c:forEach items="${carrello.viniliInCarrello}" var="vinileincarrello">
@@ -97,8 +97,13 @@
             let json = JSON.parse(resp);
             if (json.status === "OK") {
                 cartItem.remove();
-                $("#quantita-carrello").html(json.quantita);
-                $("#totale-carrello").html(json.totale + "&euro;");
+                let length = $(".cart-item").length
+                if (length > 0) {
+                    $("#quantita-carrello").html(json.quantita);
+                    $("#totale-carrello").html(json.totale + "&euro;");
+                } else {
+                    $(".prezzo").html("<h3>Il carrello è vuoto</h3>");
+                }
             } else {
                 console.error("Qualcosa è andato storto");
             }

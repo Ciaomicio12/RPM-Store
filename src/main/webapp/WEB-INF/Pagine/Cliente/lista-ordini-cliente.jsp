@@ -33,15 +33,6 @@
 </c:if>
 <c:if test="${!ordini.isEmpty()}">
     <div class="container my-4">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="input-group mb-3">
-                    <input type="text" id="search-input" class="form-control"
-                           placeholder="Cerca per destinatario, numero ordine...">
-                    <button id="search-button" class="btn btn-primary" type="button">Cerca</button>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="container">
         <table class="table table-striped">
