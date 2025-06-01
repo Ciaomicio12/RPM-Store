@@ -31,7 +31,7 @@
         <img src="img/Cover/${vinile.copertina}" alt="Copertina Album" class="img-fluid">
       </div>
       <div class="information col-8 col-xl-4 col-md-6 mt-4 mt-md-0">
-        <h3 class="display-6"><strong>${vinile.titolo}</strong></h3>
+        <h3 class="display-5"><strong><font color="#FF0000">${vinile.titolo}</font></strong></h3>
         <p>Titolo</p>
         <h3>${vinile.autore}</h3>
         <p>Artista</p>
