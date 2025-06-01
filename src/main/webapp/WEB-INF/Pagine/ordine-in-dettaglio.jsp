@@ -78,7 +78,7 @@
             </h2>
             <% if (utente != null && utente.isAdmin() && ordine.getStato().equals("P")) { %>
             <form class="border border-dark px-4 py-3 mt-5" method="POST"
-                  action="<%= request.getContextPath()%>/dettagliordine">
+                  action="<%= request.getContextPath()%>/user/dettagliordine">
                 <button type="submit" class="btn btn-primary" name="azione"
                         value="<%= DettagliOrdineServlet.AZIONE_ANNULLA%>">Annulla ordine
                 </button>
