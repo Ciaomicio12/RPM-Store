@@ -39,21 +39,25 @@
         </div>
         <div class="mx-auto" style="width: 110px;">
           <label for="citta" class="form-label">Città:</label>
-          <input type="text" class="form-control" id="citta" name="citta" value="<%=utente.getIndirizzo().getCitta()%>" required>
+          <input type="text" class="form-control" id="citta" name="citta" value="<%=utente.getIndirizzo().getCitta()%>"
+                 required>
         </div>
         <div class="mx-auto" style="width: 110px;">
-          <label for="codice-postale" class="form-label">Codice Postale:</label>
-          <input type="text" class="form-control" id="codice-postale" name="codice-postale" value="<%=utente.getIndirizzo().getCap()%>"
+          <label for="cap" class="form-label">Codice Postale:</label>
+          <input type="text" class="form-control" id="cap" name="cap" value="<%=utente.getIndirizzo().getCap()%>"
                  required>
         </div>
         <div class="mx-auto" style="width: 110px;">
           <label for="telefono" class="form-label">Telefono:</label>
-          <input type="text" class="form-control" id="telefono" name="telefono" value="<%=utente.getIndirizzo().getTelefono()%>" required>
+          <input type="text" class="form-control" id="telefono" name="telefono"
+                 value="<%=utente.getIndirizzo().getTelefono()%>" required>
         </div>
-        <button type="submit" class="btn btn-outline-danger btn-secondary btn-lg active" value="conferma-acquisto" name="azione">Conferma il pagamento</button>
+        <button type="submit" class="btn btn-outline-danger btn-secondary btn-lg active" value="conferma-acquisto"
+                name="azione">Conferma il pagamento
+        </button>
       </form>
-    <div class="px-4 py-3 mx-4 mx-auto mx-md-0 mt-1 col-md-6">
-      <h5 class="title">Dati di pagamento</h5>
+      <div class="px-4 py-3 mx-4 mx-auto mx-md-0 mt-1 col-md-6">
+        <h5 class="title">Dati di pagamento</h5>
       <div class="px-4 py-3 mx-1 mx-sm-auto mt-1">
         <div class="mx-auto" style="width: 110px;">
           <label class="form-label" for="numero-carta">Numero carta:</label>

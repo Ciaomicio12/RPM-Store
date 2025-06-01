@@ -38,7 +38,7 @@
             <div class="cart-item col-12" id="${vinileincarrello.vinile.ean}">
                 <div class="col-12 row my-5 my-sm-4 mx-auto">
                     <div class="col-9 col-sm-3 mx-auto">
-                        <a href="dettaglio-album.html">
+                        <a href="<%= request.getContextPath()%>/vinile?ean=${vinileincarrello.vinile.ean}">
                             <img src="<%= request.getContextPath()%>/img/Cover/${vinileincarrello.vinile.copertina}"
                                  alt="Copertina Album 1" class="img-fluid">
                         </a>

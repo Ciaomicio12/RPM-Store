@@ -70,7 +70,7 @@
                 <c:if test="${utente != null}">
                     <c:if test="${!utente.admin}">
                         <li class="nav-item justify-content-center">
-                            <a class="nav-link" href="<%= request.getContextPath() %>/lista-ordini-cliente">I miei
+                            <a class="nav-link" href="<%= request.getContextPath() %>/ordini">I miei
                                 ordini</a>
                         </li>
                         <li class="nav-item justify-content-center">

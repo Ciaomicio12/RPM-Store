@@ -26,7 +26,7 @@ public class ListaOrdiniServlet extends HttpServlet {
             OrdineDAO o = new OrdineDAO();
             ArrayList<Ordine> ordini = o.doRetrieveByUserId(utente.getId());
             request.setAttribute("ordini", ordini);
-            request.getRequestDispatcher("WEB-INF/jsp/ordini.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/Pagine/Cliente/lista-ordini-cliente.jsp").forward(request, response);
         } else {
             throw new MyServletException("Sezione dedicata agli utenti registrati");
         }

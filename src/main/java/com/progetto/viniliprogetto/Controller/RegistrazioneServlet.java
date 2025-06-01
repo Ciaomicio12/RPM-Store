@@ -87,7 +87,6 @@ public class RegistrazioneServlet extends HttpServlet {
             error = error + "Sesso non valido<br>";
             check = false;
         }
-
         if (check) {
             Utente utente = new Utente();
             utente.setAdmin(false);
@@ -100,7 +99,7 @@ public class RegistrazioneServlet extends HttpServlet {
             utentedao.doSave(utente);
             HttpSession session = request.getSession();
             session.setAttribute("utente", utente);
-            response.sendRedirect(request.getContextPath() + "/WEB-INF/Cliente/dati-personali-cliente.jsp");
+            response.sendRedirect(request.getContextPath() + "/profilo");
         } else {
             request.setAttribute("formerror", error);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/Pagine/registrazione.jsp");

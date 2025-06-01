@@ -10,10 +10,10 @@ public class ProcessaIndirizzo {
     }
 
     public static Indirizzo getIndirizzoFromRequest(HttpServletRequest request) throws Exception {
-        String strada = request.getParameter("strada");
+        String strada = request.getParameter("via");
         String citta = request.getParameter("citta");
         String cap = request.getParameter("cap");
-        String numeroCivico = request.getParameter("numero_civico");
+        String numeroCivico = request.getParameter("numero-civico");
         String telefono = request.getParameter("telefono");
         String error = "";
         if (strada == null || strada.trim().isEmpty())
