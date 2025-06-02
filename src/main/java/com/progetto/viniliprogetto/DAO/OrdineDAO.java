@@ -61,7 +61,7 @@ public class OrdineDAO {
         Ordine o = new Ordine();
         o.setId(rs.getInt("ordineid"));
         o.setOraordine(rs.getString("ora"));
-        o.setTotale(rs.getInt("ordinetotale"));
+        o.setTotale(rs.getFloat("ordinetotale"));
         o.setStato(rs.getString("stato"));
         return o;
     }
@@ -179,7 +179,7 @@ public class OrdineDAO {
                 ordine = new Ordine();
                 Utente utente = new Utente();
                 Indirizzo indirizzo = new Indirizzo();
-                ordine.setTotale(rs.getInt(4));
+                ordine.setTotale(rs.getFloat(4));
                 ordine.setOraordine(rs.getString(3));
                 ordine.setId(rs.getInt(1));
                 ordine.setStato(rs.getString(5));
