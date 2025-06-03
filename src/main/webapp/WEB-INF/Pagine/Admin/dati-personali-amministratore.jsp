@@ -20,7 +20,8 @@
 <section>
     <div class="row">
         <div class="col-md-6">
-            <form class="border border-dark px-4 py-3 mt-5 margini" method="POST" action="dati_personali_servlet">
+            <form class="border border-dark px-4 py-3 mt-5 margini" method="POST"
+                  action="<%=request.getContextPath()%>/user/cambiadatipersonali">
                 <h5 class="title">Informazioni personali</h5>
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome</label>
@@ -28,7 +29,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="surname" class="form-label">Cognome</label>
-                    <input type="text" class="form-control" id="surname" value="${utente.cognome}" name="surname" required>
+                    <input type="text" class="form-control" id="surname" value="${utente.cognome}" name="surname"
+                           required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
@@ -38,7 +40,8 @@
             </form>
         </div>
         <div class="col-md-6">
-            <form class="border border-dark px-4 py-3 mt-5 margini" method="POST" action="dati_personali_servlet">
+            <form class="border border-dark px-4 py-3 mt-5 margini" method="POST"
+                  action="<%=request.getContextPath()%>/user/cambiapassword">
                 <h5 class="title">Cambio password</h5>
                 <div class="mb-3">
                     <label for="password-attuale" class="form-label">Password Attuale:</label>
