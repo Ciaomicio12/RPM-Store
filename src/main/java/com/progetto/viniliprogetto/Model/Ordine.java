@@ -54,17 +54,8 @@ public class Ordine {
 
     public String getData() {
         long unixSeconds = Long.parseLong(oraordine);
-        Date date = new java.util.Date(unixSeconds * 1000L);
+        Date date = new java.util.Date(unixSeconds);
         SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-        sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+2"));
-        String formattedDate = sdf.format(date);
-        return formattedDate;
-    }
-
-    public String getOra() {
-        long unixSeconds = Long.parseLong(oraordine);
-        Date date = new java.util.Date(unixSeconds * 1000L);
-        SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH:mm");
         sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+2"));
         String formattedDate = sdf.format(date);
         return formattedDate;

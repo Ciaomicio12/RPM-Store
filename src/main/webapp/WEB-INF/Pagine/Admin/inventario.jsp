@@ -24,18 +24,7 @@
 
 <div class="container my-4">
     <div class="row">
-        <div class="col-md-6">
-            <div class="input-group mb-3">
-                <form class="col d-flex my-0 my-md-3" method="get" action="cerca">
-                    <input class="form-control me-2" list="ricerca-datalist" name="ricerca" type="search"
-                           onkeyup="ricercaajax(this.value)" placeholder="Cerca per titolo o artista..."
-                           aria-label="Search" required>
-                    <datalist id="ricerca-datalist"></datalist>
-                    <button class="btn btn-outline-success" type="submit">Cerca</button>
-                </form>
-            </div>
-        </div>
-        <div class="col-md-6 text-md-end">
+        <div class="col-12 text-md-end">
             <a href="<%= request.getContextPath() %>/admin/aggiunta-mofica" class="btn btn-success">Aggiungi Nuovo
                 Album</a>
         </div>
