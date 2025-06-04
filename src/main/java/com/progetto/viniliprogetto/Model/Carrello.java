@@ -49,7 +49,7 @@ public class Carrello {
     }
 
     public float getTotale() {
-        int sum = 0;
+        float sum = 0;
         for (VinileInCarrello v : viniliInCarrello) {
             sum += (v.getVinile().getPrezzo() * v.getQuantita());
         }
