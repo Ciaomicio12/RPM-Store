@@ -1,8 +1,11 @@
 package com.progetto.viniliprogetto.Controller;
 
 import com.progetto.viniliprogetto.DAO.OrdineDAO;
+import com.progetto.viniliprogetto.DAO.VinileDAO;
 import com.progetto.viniliprogetto.Model.Ordine;
 import com.progetto.viniliprogetto.Model.Utente;
+import com.progetto.viniliprogetto.Model.Vinile;
+import com.progetto.viniliprogetto.Model.VinileInOrdine;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,6 +44,14 @@ public class DettagliOrdineServlet extends HttpServlet {
         // impostare lo stato (controllare che il valore passato sia giusto)
         if (ordine == null) throw new MyServletException("Errore parametro ordine non trovato", 404);
         // Chiamare doCambiaStato passando solo l'ordine aggiornato
+        if (azione.equals(AZIONE_ANNULLA)) {
+            VinileDAO dao2 = new VinileDAO();
+            for (VinileInOrdine vio : ordine.getViniliInOrdineList()) {
+                Vinile v = vio.getVinile();
+                v.setNumeroDisponibili(v.getNumeroDisponibili() + vio.getQuantita());
+                dao2.doUpdate(v);
+            }
+        }
         ordine.setStato(nuovoStato);
         dao.doCambiaStatoOrdine(ordine);
         response.sendRedirect(request.getContextPath() + "/user/dettagliordine?id=" + idordine);
