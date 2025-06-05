@@ -18,7 +18,7 @@ public class ConPool {
 			p.setDriverClassName("com.mysql.cj.jdbc.Driver");
 			//ricordati di modificare il nome del database, perché sono diversi per i due computer
 			p.setUsername("root");
-			p.setPassword("root");
+			p.setPassword("sesso");
 			p.setMaxActive(100);
 			p.setInitialSize(10);
 			p.setMinIdle(10);

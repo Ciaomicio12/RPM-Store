@@ -1,0 +1,4 @@
+apache-tomcat-9.0.106
+IntelliJ IDEA 2021.1.3
+https://adoptium.net/temurin/releases/?os=any&arch=any&version=8
+http://localhost:8080/ViniliProgetto_war_exploded

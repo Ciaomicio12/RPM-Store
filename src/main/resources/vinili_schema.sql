@@ -90,10 +90,10 @@ VALUES ('Via Roma', 'Roma', '00100', '10', '3248955432'),
 -- Inserimento dati nella tabella "utente"
 
 INSERT INTO utente (indirizzo, username, password, nome, cognome, sesso, email, admin, disabled)
-VALUES (1, 'utente1', SHA1('password1'), 'Tommaso', 'Spataro', 'M', 'utente1@email.com', 0, 0),
-       (3, 'utente2', SHA1('password2'), 'Alfredo', 'Amendola', 'M', 'utente3@email.com', 0, 0),
-       (2, 'AbSoluTe', SHA1('password2'), 'Angelo', 'Spataro', 'M', 'utente2@email.com', 0, 0),
-       (4, 'admin1', SHA1('adminpass'), 'Admin', 'Admin', 'F', 'admin@example.com', 1, 0);
+VALUES (1, 'gianluca', SHA1('7429'), 'Gianluca', 'Grauso', 'M', 'ggrauso@email.com', 0, 0),
+       (3, 'carmine', SHA1('1234'), 'Carmine', 'Aiello', 'M', 'caiello@email.com', 0, 0),
+       (2, 'jotaro', SHA1('theworld'), 'Jotaro', 'Kujo', 'M', 'jkujo@email.com', 0, 0),
+       (4, 'admin', SHA1('admin'), 'Admin', 'Admin', 'M', 'admin@email.com', 1, 0);
 
 -- Inserimento dati nella tabella "vinile"
 
@@ -187,5 +187,3 @@ ALTER TABLE Vinile
 
 ALTER TABLE Vinile
     ADD FULLTEXT (autore);
-
-
