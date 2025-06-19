@@ -10,7 +10,7 @@
                 <img class="logo"
                      style="   .transparent { zoom: 1;filter: alpha(opacity=50);opacity: 0.5;} width: 100px; height: 100px; margin-right: 10px;"
                      src="<%= request.getContextPath() %>/img/logo.png" alt="Logo"/>
-                <h1 class="text-decoration-none text-dark fw-bold titleHeader">Record Road</h1>
+                <h1 class="text-decoration-none text-dark fw-bold titleHeader">RPM-Store</h1>
             </a>
             <div class="w-100 d-md-none"></div>
             <form class="col d-flex my-0 my-md-3" method="get" action="<%= request.getContextPath() %>/cerca">

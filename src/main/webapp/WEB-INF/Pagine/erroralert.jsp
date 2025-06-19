@@ -2,7 +2,7 @@
          pageEncoding="UTF-8" isErrorPage="true" %>
 <html>
 <head>
-    <title>Record Road - Errore</title>
+    <title>RPM-Store - Errore</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
