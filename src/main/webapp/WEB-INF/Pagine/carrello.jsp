@@ -1,7 +1,7 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.progetto.viniliprogetto.Controller.CarrelloServlet" %>
-<%@ page import="com.progetto.viniliprogetto.Model.Carrello" %>
-<%@ page import="com.progetto.viniliprogetto.Model.Utente" %>
+<%@ page import="com.rpm_store.Controller.CarrelloServlet" %>
+<%@ page import="com.rpm_store.Model.Carrello" %>
+<%@ page import="com.rpm_store.Model.Utente" %>
 <%
     Carrello carrello = (Carrello) session.getAttribute("carrello");
     Utente utente = (Utente) request.getAttribute("utente");

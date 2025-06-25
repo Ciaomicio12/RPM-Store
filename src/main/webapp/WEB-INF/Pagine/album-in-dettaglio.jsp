@@ -1,5 +1,5 @@
-<%@ page import="com.progetto.viniliprogetto.Model.Vinile" %>
-<%@ page import="com.progetto.viniliprogetto.Controller.CarrelloServlet" %>
+<%@ page import="com.rpm_store.Model.Vinile" %>
+<%@ page import="com.rpm_store.Controller.CarrelloServlet" %>
 <%
   Vinile vinile = (Vinile) request.getAttribute("vinile");
 %>

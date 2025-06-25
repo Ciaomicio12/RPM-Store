@@ -1,6 +1,6 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.progetto.viniliprogetto.Model.Genere" %>
-<%@ page import="com.progetto.viniliprogetto.Model.Vinile" %>
+<%@ page import="com.rpm_store.Model.Genere" %>
+<%@ page import="com.rpm_store.Model.Vinile" %>
 <%@ page import="java.util.ArrayList" %>
 <%
     Vinile vinile = (Vinile) request.getAttribute("vinile");

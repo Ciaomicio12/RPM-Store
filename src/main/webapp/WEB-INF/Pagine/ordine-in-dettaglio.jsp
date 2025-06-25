@@ -1,7 +1,7 @@
-<%@ page import="com.progetto.viniliprogetto.Model.Ordine" %>
-<%@ page import="com.progetto.viniliprogetto.Model.Utente" %>
-<%@ page import="com.progetto.viniliprogetto.Model.VinileInOrdine" %>
-<%@ page import="com.progetto.viniliprogetto.Controller.DettagliOrdineServlet" %>
+<%@ page import="com.rpm_store.Model.Ordine" %>
+<%@ page import="com.rpm_store.Model.Utente" %>
+<%@ page import="com.rpm_store.Model.VinileInOrdine" %>
+<%@ page import="com.rpm_store.Controller.DettagliOrdineServlet" %>
 <%
     Ordine ordine = (Ordine) request.getAttribute("ordine");
     Utente utente = (Utente) request.getAttribute("utente");

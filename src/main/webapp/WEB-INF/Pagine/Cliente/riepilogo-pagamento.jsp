@@ -1,4 +1,4 @@
-<%@ page import="com.progetto.viniliprogetto.Model.Utente" %>
+<%@ page import="com.rpm_store.Model.Utente" %>
 <%
   Utente utente = (Utente) request.getAttribute("utente");
 %>

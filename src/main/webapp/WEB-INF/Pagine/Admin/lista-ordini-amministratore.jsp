@@ -1,4 +1,4 @@
-<%@ page import="com.progetto.viniliprogetto.Model.Ordine" %>
+<%@ page import="com.rpm_store.Model.Ordine" %>
 <%@ page import="java.util.List" %>
 <%
 	List<Ordine> ordini = (List<Ordine>) request.getAttribute("ordini");
