@@ -18,8 +18,44 @@ ss
 		.nav-link:hover {
 			text-decoration: underline;
 		}
+		 th {
+			 cursor: pointer;
+			 user-select: none;
+		 }
+
+		.sort-arrow {
+			font-size: 0.8em;
+			margin-left: 4px;
+			color: gray;
+		}
 	</style>
 	<link rel="stylesheet" href="<%= request.getContextPath()%>/style.css"/>
+	<script>
+		let sortDirection = {};
+
+		function sortTable(columnIndex) {
+			const table = document.querySelector("table");
+			const rows = Array.from(table.rows).slice(1); // Skip the header row
+			const tbody = table.querySelector("tbody");
+
+			const direction = sortDirection[columnIndex] = !sortDirection[columnIndex]; // toggle
+			const factor = direction ? 1 : -1;
+
+			rows.sort((a, b) => {
+				const cellA = a.cells[columnIndex].innerText.trim();
+				const cellB = b.cells[columnIndex].innerText.trim();
+
+				const isNumeric = !isNaN(cellA.replace(',', '.')) && !isNaN(cellB.replace(',', '.'));
+				const aVal = isNumeric ? parseFloat(cellA.replace(',', '.')) : cellA.toLowerCase();
+				const bVal = isNumeric ? parseFloat(cellB.replace(',', '.')) : cellB.toLowerCase();
+
+				return aVal > bVal ? factor : aVal < bVal ? -factor : 0;
+			});
+
+			tbody.innerHTML = '';
+			rows.forEach(row => tbody.appendChild(row));
+		}
+	</script>
 </head>
 <body>
 <%@ include file = "../header.jsp" %>
@@ -29,11 +65,11 @@ ss
     <table class="table table-striped">
         <thead>
 			<tr>
-				<th onclick="sortTable(0)">Numero ordine</th>
-				<th onclick="sortTable(1)">Destinatario</th>
-				<th onclick="sortTable(2)">Data Acquisto</th>
-				<th onclick="sortTable(3)">Totale</th>
-				<th onclick="sortTable(4)">Stato</th>
+				<th onclick="sortTable(0)">Numero ordine <span class="sort-arrow">▲▼</span></th>
+				<th onclick="sortTable(1)">Destinatario <span class="sort-arrow">▲▼</span></th>
+				<th onclick="sortTable(2)">Data Acquisto <span class="sort-arrow">▲▼</span></th>
+				<th onclick="sortTable(3)">Totale <span class="sort-arrow">▲▼</span></th>
+				<th onclick="sortTable(4)">Stato <span class="sort-arrow">▲▼</span></th>
 			</tr>
 		</thead>
 		<tbody>
